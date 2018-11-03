@@ -1,14 +1,11 @@
-import { User } from './user';
-import { Team } from './team';
-
 export class Tournament {
   id: number;
   title: string;
-  host: User;
-  teams: Team[];
+  host: number;
+  teams_id: number[];
   game_type: number;
   max_team: number;
-  result: Team[];
+  result_id: number[];
   reward: string;
   admin_approval: boolean;
 }

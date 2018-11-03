@@ -1,5 +1,3 @@
-import { Team } from './team';
-
 export class User {
   id: number;
   email: string;
@@ -8,6 +6,6 @@ export class User {
   position: string;
   wins: number;
   loses: number;
-  teams: Team[];
+  teams_id: number[];
   point: number;
 }

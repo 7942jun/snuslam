@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { User } from '../user';
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -12,10 +13,8 @@ export class SignUpComponent implements OnInit {
   newUser = new User();
   pw_confirm = '';
 
-  @Output()
-  add: EventEmitter<User> = new EventEmitter();
-
-  constructor(private location: Location) { }
+  constructor( private location: Location,
+               private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -30,8 +29,9 @@ export class SignUpComponent implements OnInit {
       this.newUser.password = '';
       return;
     }
-    this.add.emit(this.newUser);
+    this.userService.addUser(this.newUser);
     this.goBack();
+    alert("Sign up success!");
   }
 
   goBack() {

@@ -1,10 +1,7 @@
-import { User } from './user';
-import { Tournament } from './tournament';
-
 export class Team {
   id: number;
   name: string;
-  leader: User;
-  members: User[];
-  tournament: Tournament;
+  leader_id: number;
+  members_id: number[];
+  tournament_id: number;
 }

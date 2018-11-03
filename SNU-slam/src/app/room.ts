@@ -1,10 +1,8 @@
-import { User } from './user';
-
 export class Room {
   id: number;
   title: string;
-  host: User;
-  guests: User[];
+  host_id: number;
+  guests_id: number[];
   location: string;
   play_time: number;
   creation_time: Date;
