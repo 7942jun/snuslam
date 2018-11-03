@@ -1,0 +1,16 @@
+<button (click)="goBack()">Back</button>
+<input #searchBox><button (click)="search(searchBox.value)">Search</button>
+<ul *ngIf="searched_users.length > 0">
+  <li *ngFor="let user of users">
+    <a>
+      nickname: {{ user.nickname }}, wins: {{ user.wins }} loses: {{ user.loses }}
+    </a>
+  </li>
+</ul>
+<ul *ngIf="searched_users.length == 0">
+  <li *ngFor="let user of users">
+    <a>
+      nickname: {{ user.nickname }}, wins: {{ user.wins }} loses: {{ user.loses }}
+    </a>
+  </li>
+</ul>
