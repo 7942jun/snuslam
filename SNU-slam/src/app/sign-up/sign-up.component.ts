@@ -19,7 +19,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
   }
 
-  addUser() {
+  signUp() {
     if (!this.newUser.email || !this.newUser.password || !this.newUser.nickname) {
       return;
     }
@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit {
       this.newUser.password = '';
       return;
     }
-    this.userService.addUser(this.newUser);
+    this.userService.postUser(this.newUser);
     this.goBack();
     alert("Sign up success!");
   }

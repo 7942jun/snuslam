@@ -1,12 +1,26 @@
-<div align="right">
+<div style="position: absolute; top: 150px; right: 200px;">
   <button (click)="sign_in()" style="height:30px;width:100px">Sign in</button>
   <br>
-  <button routerLink="/sign_up" style="height:30px;width:100px">Sign up</button>
+  <button routerLink="/sign_up" style="height:30px;width:100px;visibility: visible">Sign up</button>
 </div>
 
-<span id="waiting rooms" style="text-align: right">
-  <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif" align="left">
+<div style="position: absolute; top: 320px; left: 180px;">
+  <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif" align="left"/>
+</div>
+<div style="position: absolute; top: 350px; left: 380px;">
+  <input type="image"  src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+         (click)="court1()" style="height: 30px; width:30px;">
+</div>
+<div style="position: absolute; top: 513px; left: 333px;">
+  <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+         (click)="court2()" style="height: 30px; width: 30px;">
+</div>
+<div style="position: absolute; top: 360px; left: 630px;">
+  <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+         (click)="court3()" style="height: 30px; width: 30px;">
+</div>
+<div style="position: absolute; top: 380px; right: 500px;">
   <h3>Waiting room 1</h3>
   <h3>Waiting room 2</h3>
   <h3>Waiting room 3</h3>
-</span>
+</div>
