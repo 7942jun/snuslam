@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
-from django.forms.models import model_to_dict
+from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
+from django.core import serializers
+from .models import User, Room, Team, Tournament
 import json
 
 def user(request):
@@ -17,8 +18,8 @@ def game(request):
 
 def room(request):
 	if request.method == 'GET':
-		room_list = [room for room in Room.objects.all().values()]
-		return JsonResponse(room_list, safe=False)
+		room_list = [room.json() for room in Room.objects.all()]
+		return HttpResponse(json.dumps(room_list), content_type='appication/json')
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
@@ -29,39 +30,28 @@ def room_create(request):
 		location = data['location']
 		play_time = data['play_time']
 		type = data['type']
-		host = request.user
+		host = User(**data['host'])
 		room = Room(title=title, host=host, location=location, play_time=play_time, type=type)
 		room.save()
-		response_dict = {
-			'id' = room.id,
-			'title' = room.title,
-			'host' = room.host,
-			'location' = room.location,
-			'play_time' = room.play_time,
-			'cration_time' = room.creation_time,
-			'type' = room.type
-		}
-		return JsonResponse(response_dict, status=201)
+		return HttpResponse(status=201)
 	else:
 		return HttpResponseNotAllowed(['POST'])
 
-
-
-def room_detail(request, id)
+def room_detail(request, id):
 	if request.method == 'GET':
 		try:
 			room = Room.objects.get(id=id)
 		except Room.DoesNotExist:
 			return HttpResponse(status=404)
-		room = model_to_dict(room)
-		return JsonResponse(room, safe=False)
+		return HttpResponse(json.dumps(room.json()), content_type='application/json')
 	elif request.method == 'PUT':
 		try:
 			room = Room.objects.get(id=id)
 		except Room.DoesNotExist:
 			return HttpResponse(status=404)
-		new_user = json.loads(request.body.decode())
-		room.guests.add(new_user)
+		user = User(**json.loads(request.body.decode()))
+		user.save() #나중에 수정
+		room.guests.add(user)
 		room.save()
 		return HttpResponse(status=200)
 	elif request.method == 'DELETE':
@@ -72,7 +62,7 @@ def room_detail(request, id)
 		room.delete()
 		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE')]
+		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
 def game_detail(request, id):
 	pass
