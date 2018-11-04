@@ -1,0 +1,16 @@
+<section class="red" *ngIf="redteam.length > 0">
+  <ul class="room-list">RED TEAM
+    <li *ngFor="let user of redteam">
+      <span class="badge">{{user.nickname}}</span>
+    </li>
+  </ul>s
+</section>
+<section class="blue" *ngIf="blueteam.length > 0">
+  <ul class="room-list">BLUE TEAM
+    <li *ngFor="let user of blueteam">
+      <span class="badge">{{user.nickname}}</span>
+    </li>
+  </ul>
+</section>
+<button class="change team" (click)="changeteam()">Change Team</button> 
+  

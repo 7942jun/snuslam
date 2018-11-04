@@ -1,0 +1,10 @@
+<section class="main" *ngIf="room.length > 0">
+  <ul class="room-list">
+    <li *ngFor="let room of roomlist">
+      <span class="badge">{{room.title}}</span>
+    </li>
+  </ul>
+</section>
+<button class="create" routerLink = "/create">
+  create
+</button>
