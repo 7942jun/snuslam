@@ -7,9 +7,9 @@ import { User } from '../../user'
   styleUrls: ['./teamlist.component.css']
 })
 export class TeamlistComponent implements OnInit {
-  @Input()
+ //@Input()
   redteam: User[];
-  @Input()
+ // @Input()
   blueteam: User[];
   @Output()
   changeteam: EventEmitter<any> = new EventEmitter();
