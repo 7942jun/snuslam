@@ -1,9 +1,16 @@
-<button (click)="goBack()">Back</button>
-<div class="signup">
+<div style="position: absolute; top: 100px; left: 70px;">
+  <button (click)="goBack()" style="height: 30px; width:100px">Back</button>
+</div>
+<br>
+<br>
+<div align="center">
   <h1>Sign Up</h1>
-  <h3>e-mail: <input placeholder="e-mail" [(ngModel)]="newUser.email"></h3>
-  <h3>password: <input placeholder="password" [(ngModel)]="newUser.password"> @snu.ac.kr</h3>
-  <h3>confirm: <input placeholder="confirm" [(ngModel)]="pw_confirm"></h3>
-  <h3>nickname: <input placeholder="nickname" [(ngModel)]="newUser.nickname"></h3>
+  <br>
+  <div>
+    <h3>e-mail: <input placeholder="e-mail" [(ngModel)]="newUser.email"></h3>
+    <h3>password: <input placeholder="password" [(ngModel)]="newUser.password"> @snu.ac.kr</h3>
+    <h3>confirm: <input placeholder="confirm" [(ngModel)]="pw_confirm"></h3>
+    <h3>nickname: <input placeholder="nickname" [(ngModel)]="newUser.nickname"></h3>
+  </div>
   <button (click)="signUp()">Sign Up</button>
 </div>
