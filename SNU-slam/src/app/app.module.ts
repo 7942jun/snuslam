@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { MainComponent } from './main/main.component';
 import { RankComponent } from './rank/rank.component';
+import { TournamentRoutingModule } from './tournament/tournament-routing.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RankComponent } from './rank/rank.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    TournamentRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

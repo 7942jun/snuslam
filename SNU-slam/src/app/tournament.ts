@@ -2,10 +2,11 @@ export class Tournament {
   id: number;
   title: string;
   host: number;
-  teams_id: number[];
-  game_type: number;
-  max_team: number;
-  result_id: number[];
+  teams: number[];
+  game_type: number;//value means the number of members in a team.
+  max_team: number;//value means the number of total teams in a tournament.
+  result: number[];
   reward: string;
-  admin_approval: boolean;
+  state: number; //state of tournament. 1: 승인 중, 2: 신청 중, 3: 진행 중, 4: 종료
 }
+

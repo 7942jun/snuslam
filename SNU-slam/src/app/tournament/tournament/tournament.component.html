@@ -1,0 +1,22 @@
+<h2>Tournament List</h2>
+<ul class="tournaments">
+  <li *ngFor = "let tournament of tournaments">
+    <span>
+      Tournament title: 
+      <a [routerLink] = "['tournament',tournament.id]" *ngIf="tournament.state == 2">{{tournament.title}}</a>
+      <a [routerLink] = "['tournament',tournament.id]" *ngIf="tournament.state == 3 || tournament.state == 4">{{tournament.title}}</a>
+      <p *ngIf="tournament.state == 1">{{tournament.title}}</p>
+      Game type:&nbsp;{{tournament.game_type}}:{{tournament.game_type}}&nbsp;&nbsp;
+      Total teams: 총&nbsp;{{tournament.max_team}}개 팀 참가
+      Reward:&nbsp;{{tournament.reward}}
+      <button id = "accept-tournament" (click) = "acceptTournament(tournament)" *ngIf = "tournament.state == 1">Accept</button>
+      <button id = "delete-tournament" (click) = "deleteTournament(tournament)">Delete</button>
+    </span>
+  </li>    
+</ul>
+<nav>
+  <a routerLink="/tournament/create">Create</a>
+  <a routerLink="/rooms">Back</a>
+</nav>
+
+
