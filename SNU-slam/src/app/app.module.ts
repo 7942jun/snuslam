@@ -8,7 +8,8 @@ import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { MainComponent } from './main/main.component';
 import { RankComponent } from './rank/rank.component';
-import { TournamentRoutingModule } from './tournament/tournament-routing.module';
+import { TournamentModule } from './tournament/tournament.module';
+import { RoomModule } from "./room/room.module";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TournamentRoutingModule } from './tournament/tournament-routing.module'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    TournamentRoutingModule
+    TournamentModule,
+    RoomModule
   ],
   providers: [],
   bootstrap: [AppComponent]
