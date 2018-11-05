@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../user';
-import {Room } from '../../room';
+import { Room } from '../../room';
+import { TeamlistComponent } from "../teamlist/teamlist.component";
 
 @Component({
   selector: 'app-room-detail',

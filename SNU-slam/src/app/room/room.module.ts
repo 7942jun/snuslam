@@ -14,6 +14,15 @@ import { TeamlistComponent } from './teamlist/teamlist.component';
     RoomRoutingModule,
     FormsModule
   ],
-  declarations: [RoollistComponent, RoompageComponent, RoomcreateComponent, RoomDetailComponent, TeamlistComponent]
+  declarations: [
+    RoollistComponent,
+    RoompageComponent,
+    RoomcreateComponent,
+    RoomDetailComponent,
+    TeamlistComponent
+  ],
+  exports: [
+    TeamlistComponent
+  ]
 })
 export class RoomModule { }
