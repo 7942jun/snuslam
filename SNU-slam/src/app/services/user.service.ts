@@ -24,8 +24,8 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl)
-      .pipe(tap(_ => this.log('fetched heroes')),
-        catchError(this.handleError('getHeroes', [])));
+      .pipe(tap(_ => this.log('fetched users')),
+        catchError(this.handleError('getUsers', [])));
   }
 
   getUserById(id: number): Observable<User> {
@@ -45,7 +45,7 @@ export class UserService {
   }
 
   private log(message: string) {
-    console.log(`TodoService: ${message}`);
+    console.log(`UserService: ${message}`);
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
