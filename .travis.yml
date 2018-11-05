@@ -29,12 +29,12 @@ matrix:
       cache:
         npm: true
         directories:
-          - frontend/node_modules
+          - SNU-slam/node_modules
       before_install:
         - export CHROME_BIN=/usr/bin/google-chrome
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
-        - cd frontend
+        - cd SNU-slam
       install:
         - npm install
         - npm install coveralls
