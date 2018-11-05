@@ -21,6 +21,7 @@ export class SignUpComponent implements OnInit {
 
   signUp() {
     if (!this.newUser.email || !this.newUser.password || !this.newUser.nickname) {
+      alert("enter information");
       return;
     }
     if (this.newUser.password != this.pw_confirm) {

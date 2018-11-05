@@ -14,7 +14,7 @@ export class MainComponent implements OnInit {
   }
 
   sign_in() {
-    this.router.navigate(['/rooms']).then();
+    this.router.navigate(['/rooms']);
   }
 
   court1() {
