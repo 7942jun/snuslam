@@ -1,4 +1,5 @@
 
+[![Build Status](https://travis-ci.com/swsnu/swpp18-team3.svg?branch=master)]
 
 # swpp18-team3 SNUSlam
 
