@@ -10,9 +10,10 @@ import { TeamlistComponent } from './teamlist/teamlist.component';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     RoomRoutingModule,
-    FormsModule
+  
   ],
   declarations: [
     RoollistComponent,
