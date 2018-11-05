@@ -35,4 +35,52 @@ describe('UserService', () => {
     const service: UserService = TestBed.get(UserService);
     expect(service).toBeTruthy();
   });
+
+  it('should post new user', async(() => {
+    userService.postUser(mockUser).subscribe(data => {
+        expect(data).toEqual(mockUser);
+    });
+    const req = httpTestingController.expectOne(userApi);
+    expect(req.request.method).toEqual('POST');
+    req.flush(mockUser);
+  }));
+
+  it('should get all users', async ( () => {
+    userService.getUsers().subscribe( data => {
+      expect(data).toEqual(mockUserList);
+    });
+    const req = httpTestingController.expectOne(userApi);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockUserList);
+  }));
+
+  it('should get specific user with id', async( () => {
+    const id = mockUser.id;
+    const url = `${userApi}${id}/`;
+    userService.getUserById(id).subscribe( data => {
+      expect(data).toEqual(mockUser);
+    });
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockUser);
+  }));
+
+  it('should search users by nickname', async (() => {
+    userService.searchUsers('').subscribe(data => {
+      expect(data).toEqual([]);
+    });
+    const nickname = mockUser.nickname;
+    userService.searchUsers(nickname).subscribe( data => {
+      expect(data).toEqual([mockUser]);
+    });
+  }));
+
+  it('should return empty list', async( () => {
+    userService.getUsers().subscribe( data => {
+      expect(data).toEqual([]);
+    });
+    httpTestingController.expectOne(userApi).flush(null,
+      {status: 401, statusText: 'Unauthorized'});
+  }));
+
 });
