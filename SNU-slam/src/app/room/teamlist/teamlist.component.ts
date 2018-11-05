@@ -11,7 +11,7 @@ export class TeamlistComponent implements OnInit {
   redteam: User[];
  // @Input()
   blueteam: User[];
-  @Output()
+ // @Output()
   changeteam: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
