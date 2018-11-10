@@ -7,11 +7,11 @@ import { User } from '../../user'
   styleUrls: ['./teamlist.component.css']
 })
 export class TeamlistComponent implements OnInit {
- //@Input()
+  //@Input()
   redteam: User[];
- // @Input()
+  //@Input()
   blueteam: User[];
- // @Output()
+  //@Output()
   changeteam: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
