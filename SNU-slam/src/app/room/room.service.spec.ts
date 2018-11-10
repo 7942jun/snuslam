@@ -36,7 +36,7 @@ describe('RoomService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   let roomservice: RoomService;
-  const url = "api/room/";
+  const url = "api/room";
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
@@ -61,7 +61,7 @@ describe('RoomService', () => {
   }))
   it('should update Rooms with put request', async(()=>{
     const roomid = mockRoom.id;
-    const room_url = `${url}${roomid}/`;
+    const room_url = `${url}/${roomid}`;
     roomservice.updateRoom(mockRoom).subscribe();
     const req = httpTestingController.expectOne(room_url);
     expect(req.request.method).toEqual('PUT');
@@ -70,7 +70,7 @@ describe('RoomService', () => {
 
   it('should delete Room with delete request', async(()=>{
     const roomid = mockRoom.id;
-    const room_url = `${url}${roomid}/`;
+    const room_url = `${url}/${roomid}`;
     roomservice.deleteRoomById(roomid).subscribe();
     const req = httpTestingController.expectOne(room_url);
     expect(req.request.method).toEqual('DELETE');
@@ -79,7 +79,7 @@ describe('RoomService', () => {
 
   it('should get Room by id with get request', async(()=>{
     const roomid = mockRoom.id;
-    const room_url = `${url}${roomid}/`;
+    const room_url = `${url}/${roomid}`;
     roomservice.getRoomById(roomid).subscribe(
       data => {expect(data).toEqual(mockRoom);}
     )

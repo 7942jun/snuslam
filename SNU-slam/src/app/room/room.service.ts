@@ -11,7 +11,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RoomService {
-  private  url = "api/rooms";
+  private  url = "api/room";
 
   constructor(
      private http: HttpClient
