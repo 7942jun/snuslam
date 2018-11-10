@@ -7,7 +7,7 @@ import {Room } from '../../room';
   styleUrls: ['./roomlist.component.css']
 })
 export class RoomlistComponent implements OnInit {
-  //@Input()
+  @Input()
   roomlist : Room[];
 
   constructor() { }
