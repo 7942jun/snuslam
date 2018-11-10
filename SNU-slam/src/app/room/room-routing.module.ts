@@ -5,8 +5,9 @@ import { RoomcreateComponent} from './roomcreate/roomcreate.component'
 import { RoomDetailComponent} from './room-detail/room-detail.component'
 const roomRoutes: Routes = [
   { path: 'room', component: RoompageComponent},
+  { path: 'room/detail/:id', component: RoomDetailComponent},
   { path: 'room/create', component: RoomcreateComponent},
-  { path: 'room/detail/:id', component: RoomDetailComponent}
+
 
 ];
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Room } from '../room';
-
+import { User } from '../user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -35,6 +35,10 @@ export class RoomService {
   updateRoom(room : Room): Observable<void>{
     const url = `${this.url}/${room.id}`;
     return this.http.put<void>(url,room,httpOptions);
+  }
+  getUser(): Observable<User>{
+    const url = "api/user/1";  //mock
+    return this.http.get<User>(url);
   }
 
 }

@@ -1,7 +1,7 @@
 <section class="main">
   <ul class="room-list">
     <li *ngFor="let room of roomlist">
-      <span class="badge">{{room.title}}</span>
+      <span class="badge" routerLink = "/detail/{{room.id}}">{{room.title}}</span>
     </li>
   </ul>
 </section>

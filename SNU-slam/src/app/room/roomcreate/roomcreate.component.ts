@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { RoomService } from '../room.service';
+import { Room } from '../../room';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-roomcreate',
@@ -14,11 +16,26 @@ export class RoomcreateComponent implements OnInit {
   creation_time: Date;
   game_type: number;
 
-  constructor() { }
+  constructor(
+    private roomService: RoomService,
+    private router: Router,
+    
+  ) { }
 
   ngOnInit() {
+    this.roomService.getUser().subscribe(
+      (user) => {
+        this.id = user.id;
+      }
+    );
   }
-  create(){
+  createroom(){
+    var newroom = {title: this.title , host_id: this.id , guests_id: [], location: this.location, play_time: this.play_time, game_type: this.game_type } 
+    this.roomService.addRoom( newroom as Room ).subscribe(
+      room => this.router.navigate(['room/detail/'+room.id.toString()])
+
+    );
+    
     
   }
 

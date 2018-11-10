@@ -1,12 +1,10 @@
-<p>
-  roomcreate works!
-</p>
+
 <label>title:
-  <input/>
+  <input [(ngModel)] = "title"/>
 </label> 
 <br>
-<div class="location-select" >location:
-    <select>
+<div class="location-select" >location
+    <select [(ngModel)] = "location">
       <option value="eng">공대</option>
       <option value="nat">자연대</option>
       <option value="dorm">긱사</option>
@@ -14,14 +12,14 @@
 </div>
 
 <div class="time-select" >play time
-    <select >
+    <select [(ngModel)] = "play_time">
       <option value="1">1시간</option>
       <option value="2">2시간</option>
       <option value="3">3시간</option>
     </select>
 </div>
 <div class="type-select" >game type
-    <select >
+    <select [(ngModel)] = "game_type" >
       <option value="1">1-1</option>
       <option value="2">2-2</option>
       <option value="3">3-3</option>
