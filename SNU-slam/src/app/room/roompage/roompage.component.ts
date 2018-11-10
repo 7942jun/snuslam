@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Room } from '../../room';
 
+import { RoomService } from '../room.service';
+
 
 @Component({
   selector: 'app-roompage',
@@ -10,9 +12,14 @@ import { Room } from '../../room';
 export class RoompageComponent implements OnInit {
   roomlist: Room[];
   
-  constructor() { }
+  constructor(private roomService: RoomService) { }
 
   ngOnInit() {
+    this.roomService.getAllRoom().subscribe(
+      (rooms) => {
+        this.roomlist = rooms;
+      }
+    );
   }
 
 }

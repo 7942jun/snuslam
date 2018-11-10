@@ -23,11 +23,11 @@ import { InMemoryDataService }  from './in-memory-data.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
     HttpClientModule,
     TournamentModule,
     RoomModule,
+    AppRoutingModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     )
