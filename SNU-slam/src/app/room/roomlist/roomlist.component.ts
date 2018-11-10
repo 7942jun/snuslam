@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import {Room } from '../../room';
 
 @Component({
-  selector: 'app-roollist',
-  templateUrl: './roollist.component.html',
-  styleUrls: ['./roollist.component.css']
+  selector: 'app-roomlist',
+  templateUrl: './roomlist.component.html',
+  styleUrls: ['./roomlist.component.css']
 })
-export class RoollistComponent implements OnInit {
+export class RoomlistComponent implements OnInit {
   //@Input()
   roomlist : Room[];
 

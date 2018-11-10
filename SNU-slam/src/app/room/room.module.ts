@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RoollistComponent } from './roollist/roollist.component';
+import { RoomlistComponent } from './roomlist/roomlist.component';
 import { RoompageComponent } from './roompage/roompage.component';
 import { RoomRoutingModule } from './room-routing.module';
 import { RoomcreateComponent } from './roomcreate/roomcreate.component';
@@ -16,7 +16,7 @@ import { TeamlistComponent } from './teamlist/teamlist.component';
   
   ],
   declarations: [
-    RoollistComponent,
+    RoomlistComponent,
     RoompageComponent,
     RoomcreateComponent,
     RoomDetailComponent,
