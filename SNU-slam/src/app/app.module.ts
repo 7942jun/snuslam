@@ -11,6 +11,9 @@ import { RankComponent } from './rank/rank.component';
 import { TournamentModule } from './tournament/tournament.module';
 import { RoomModule } from "./room/room.module";
 
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,10 @@ import { RoomModule } from "./room/room.module";
     FormsModule,
     HttpClientModule,
     TournamentModule,
-    RoomModule
+    RoomModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
