@@ -1,4 +1,37 @@
-<section class="teamlist">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  </section>
-  <button class="start">start</button>
+<div style="position: absolute; top: 110px; left: 100px;">
+  <button (click)="goBack()" class="btn btn-default" style="width: 100px">Back</button>
+</div>
+
+<div style="position: absolute; top: 110px; right: 170px;">
+  <button routerLink="/" style="width: 100px" class="btn btn-default">Sign out</button>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-4" style="text-align: center">
+      <div class="well">
+        <h3>Title: {{ room.title }}</h3>
+        <h4>Location: {{ room.location }} Game type: {{ room.game_type }} Play time: {{ room.play_time }}</h4>
+      </div>
+      <br>
+      <div style="text-align: left">
+        <h4>Chatting1: SWPP is so hard!</h4>
+        <h4>Chatting2: I want to go sleep!</h4>
+        <h4>Chatting3: SNU slam is good service.</h4>
+        <h4>Chatting4: That's amazing.</h4>
+      </div>
+    </div>
+    <div class="col-lg-2"></div>
+    <div class="col-lg-4" style="text-align: center">
+      <app-teamlist></app-teamlist>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
+</div>

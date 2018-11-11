@@ -1,16 +1,41 @@
-<div style="position: absolute; top: 100px; left: 70px;">
-  <button (click)="goBack()" style="height: 30px; width:100px">Back</button>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div style="position: absolute; top: 110px; left: 100px;">
+  <button (click)="goBack()" class="btn btn-default" style="width: 100px">Back</button>
+</div>
+
+<div class="container">
+  <h1 style="text-align: center">Sign Up</h1>
+  <br>
+  <br>
+  <label class="control-label col-sm-2">Email:</label>
+  <div class="col-sm-10">
+    <input type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)" [(ngModel)]="newUser.email">
+  </div>
+  <br>
+  <br>
+  <label class="control-label col-sm-2">Password:</label>
+  <div class="col-sm-10">
+    <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="newUser.password">
+  </div>
+  <br>
+  <br>
+  <label class="control-label col-sm-2">Password Confirm:</label>
+  <div class="col-sm-10">
+    <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="pw_confirm">
+  </div>
+  <br>
+  <br>
+  <label class="control-label col-sm-2">Nickname:</label>
+  <div class="col-sm-10">
+    <input type="string" class="form-control" placeholder="Enter nickname" [(ngModel)]="newUser.nickname">
+  </div>
 </div>
 <br>
-<br>
-<div align="center">
-  <h1>Sign Up</h1>
-  <br>
-  <div>
-    <h3>e-mail: <input placeholder="e-mail" [(ngModel)]="newUser.email"></h3>
-    <h3>password: <input placeholder="password" [(ngModel)]="newUser.password"> @snu.ac.kr</h3>
-    <h3>confirm: <input placeholder="confirm" [(ngModel)]="pw_confirm"></h3>
-    <h3>nickname: <input placeholder="nickname" [(ngModel)]="newUser.nickname"></h3>
-  </div>
-  <button (click)="signUp()">Sign Up</button>
+<div style="text-align: center">
+  <button type="submit" class="btn btn-default" (click)="signUp()" style="width: 100px">Submit</button>
 </div>

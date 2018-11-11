@@ -30,7 +30,8 @@ export class SignUpComponent implements OnInit {
       this.newUser.password = '';
       return;
     }
-    this.userService.postUser(this.newUser);
+
+    this.userService.postUser(this.newUser).subscribe();
     this.goBack();
     alert("Sign up success!");
   }

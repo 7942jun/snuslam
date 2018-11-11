@@ -18,6 +18,7 @@ export class RoomDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.room = { id: 5, title: 'room_5', host_id: 5, guests_id: [], location: 'nat', play_time: 120, creation_time: new Date("2015-04-25"), game_type: 3}
   }
   onChangeTeam(){
 

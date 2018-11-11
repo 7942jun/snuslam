@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { Room } from "../room";
+import { RoomService } from "../room/room.service";
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: 'app-main',
@@ -7,14 +10,22 @@ import { Router } from "@angular/router";
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+  rooms: Room[];
 
-  constructor(public router: Router) { }
+  constructor(public router: Router,
+              private roomService: RoomService,
+              public userService: UserService) { }
 
   ngOnInit() {
+    this.getRooms();
+  }
+
+  getRooms() {
+    this.roomService.getAllRoom().subscribe(rooms => this.rooms = rooms);
   }
 
   sign_in() {
-    this.router.navigate(['/rooms']);
+    this.router.navigate(['room']);
   }
 
   court1() {
