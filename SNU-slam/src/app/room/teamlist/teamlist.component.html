@@ -1,16 +1,34 @@
-<section class="red">
-  <ul class="room-list">RED TEAM
-    <li *ngFor="let user of redteam">
-      <span class="badge">{{user.nickname}}</span>
-    </li>
-  </ul>
-</section>
-<section class="blue" >
-  <ul class="room-list">BLUE TEAM
-    <li *ngFor="let user of blueteam">
-      <span class="badge">{{user.nickname}}</span>
-    </li>
-  </ul>
-</section>
-<button class="change team" (click)="changeteam()">Change Team</button> 
-  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th>Nickname</th>
+    <th>Position</th>
+    <th>Point</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of redteam">
+    <td>{{ user.nickname }}</td>
+    <td>{{ user.position }}</td>
+    <td>{{ user.point }}</td>
+  </tr>
+  <tr *ngFor="let user of blueteam">
+    <td>{{ user.nickname }}</td>
+    <td>{{ user.position }}</td>
+    <td>{{ user.point }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="col-lg-6">
+  <button class="change team btn btn-default" (click)="changeteam()" style="width: 100px">Change</button>
+</div>
+<div class="col-lg-6">
+  <button class="btn btn-default" style="width: 100px">Start</button>
+</div>
