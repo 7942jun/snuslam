@@ -20,11 +20,15 @@ export class RankComponent implements OnInit {
   }
 
   getUsers() {
-    this.userService.getUsers().subscribe(users => this.users = users.slice(0,10));
+    this.userService.getUsers().subscribe(users => this.users = users.sort((a, b) => {
+      return a.point > b.point ? -1 : a.point < b.point ? 1 : 0;
+    }));
   }
 
   search(term: string) {
-    this.userService.searchUsers(term).subscribe(users => this.searched_users = users.slice(0, 10));
+    this.userService.searchUsers(term).subscribe(users => this.searched_users = users.slice(0, 10).sort((a, b) => {
+      return a.point > b.point ? -1 : a.point < b.point ? 1 : 0;
+    }));
   }
 
   goBack() {
