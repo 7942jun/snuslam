@@ -29,7 +29,7 @@ class Team(models.Model):
 		return {
 			'name': self.name,
 			'leader': self.leader.id,
-			'member': [user.id for user in self.member.all()]
+			'members': [user.id for user in self.members.all()]
 		}
 
 class Room(models.Model):
@@ -62,7 +62,6 @@ class Tournament(models.Model):
 	type = models.IntegerField(default=0)
 	result = models.ManyToManyField(Team, related_name='%(class)s_result_teams')
 	reward = models.CharField(max_length=100)
-	admin_approval = models.BooleanField(default=False)
 
 	def json(self):
 		return {
@@ -71,6 +70,5 @@ class Tournament(models.Model):
 			'teams': [team.id for team in self.teams.all()],
 			'type': self.type,
 			'result': [team.id for team in self.result.all()],
-			'reward': self.reward,
-			'admin_approval': self.admin_approval
+			'reward': self.reward
 		}

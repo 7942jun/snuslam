@@ -11,9 +11,9 @@ urlpatterns = [
 	path('room/detail/<int:id>', views.room_detail, name='room_detail'),
 	path('game/<int:id>', views.game_detail, name='game_detail'),
 	path('tournament', views.tournament, name='tournament'),
-	path('tournament/create', views.tournament_create, name='tournament_create'),
+	path('tournament/<int:id>', views.tournament_detail, name='tournament_detail'),
 	path('tournament/participate/<int:id>', views.tournament_participate, name='tournament_participate'),
 	path('tournament/ongoing/<int:id>', views.tournament_ongoing, name='tournament_ongoing'),
 	path('team', views.team, name='team'),
-	path('team/participate/<int:id>', views.team_participate, name='team_participate')
+	path('team/<int:id>', views.team_detail, name='team_detail')
 ]
