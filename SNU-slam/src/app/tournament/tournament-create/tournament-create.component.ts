@@ -80,12 +80,17 @@ export class TournamentCreateComponent implements OnInit {
   }
 
   addTournament(): void {
-    this.tournamentService.addTournament(
-      { title: this.title.trim(), host: 1, teams: this.teams, game_type: this.game_type,
-        total_team: this.total_team, result: this.result, reward: this.prize.trim(), state: 1} as Tournament)
-      .subscribe(tournament => {
-        this.tournaments.push(tournament);
-        this.router.navigateByUrl(`tournament`);
-      });
+    const check = confirm('Title: ' + this.title + '\n' + 'Type: ' + this.game_type + ':' + this.game_type + '\n'
+      + 'Total Teams: ' + this.total_team + '팀' + '\n' + 'Prize: ' + this.prize + '\n' + 'Is it correct?');
+
+    if (check) {
+      this.tournamentService.addTournament(
+        { title: this.title.trim(), host: 1, teams: this.teams, game_type: this.game_type,
+          total_team: this.total_team, result: this.result, reward: this.prize.trim(), state: 1 } as Tournament)
+        .subscribe(tournament => {
+          this.tournaments.push(tournament);
+          this.router.navigateByUrl(`tournament`);
+        });
+    }
   }
 }

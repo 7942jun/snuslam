@@ -18,9 +18,9 @@ Game type
 
 Total teams
   &nbsp;
-  <input id = "tournament-total-teams-3" type = "checkbox" [checked] = "total_team4" (change) = "total_team4 = !total_team4">4팀 참가
+  <input id = "tournament-total-teams-4" type = "checkbox" [checked] = "total_team4" (change) = "total_team4 = !total_team4">4팀 참가
   &nbsp;
-  <input id = "tournament-total-teams-5" type = "checkbox" [checked] = "total_team8" (change) = "total_team8 = !total_team8">8팀 참가
+  <input id = "tournament-total-teams-8" type = "checkbox" [checked] = "total_team8" (change) = "total_team8 = !total_team8">8팀 참가
   &nbsp;&nbsp;
   <abbr id = "tournament-total-teams-check" title="You must select only one total teams." *ngIf = "checkTotalTeams()">X</abbr>
 <br>
@@ -33,3 +33,6 @@ Tournament prize
 <br>
 
 <button id = "create-tournament-button" (click) = "addTournament()" *ngIf = "!checkPrize() && !checkTotalTeams() && !checkGameType() && !checkTitle()">Create</button>
+<nav>
+  <a routerLink="/tournament">Back</a>
+</nav>
