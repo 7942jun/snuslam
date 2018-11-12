@@ -1,3 +1,35 @@
-<p>
-  tournament-create works!
-</p>
+<h2>Tournament Create</h2>
+
+Tournament title
+  &nbsp;
+  <input id = "tournament-title-input" [(ngModel)] = "title" placeholder="tournament title">
+  &nbsp;&nbsp;
+  <abbr id = "tournament-title-check" title="You must type at least one letter and title should be under 30 letters." *ngIf = "checkTitle()">X</abbr>
+<br>
+
+Game type
+  &nbsp;
+  <input id = "tournament-game-type-3" type = "checkbox" [checked] = "game_type3" (change) = "game_type3 = !game_type3">3:3
+  &nbsp;
+  <input id = "tournament-game-type-5" type = "checkbox" [checked] = "game_type5" (change) = "game_type5 = !game_type5">5:5
+  &nbsp;&nbsp;
+  <abbr id = "tournament-game-type-check" title="You must select only one game type." *ngIf = "checkGameType()">X</abbr>
+<br>
+
+Total teams
+  &nbsp;
+  <input id = "tournament-total-teams-3" type = "checkbox" [checked] = "total_team4" (change) = "total_team4 = !total_team4">4팀 참가
+  &nbsp;
+  <input id = "tournament-total-teams-5" type = "checkbox" [checked] = "total_team8" (change) = "total_team8 = !total_team8">8팀 참가
+  &nbsp;&nbsp;
+  <abbr id = "tournament-total-teams-check" title="You must select only one total teams." *ngIf = "checkTotalTeams()">X</abbr>
+<br>
+
+Tournament prize
+  &nbsp;
+  <input id = "tournament-prize-input" [(ngModel)] = "prize" placeholder="tournament prize">
+  &nbsp;&nbsp;
+  <abbr id = "tournament-prize-check" title="You must type at least one letter and prize should be under 30 letters." *ngIf = "checkPrize()">X</abbr>
+<br>
+
+<button id = "create-tournament-button" (click) = "addTournament()" *ngIf = "!checkPrize() && !checkTotalTeams() && !checkGameType() && !checkTitle()">Create</button>

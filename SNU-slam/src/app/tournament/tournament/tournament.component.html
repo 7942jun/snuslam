@@ -5,7 +5,7 @@
       Tournament title: 
       <a [routerLink] = "['tournament',tournament.id]" *ngIf="tournament.state == 2">{{tournament.title}}</a>
       <a [routerLink] = "['tournament',tournament.id]" *ngIf="tournament.state == 3 || tournament.state == 4">{{tournament.title}}</a>
-      <p *ngIf="tournament.state == 1">{{tournament.title}}</p>
+      <span *ngIf="tournament.state == 1">{{tournament.title}}</span>
       Game type:&nbsp;{{tournament.game_type}}:{{tournament.game_type}}&nbsp;&nbsp;
       Total teams: 총&nbsp;{{tournament.max_team}}개 팀 참가
       Reward:&nbsp;{{tournament.reward}}
@@ -16,7 +16,7 @@
 </ul>
 <nav>
   <a routerLink="/tournament/create">Create</a>
-  <a routerLink="/rooms">Back</a>
+  <a routerLink="/room">Back</a>
 </nav>
 
 

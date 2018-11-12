@@ -13,26 +13,26 @@ const httpOptions = {
 })
 export class TournamentService {
 
-  private tournamentsUrl = 'api/tournaments/';
-  
+  private tournamentsUrl = 'api/tournament';
 
   constructor(
     private http: HttpClient,
   ) { }
-    
+
   getTournaments(): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(this.tournamentsUrl);
   }
 
-  updateTournament(tournament:Tournament):Observable<any>{
-    return this.http.put(this.tournamentsUrl, tournament, httpOptions)
+  updateTournament(tournament: Tournament): Observable<any> {
+    return this.http.put(this.tournamentsUrl, tournament, httpOptions);
   }
 
-  deleteTournament(tournament:Tournament):Observable<Tournament>{
+  deleteTournament(tournament: Tournament): Observable<Tournament> {
     const url = `${this.tournamentsUrl}/${tournament.id}`;
     return this.http.delete<Tournament>(url, httpOptions);
   }
-  
 
-
+  addTournament(tournament: Tournament): Observable<Tournament> {
+    return this.http.post<Tournament>(this.tournamentsUrl, tournament, httpOptions);
+  }
 }
