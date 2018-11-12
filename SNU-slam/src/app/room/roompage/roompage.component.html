@@ -1,11 +1,37 @@
-<section class="roompage">
-  <app-roomlist
-    [roomlist] = "roomlist"
-  >
-  </app-roomlist>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<div style="position: absolute; top: 110px; right: 170px;">
+  <button routerLink="/" style="width: 100px" class="btn btn-default">Sign out</button>
+</div>
 
-</section>
-<button class="create" routerLink = "create">
-  create
-</button>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div style="text-align: center">
+        <h2 style="text-align: center">SNU map</h2>
+        <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif"/>
+        <div style="position: absolute; top: 90px; left: 370px;">
+          <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+                 (click)="court1()" style="height: 30px; width: 30px;">
+        </div>
+        <div style="position: absolute; top: 255px; left: 330px;">
+          <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+                 (click)="court2()" style="height: 30px; width: 30px;">
+        </div>
+        <div style="position: absolute; top: 100px; left: 660px;">
+          <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+                 (click)="court3()" style="height: 30px; width: 30px;">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-4">
+      <app-roomlist [roomlist]="roomlist"></app-roomlist>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+</div>

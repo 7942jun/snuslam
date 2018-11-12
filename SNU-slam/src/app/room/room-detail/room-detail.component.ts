@@ -26,6 +26,7 @@ export class RoomDetailComponent implements OnInit {
 
 
   ngOnInit() {
+<<<<<<< HEAD
     this.roomService.getUser().subscribe(
       (user) => {
         this.user = user;
@@ -33,6 +34,9 @@ export class RoomDetailComponent implements OnInit {
     );
     this.getUserlist();
 
+=======
+    this.room = { id: 5, title: 'room_5', host_id: 5, guests_id: [], location: 'nat', play_time: 120, creation_time: new Date("2015-04-25"), game_type: 3}
+>>>>>>> 34e89a156afabeb9041f12072abf56dc5730a829
   }
   getUserlist(): void{
     const id = +this.route.snapshot.paramMap.get('id');

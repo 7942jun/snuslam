@@ -1,34 +1,62 @@
-<div style="position: absolute; top: 150px; right: 200px;">
-  <button (click)="sign_in()" style="height:30px;width:100px">Sign in</button>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div style="position: absolute; top: 90px; right: 170px;">
+  <button (click)="sign_in()" style="width: 100px" class="btn btn-default">Sign in</button>
   <br>
-  <button routerLink="/sign_up" style="height:30px;width:100px;visibility: visible">Sign up</button>
+  <button routerLink="/sign_up" style="width: 100px" class="btn btn-default">Sign up</button>
 </div>
 
-<div style="position: absolute; top: 250px; left: 180px;">
-  <h2 style="text-align: center">SNU map</h2>
-  <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif"/>
-</div>
-<div style="position: absolute; top: 350px; left: 380px;">
-  <input type="image"  src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
-         (click)="court1()" style="height: 30px; width:30px;">
-</div>
-<div style="position: absolute; top: 513px; left: 333px;">
-  <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
-         (click)="court2()" style="height: 30px; width: 30px;">
-</div>
-<div style="position: absolute; top: 360px; left: 630px;">
-  <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
-         (click)="court3()" style="height: 30px; width: 30px;">
-</div>
-<div style="position: absolute; top: 250px; right: 500px;">
-  <h2>Waiting Rooms</h2>
-  <br>
-  <br>
-  <br>
-  <div style="text-align: center">
-    <h3>Waiting room 1</h3>
-    <h3>Waiting room 2</h3>
-    <h3>Waiting room 3</h3>
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-lg-6" style="text-align: center">
+      <h2 style="text-align: center">SNU map</h2>
+      <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif"/>
+      <div style="position: absolute; top: 90px; left: 370px;">
+        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+               (click)="court1()" style="height: 30px; width: 30px;">
+      </div>
+      <div style="position: absolute; top: 255px; left: 330px;">
+        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+               (click)="court2()" style="height: 30px; width: 30px;">
+      </div>
+      <div style="position: absolute; top: 100px; left: 660px;">
+        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+               (click)="court3()" style="height: 30px; width: 30px;">
+      </div>
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-4" style="text-align: center">
+      <div style="text-align: center">
+        <h2>Waiting Rooms</h2>
+        <br>
+      </div>
+      <h1 *ngIf="rooms.length == 0" style="text-align: center">
+        No rooms available now!
+      </h1>
+      <table class="table table-striped table-hover" *ngIf="rooms.length > 0">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Location</th>
+          <th>Play time</th>
+          <th>Game type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let room of rooms">
+          <td>{{ room.title }}</td>
+          <td>{{ room.location }}</td>
+          <td>{{ room.play_time }}</td>
+          <td>{{ room.game_type }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-1"></div>
   </div>
-
 </div>
