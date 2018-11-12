@@ -1,26 +1,96 @@
 from django.test import TestCase, Client
 import json
 
+class UserTestCase(TestCase):
+	def test_user(self):
+		from django.contrib.auth.models import User
+		from .models import Profile
+		
+		client = Client()
+		
+		#'api/user'에 post 요청이 잘 처리되는지 확인
+		new_user_json = {'email':'7942jun@naver.com', 'password':'1234', 'username':'raa', 'position':'guard'}
+		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
+		self.assertEqual(response.status_code, 201)
+		self.assertEqual(1, User.objects.all().count())
+
+		user = User.objects.get(id=1)
+		self.assertEqual(user.profile.position, 'guard')
+		
+		#'api/user'에 post 이외의 요청이 잘 처리되는지 확인
+		response = client.put('/api/user')
+		self.assertEqual(response.status_code, 405)
+
+		#'api/user'에 get 요청이 잘 처리되는지 확인
+		response = client.get('/api/user')
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(json.loads(response.content.decode())), 1)
+
+
+class SignInOutTestCase(TestCase):
+	def test_sign_in_out(self):
+		from django.contrib.auth.models import User
+		user = User.objects.create_user(email='1111@gmail.com', password='1234', username='user1')
+		user2 = User.objects.create_user(email='2222@gmail.com', password='5678', username='user2')
+
+		client = Client()
+
+		#사용자가 로그인 되어있지 않을 때 sign_out
+		response = client.get('/api/sign_out')
+		self.assertEqual(response.status_code, 401)
+		
+		#올바른 sign_in 
+		response = client.post('/api/sign_in', json.dumps({'email':'1111@gmail.com', 'password':'1234'}), content_type='application/json')
+		self.assertEqual(response.status_code, 204)
+
+		#사용자가 로그인 되어있을 때 sign_out
+		response = client.get('/api/sign_out')
+		self.assertEqual(response.status_code, 204)
+		
+		#email이 틀렸을 때의 sign_in
+		response = client.post('/api/sign_in', json.dumps({'email':'1112@gmail.com', 'password':'1234'}), content_type='application/json')
+		self.assertEqual(response.status_code, 401)
+		
+		#password가 틀렸을 때의 sign_in
+		response = client.post('/api/sign_in', json.dumps({'email':'2222@gmail.com', 'password':'1234'}), content_type='application/json')
+		self.assertEqual(response.status_code, 401)
+		
+		#'api/sign_in'에 post 이외의 요청이 잘 처리되는지 확인
+		response = client.get('/api/sign_in')
+		self.assertEqual(response.status_code, 405)
+
+		#'api/sign_out'에 get 이외의 요청이 잘 처리되는지 확인
+		response = client.post('/api/sign_out')
+		self.assertEqual(response.status_code, 405)
+		
+
 class ModelTestCase(TestCase):
 	def test_models(self):
-		from .models import User, Room, Team, Tournament
+		from .models import Profile, Room, Team, Tournament
+		from django.contrib.auth.models import User
 
-		user = User(email='7942jun@naver.com', password='1234', nickname='raa', position='point guard')
+		user = User(email='7942jun@naver.com', password='1234', username='raa')
 		user.save()
-		user2 = User(email='helloworld@gmail.com', password='5678', nickname='python', position='center')
+		user2 = User(email='helloworld@gmail.com', password='5678', username='python')
 		user2.save()
-		user3 = User(email='swpp@snu.ac.kr', password='9010', nickname='angular', position='power forward')
+		user3 = User(email='swpp@snu.ac.kr', password='9010', username='angular')
 		user3.save()
 		self.assertEqual(User.objects.all().count(), 3)
 		self.assertEqual(User.objects.get(id=1).password, '1234')
 		self.assertEqual(User.objects.get(id=1).email, '7942jun@naver.com')
-		self.assertEqual(User.objects.get(id=1).nickname, 'raa')
-		self.assertEqual(User.objects.get(id=1).position, 'point guard')
+		self.assertEqual(User.objects.get(id=1).username, 'raa')
 		
-		for User in User.objects.all():
-			self.assertEqual(User.wins, 0)
-			self.assertEqual(User.loses, 0)
-			self.assertEqual(User.point, 0)
+		for i in User.objects.all():
+			self.assertEqual(i.profile.wins, 0)
+			self.assertEqual(i.profile.loses, 0)
+			self.assertEqual(i.profile.point, 0)
+		
+		temp1 = User.objects.get(id=1)
+		temp1.profile.position = 'guard'
+		temp1.save()
+
+		temp2 = User.objects.get(id=1)
+		self.assertEqual(temp2.profile.position, 'guard')
 
 		room = Room(title='room1!', host=user, location='302', play_time=30, type=6)
 		room.save()
@@ -28,7 +98,7 @@ class ModelTestCase(TestCase):
 		room2.save()
 		self.assertEqual(Room.objects.all().count(), 2)
 		self.assertEqual(Room.objects.get(id=1).title, 'room1!')
-		self.assertEqual(Room.objects.get(id=1).host.nickname, 'raa')
+		self.assertEqual(Room.objects.get(id=1).host.username, 'raa')
 		self.assertEqual(Room.objects.get(id=1).location, '302')
 		self.assertEqual(Room.objects.get(id=1).play_time, 30)
 		self.assertEqual(Room.objects.get(id=1).type, 6)
@@ -58,17 +128,17 @@ class ModelTestCase(TestCase):
 		self.assertEqual(Tournament.objects.get(id=1).teams.count(), 0)
 		self.assertEqual(Tournament.objects.get(id=1).type, 8)
 		self.assertEqual(Tournament.objects.get(id=1).reward, '$1000')
-		self.assertEqual(Tournament.objects.get(id=1).admin_approval, False)
 
 class RoomTestCase(TestCase):
 	def setUp(self):
-		from .models import User, Room
+		from .models import Profile, Room
+		from django.contrib.auth.models import User
 
-		user = User(email='7942jun@naver.com', password='1234', nickname='raa', position='point guard')
+		user = User(email='7942jun@naver.com', password='1234', username='raa')
 		user.save()
-		user2 = User(email='helloworld@gmail.com', password='5678', nickname='python', position='center')
+		user2 = User(email='helloworld@gmail.com', password='5678', username='python')
 		user2.save()
-		user3 = User(email='swpp@snu.ac.kr', password='9010', nickname='angular', position='power forward')
+		user3 = User(email='swpp@snu.ac.kr', password='9010', username='angular')
 		user3.save()
 		room = Room(title='room1!', host=user, location='302', play_time=30, type=6)
 		room.save()
@@ -76,55 +146,181 @@ class RoomTestCase(TestCase):
 		room2.save()
 
 	def test_room(self):
-		from .models import User
-		from django.forms.models import model_to_dict
 		client = Client()
-		user3 = User.objects.get(id=3)
 
 		#'/room'의 get이 잘 작동하는지 확인
-		response = client.get('/room')
+		response = client.get('/api/room')
 		self.assertEqual(response.status_code, 200)
 		
-		#'/room'에 get 이외의 요청이 잘 처리되는지 확인
-		response = client.delete('/room')
+		#'/room'에 get, post 이외의 요청이 잘 처리되는지 확인
+		response = client.delete('/api/room')
 		self.assertEqual(response.status_code, 405)
 	
-		#'/room/create'에 post가 잘 작동하는지 확인
-		user3_dict = model_to_dict(user3)
-		response = client.post('/room/create', json.dumps({'title':'room3!', 'host':user3_dict, 'location':'somewhere', 'play_time':20, 'type':8}), content_type='application/json')
+		#'/room'에 post가 잘 작동하는지 확인
+		new_room_json = {'title':'room3!', 'host':3, 'location':'somewhere', 'play_time':20, 'type':8}
+		response = client.post('/api/room', json.dumps(new_room_json), content_type='application/json')
 		self.assertEqual(response.status_code, 201)
 
-		#'/room/create'에 post 이외의 요청이 잘 처리되는지 확인
-		response = client.get('/room/create')
-		self.assertEqual(response.status_code, 405)
-
-		#'/room/detail/:id'에 get이 잘 작동하는지 확인
-		response = client.get('/room/detail/3')
+		#'/room/:id'에 get이 잘 작동하는지 확인
+		response = client.get('/api/room/3')
 		self.assertEqual(response.status_code, 200)
 		self.assertIn('room3!', response.content.decode())
 
-		#'/room/detail/:id'에 존재하지 않는 데이터에 대한 get이 잘 처리되는지 확인
-		response = client.get('/room/detail/4')
+		#'/room/:id'에 존재하지 않는 데이터에 대한 get이 잘 처리되는지 확인
+		response = client.get('/api/room/4')
 		self.assertEqual(response.status_code, 404)
 
-		#'/room/detail/:id'에 put이 잘 작동하는지 확인
-		response = client.put('/room/detail/1', json.dumps(model_to_dict(user3)), content_type='application/json')
+		#'/room/:id'에 put이 잘 작동하는지 확인
+		response = client.put('/api/room/1', json.dumps({'user':3}), content_type='application/json')
 		self.assertEqual(response.status_code, 200)
-		response = client.get('/room/detail/1')
+		response = client.get('/api/room/1')
 		self.assertEqual(len(json.loads(response.content.decode()).get('guests')), 1)
 		
-		#'/room/detail/:id'에 존재하지 않는 데이터에 대한 put이 잘 처리되는지 확인
-		response = client.put('/room/detail/4')
+		#'/room/:id'에 존재하지 않는 데이터에 대한 put이 잘 처리되는지 확인
+		response = client.put('/api/room/4')
 		self.assertEqual(response.status_code, 404)
 
-		#'/room/detail/:id'에 delete가 잘 작동하는지 확인
-		response = client.delete('/room/detail/3')
+		#'/room/:id'에 delete가 잘 작동하는지 확인
+		response = client.delete('/api/room/3')
 		self.assertEqual(response.status_code, 200)
 		
-		#'/room/detail/:id'에 존재하지 않는 데이터에 대한 delete가 잘 처리되는지 확인
-		response = client.delete('/room/detail/3')
+		#'/room/:id'에 존재하지 않는 데이터에 대한 delete가 잘 처리되는지 확인
+		response = client.delete('/api/room/3')
 		self.assertEqual(response.status_code, 404)
 
-		#'/room/detail/:id'에 post 요청이 잘 처리되는지 확인
-		response = client.post('/room/detail/2')
+		#'/room/:id'에 post 요청이 잘 처리되는지 확인
+		response = client.post('/api/room/2')
 		self.assertEqual(response.status_code, 405)
+
+class TeamTestCase(TestCase):
+	def setUp(self):
+		from .models import Profile, Room, Team
+		from django.contrib.auth.models import User
+
+
+		user = User(email='7942jun@naver.com', password='1234', username='raa')
+		user.save()
+		user2 = User(email='helloworld@gmail.com', password='5678', username='python')
+		user2.save()
+		user3 = User(email='swpp@snu.ac.kr', password='9010', username='angular')
+		user3.save()
+		team = Team(name='team1!', leader=user)
+		team.save()
+		team2 = Team(name='team2!', leader=user2)
+		team2.save()
+
+	def test_team(self):
+		client = Client()
+
+		#'/api/team'에 get 요청이 잘 처리되는지 확인
+		response = client.get('/api/team')
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(json.loads(response.content.decode())), 2)
+
+		#'/api/team'에 post 요청이 잘 처리되는지 확인
+		new_team_json = {'name':'team3!', 'leader':3}
+		response = client.post('/api/team', json.dumps(new_team_json), content_type='application/json')
+		self.assertEqual(response.status_code, 201)
+
+		#'/api/team'에 get, post 이외의 요청이 잘 처리되는지 확인
+		response = client.delete('/api/team')
+		self.assertEqual(response.status_code, 405)
+
+		#'/api/team/:id'에 get 요청이 잘 처리되는지 확인
+		response = client.get('/api/team/3')
+		self.assertEqual(response.status_code, 200)
+		self.assertIn('team3!', response.content.decode())
+
+		response = client.get('/api/team/4')
+		self.assertEqual(response.status_code, 404)
+
+		#'/api/team/:id'에 put 요청이 잘 처리되는지 확인
+		response = client.put('/api/team/1', json.dumps({'user':3}), content_type='application/json')
+		self.assertEqual(response.status_code, 200)
+		response = client.get('/api/team/1')
+		self.assertEqual(len(json.loads(response.content.decode()).get('members')), 1)
+
+		response = client.put('/api/team/4')
+		self.assertEqual(response.status_code, 404)
+
+		#'/api/team/:id'에 delete 요청이 잘 처리되는지 확인
+		response = client.delete('/api/team/3')
+		self.assertEqual(response.status_code, 200)
+
+		response = client.delete('/api/team/3')
+		self.assertEqual(response.status_code, 404)
+
+		#'/api/team/:id'에 post 요청이 잘 처리되는지 확인
+		response = client.post('/api/team/1')
+		self.assertEqual(response.status_code, 405)
+
+class TournamentTestCase(TestCase):
+	def setUp(self):
+		from .models import Profile, Room, Team, Tournament
+		from django.contrib.auth.models import User
+
+		user = User(email='7942jun@naver.com', password='1234', username='raa')
+		user.save()
+		user2 = User(email='helloworld@gmail.com', password='5678', username='python')
+		user2.save()
+		user3 = User(email='swpp@snu.ac.kr', password='9010', username='angular')
+		user3.save()
+		team = Team(name='team1!', leader=user)
+		team.save()
+		team2 = Team(name='team2!', leader=user2)
+		team2.save()
+		team3 = Team(name='team3!', leader=user3)
+		team3.save()
+		tournament = Tournament(title='tournament1!', host=user, type=8, reward='reward1')
+		tournament.save()
+		tournament2 = Tournament(title='tournament2!', host=user2, type=4, reward='reward2')
+		tournament2.save()
+
+	def test_tournament(self):
+		client = Client()
+
+		#'api/tournament'에 get 요청이 잘처리되는지 확인 
+		response = client.get('/api/tournament')
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(json.loads(response.content.decode())), 2)
+
+		#'api/tournament'에 post 요청이 잘 처리되는지 확인
+		new_tournament_json = {'title':'tournament3!', 'type':6, 'host':3, 'reward':'reward3'}
+		response = client.post('/api/tournament', json.dumps(new_tournament_json), content_type='application/json')
+		self.assertEqual(response.status_code, 201)
+
+		#'api/tournament'에 get, post 이외의 요청이 잘 처리되는지 확인
+		response = client.delete('/api/tournament')
+		self.assertEqual(response.status_code, 405)
+
+		#'api/tournament/:id'에 get 요청이 잘 처리되는지 확인
+		response = client.get('/api/tournament/3')
+		self.assertEqual(response.status_code, 200)
+		self.assertIn('tournament3!', response.content.decode())
+
+		response = client.get('/api/tournament/4')
+		self.assertEqual(response.status_code, 404)
+
+		#'api/tournament/:id'에 put 요청이 잘 처리되는지 확인
+		response = client.put('/api/tournament/1', json.dumps({'team':3}), content_type='application/json')
+		self.assertEqual(response.status_code, 200)
+		response = client.get('/api/tournament/1')
+		self.assertEqual(len(json.loads(response.content.decode()).get('teams')), 1)
+
+		response = client.put('/api/tournament/4')
+		self.assertEqual(response.status_code, 404)
+
+		#'api/tournament/:id'에 delete 요청이 잘 처리되는지 확인
+		response = client.delete('/api/tournament/3')
+		self.assertEqual(response.status_code, 200)
+		response = client.get('/api/tournament/3')
+		self.assertEqual(response.status_code, 404)
+
+		response = client.delete('/api/tournament/4')
+		self.assertEqual(response.status_code, 404)
+
+		#'api/tournament/:id'에 post 요청이 잘 처리되는지 확인
+		response = client.post('/api/tournament/1')
+		self.assertEqual(response.status_code, 405)
+
+

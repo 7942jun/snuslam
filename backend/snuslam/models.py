@@ -1,24 +1,36 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-class User(models.Model):
-	email = models.CharField(max_length=100)
-	password = models.CharField(max_length=20)
-	nickname = models.CharField(max_length=10)
+class Profile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE) 
 	position = models.CharField(max_length=100)
 	wins = models.IntegerField(default=0)
 	loses = models.IntegerField(default=0)
 	point = models.IntegerField(default=0)
-
+	
 	def json(self):
 		return {
-			'email': self.email,
-			'password': self.password,
-			'nickname': self.nickname,
+			'email': self.user.email,
+			'password': self.user.password,
+			'username': self.user.username,
 			'position': self.position,
 			'wins': self.wins,
 			'loses': self.loses,
 			'point': self.point
 		}
+	
+	#User의 save()가 호출됐을 때 Profile 자동으로 생성 및 연결
+	@receiver(post_save, sender=User)
+	def create_user_info(sender, instance, created, **kwargs):
+		if created:
+			Profile.objects.create(user=instance)
+
+	#User의 save()가 호출됐을 때 Profile 자동으로 저장
+	@receiver(post_save, sender=User)
+	def save_user_info(sender, instance, **kwargs):
+		instance.profile.save()
 
 class Team(models.Model):
 	leader = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -29,7 +41,7 @@ class Team(models.Model):
 		return {
 			'name': self.name,
 			'leader': self.leader.id,
-			'member': [user.id for user in self.member.all()]
+			'members': [user.id for user in self.members.all()]
 		}
 
 class Room(models.Model):
@@ -60,9 +72,7 @@ class Tournament(models.Model):
 	host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_user')
 	teams = models.ManyToManyField(Team, related_name='%(class)s_teams')
 	type = models.IntegerField(default=0)
-	result = models.ManyToManyField(Team, related_name='%(class)s_result_teams')
 	reward = models.CharField(max_length=100)
-	admin_approval = models.BooleanField(default=False)
 
 	def json(self):
 		return {
@@ -70,7 +80,5 @@ class Tournament(models.Model):
 			'host': self.host.id,
 			'teams': [team.id for team in self.teams.all()],
 			'type': self.type,
-			'result': [team.id for team in self.result.all()],
-			'reward': self.reward,
-			'admin_approval': self.admin_approval
+			'reward': self.reward
 		}
