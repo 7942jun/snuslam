@@ -8,14 +8,14 @@ import { TournamentCreateComponent } from './tournament-create/tournament-create
 
 const tournamentRoutes: Routes = [
   { path: 'tournament', component: TournamentComponent},
-]
+  { path: 'tournament/create', component: TournamentCreateComponent},
+];
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    //RouterModule.forChild(tournamentRoutes)
+    RouterModule.forChild(tournamentRoutes)
   ],
   exports: [
     RouterModule

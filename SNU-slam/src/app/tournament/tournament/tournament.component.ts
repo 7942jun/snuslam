@@ -21,24 +21,21 @@ export class TournamentComponent implements OnInit {
   ngOnInit() {
     this.getTournaments();
   }
-  
+
   getTournaments(): void {
     this.tournamentService.getTournaments()
       .subscribe(tournaments => this.tournaments = tournaments);
   }
 
-  acceptTournament(tournament:Tournament): void{
+  acceptTournament(tournament: Tournament): void {
     tournament.state = 2;
     this.tournamentService.updateTournament(tournament).subscribe();
   }
 
-  deleteTournament(tournament:Tournament): void{
-    this.tournaments = this.tournaments.filter(t => t!==tournament);
+  deleteTournament(tournament: Tournament): void {
+    this.tournaments = this.tournaments.filter(t => t !== tournament);
     this.tournamentService.deleteTournament(tournament).subscribe();
   }
-  
-
-  
 
 }
 
