@@ -9,10 +9,10 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { MainComponent } from './main/main.component';
 import { RankComponent } from './rank/rank.component';
 import { TournamentModule } from './tournament/tournament.module';
-import { RoomModule } from "./room/room.module";
+import { RoomModule } from './room/room.module';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService } from './in-memory-data.service';
 
 @NgModule({
   declarations: [

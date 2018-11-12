@@ -8,7 +8,7 @@ import {Room } from '../../room';
 })
 export class RoomlistComponent implements OnInit {
   @Input()
-  roomlist : Room[];
+  roomlist: Room[];
 
   constructor() { }
 

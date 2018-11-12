@@ -1,52 +1,132 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../user';
 import { Room } from '../../room';
-import { TeamlistComponent } from "../teamlist/teamlist.component";
+import { TeamlistComponent } from '../teamlist/teamlist.component';
 import { RoomService } from '../room.service';
-import {ActivatedRoute}from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { interval } from 'rxjs';
+
+
+
 
 @Component({
   selector: 'app-room-detail',
   templateUrl: './room-detail.component.html',
   styleUrls: ['./room-detail.component.css']
 })
-export class RoomDetailComponent implements OnInit {
+export class RoomDetailComponent implements OnInit, OnDestroy {
   user: User;
   room: Room;
+  users: User[];
   redteam: User[];
   blueteam: User[];
-  host: User;
+  source = interval(1000);
+
+
+
+
+  host_id: number;
+  isStarted: boolean;
 
 
   constructor(
     private roomService: RoomService,
     private route: ActivatedRoute,
-  ){}
+    private router: Router
+  ) {}
 
+  ngOnDestroy() {
 
+  }
   ngOnInit() {
-<<<<<<< HEAD
     this.roomService.getUser().subscribe(
       (user) => {
         this.user = user;
       }
     );
-    this.getUserlist();
+    this.refreshData();
 
-=======
-    this.room = { id: 5, title: 'room_5', host_id: 5, guests_id: [], location: 'nat', play_time: 120, creation_time: new Date("2015-04-25"), game_type: 3}
->>>>>>> 34e89a156afabeb9041f12072abf56dc5730a829
   }
-  getUserlist(): void{
+  getRoom(): void {
+    console.log('fuck');
     const id = +this.route.snapshot.paramMap.get('id');
-    this.roomService.getRoomById(id).subscribe(
-      room => this.room = room
+    this.roomService.getRoomById(0).subscribe(
+      room => {
+        this.room = room;
+        this.host_id = room.host_id;
+        this.isStarted = room.ingame;
+      }
     );
-  };
-
-
-  onChangeTeam(){
   }
+  getUserlist(): void {
+    console.log('u1');
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.roomService.getRoomUserById(id).subscribe(
+      users => {
+        this.users = users;
+        this.redteam  = users.filter( user => user.team === 1);
+        this.blueteam = users.filter( user => user.team === 2);
+      }
+    );
+  }
+
+
+  onChangeTeam() {
+    if (this.user.team === 1) {
+      this.user.team = 2;
+      // this.redteam = this.redteam.filter( user => user.id !== this.user.id );
+      // this.blueteam.push(this.user);
+    } else {
+      this.user.team = 1;
+      // this.blueteam = this.blueteam.filter( user => user.id !== this.user.id );
+      // this.redteam.push(this.user);
+    }
+
+    this.roomService.changeTeam(this.user).subscribe(
+      () => {}
+    );
+  }
+  refreshData() {
+    this.source.subscribe(val => {
+      this.getRoom();
+      this.getUserlist();
+      this.gamestarted();
+    });
+  }
+  start() {
+    const newroom = this.room;
+    newroom.ingame = true;
+    this.roomService.updateRoom(newroom).subscribe(
+      () => {}
+    );
+  }
+  gamestarted() {
+    console.log(this.isStarted);
+    if (this.isStarted ) {
+      this.router.navigate(['/room/create']);
+    }
+  }
+  goBack() {
+    if (this.room.guests_id.length > 0) {
+      const newroom = this.room;
+      if (this.user.id === this.host_id) {
+        newroom.host_id = newroom.guests_id.shift();
+      } else {
+        newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
+      }
+      this.roomService.updateRoom( newroom ).subscribe(
+        () => this.router.navigate(['/room'])
+      );
+    }
+    else {
+    this.roomService.deleteRoomById(this.room.id).subscribe(
+      () => this.router.navigate(['/room'])
+      );
+    }
+  }
+
 
 }

@@ -7,4 +7,5 @@ export class Room {
   play_time: number;
   creation_time: Date;
   game_type: number;
+  ingame: boolean;
 }

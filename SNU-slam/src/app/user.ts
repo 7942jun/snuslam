@@ -8,4 +8,5 @@ export class User {
   loses: number;
   teams_id: number[];
   point: number;
+  team: number; // 0: no team ,  1: red team, 2: blue team
 }

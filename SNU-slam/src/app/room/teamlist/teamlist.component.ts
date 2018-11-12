@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { User } from '../../user'
+import { User } from '../../user';
 
 @Component({
   selector: 'app-teamlist',
@@ -7,17 +7,18 @@ import { User } from '../../user'
   styleUrls: ['./teamlist.component.css']
 })
 export class TeamlistComponent implements OnInit {
-  //@Input()
+  @Input()
   redteam: User[];
-  //@Input()
+  @Input()
   blueteam: User[];
-  //@Output()
-  changeteam: EventEmitter<any> = new EventEmitter();
-
-  constructor() { }
+  @Output()
+  changeteam: EventEmitter<void> = new EventEmitter();
+  constructor() {}
 
   ngOnInit() {
   }
 
-
+  change() {
+    this.changeteam.emit();
+  }
 }

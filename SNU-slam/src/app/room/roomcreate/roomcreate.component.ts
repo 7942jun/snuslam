@@ -19,7 +19,6 @@ export class RoomcreateComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private router: Router,
-    
   ) { }
 
   ngOnInit() {
@@ -30,13 +29,16 @@ export class RoomcreateComponent implements OnInit {
     );
   }
   createroom(){
-    var newroom = {title: this.title , host_id: this.id , guests_id: [], location: this.location, play_time: this.play_time, game_type: this.game_type } 
+    const newroom = {
+      title: this.title,
+      host_id: this.id,
+      guests_id: [],
+      location: this.location,
+      play_time: this.play_time,
+      game_type: this.game_type
+    };
     this.roomService.addRoom( newroom as Room ).subscribe(
-      room => this.router.navigate([`room/detail/${room.id}`])
-
+      room => this.router.navigate([`room/${room.id}`])
     );
-    
-    
   }
-
 }

@@ -30,8 +30,20 @@
     </div>
     <div class="col-lg-2"></div>
     <div class="col-lg-4" style="text-align: center">
-      <app-teamlist></app-teamlist>
+      <app-teamlist
+      [redteam] = "redteam"
+      [blueteam] = "blueteam"
+      (changeteam) = "onChangeTeam($event)"
+      ></app-teamlist>
     </div>
     <div class="col-lg-1"></div>
   </div>
 </div>
+<div *ngIf="user.id == host_id" class="col-lg-6">
+  <button class="btn btn-default" style="width: 100px" (click)="start()">Start</button>
+</div>
+
+
+
+
+
