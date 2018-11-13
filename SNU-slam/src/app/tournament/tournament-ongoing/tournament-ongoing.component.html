@@ -1,3 +1,64 @@
-<p>
-  tournament-ongoing works!
-</p>
+<article id="container">
+    
+  <section>
+      <div (click) = "result1(1)">Team 1</div>
+      <div (click) = "result1(2)">Team 2</div>
+      <div (click) = "result1(3)">Team 3</div>
+      <div (click) = "result1(4)">Team 4</div>
+      <div (click) = "result1(5)">Team 5</div>
+      <div (click) = "result1(6)">Team 6</div>
+      <div (click) = "result1(7)">Team 7</div>
+      <div (click) = "result1(8)">Team 8</div>
+  </section>
+  
+  <div class="connecter">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+  </div>
+  
+  <div class="line">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+  </div>
+  
+  <section id="quarterFinals">
+      <div (click) = result2(this.tournament.result1[0])>{{quarterFinals(0)}}</div>
+      <div (click) = result2(this.tournament.result1[1])>{{quarterFinals(1)}}</div>
+      <div (click) = result2(this.tournament.result1[2])>{{quarterFinals(2)}}</div>
+      <div (click) = result2(this.tournament.result1[3])>{{quarterFinals(3)}}</div>
+  </section>
+  
+  <div class="connecter" id="conn2">
+      <div></div>
+      <div></div>
+  </div>
+  
+  <div class="line" id="line2">
+      <div></div>
+      <div></div>
+  </div>
+  
+  <section id="semiFinals">
+      <div (click) = "result3(this.tournament.result2[0])">{{semiFinals(0)}}</div>
+      <div (click) = "result3(this.tournament.result2[1])">{{semiFinals(1)}}</div>
+  </section>
+  
+  <div class="connecter" id="conn3">
+      <div></div>
+  </div>
+  
+  <div class="line" id="line3">
+      <div></div>
+  </div>
+  
+  <section id="final">
+      <div>{{final()}}</div>
+  </section>
+
+</article>
+  
+  

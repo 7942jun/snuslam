@@ -21,7 +21,9 @@ export class TournamentCreateComponent implements OnInit {
   game_type = this.game_type3 == true ? 3 : 5;
   total_team = this.total_team4 == true ? 4 : 8;
   teams: number[];
-  result: number[];
+  result1 = [-1, -1, -1, -1];
+  result2 = [-1, -1];
+  result3 = [-1];
 
   constructor(
     private tournamentService: TournamentService,
@@ -86,7 +88,8 @@ export class TournamentCreateComponent implements OnInit {
     if (check) {
       this.tournamentService.addTournament(
         { title: this.title.trim(), host: 1, teams: this.teams, game_type: this.game_type,
-          total_team: this.total_team, result: this.result, reward: this.prize.trim(), state: 1 } as Tournament)
+          total_team: this.total_team, result1: this.result1, result2: this.result2,
+          result3: this.result3, reward: this.prize.trim(), state: 1 } as Tournament)
         .subscribe(tournament => {
           this.tournaments.push(tournament);
           this.router.navigateByUrl(`tournament`);

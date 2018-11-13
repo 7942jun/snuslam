@@ -35,4 +35,10 @@ export class TournamentService {
   addTournament(tournament: Tournament): Observable<Tournament> {
     return this.http.post<Tournament>(this.tournamentsUrl, tournament, httpOptions);
   }
+
+  getTournamentById(id: number): Observable<Tournament> {
+    const url = `${this.tournamentsUrl}/${id}`;
+    return this.http.get<Tournament>(url);
+  }
+
 }

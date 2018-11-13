@@ -9,9 +9,9 @@ export class InMemoryDataService implements InMemoryDbService {
             { id: 5, title: 'room_5', host_id: 5, guests_id: [], location: 'nat', play_time: 120, creation_time: new Date("2015-04-25"), type: 3, ingame: false}
         ];
         const tournament = [
-            { id: 1, title: 'tournament_1', host: 1, teams: [1, 2, 3, 4], game_type: 3, total_team: 4, result: [1, 1], reward: 'money', state: '1' },
-            { id: 2, title: 'tournament_2', host: 2, teams: [4, 2, 1, 3], game_type: 5, totla_team: 8, result: [1, 1], reward: 'haksik', state: '2' },
-            { id: 3, title: 'tournament_3', host: 3, teams: [1, 4, 5, 6], game_type: 3, total_team: 4, result: [1, 1], reward: 'ice cream', state: '3' }
+            { id: 1, title: 'tournament_1', host: 1, teams: [1, 2, 3, 4, 8, 7, 6, 5], game_type: 3, total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'money', state: '1' },
+            { id: 2, title: 'tournament_2', host: 2, teams: [4, 2, 1, 3, 6, 8, 9, 10], game_type: 5, totla_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'haksik', state: '2' },
+            { id: 3, title: 'tournament_3', host: 3, teams: [1, 4, 5, 6], game_type: 3, total_team: 4, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'ice cream', state: '3' }
         ];
         const team = [
             { id: 1, name: 'team_1', leader_id: 1, members_id: [2,3,4], tournament_id:1}

@@ -62,5 +62,5 @@ describe('TournamentCreateComponent', () => {
     expect(component.tournaments).toEqual(mockTournamentList);
     expect(tournamentService.getTournaments).toHaveBeenCalled();
   }));
-  
+
 });
