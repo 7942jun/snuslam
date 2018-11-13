@@ -14,18 +14,18 @@
 <table class="table table-striped table-hover" *ngIf="roomlist.length > 0">
   <thead>
   <tr>
-    <th>Title</th>
-    <th>Location</th>
-    <th>Play time</th>
-    <th>Game type</th>
+    <th style="text-align: center">Title</th>
+    <th style="text-align: center">Location</th>
+    <th style="text-align: center">Play time</th>
+    <th style="text-align: center">Game type</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let room of roomlist" routerLink="/room/{{room.id}}" >
-    <td>{{ room.title }}</td>
-    <td>{{ room.location }}</td>
-    <td>{{ room.play_time }}</td>
-    <td>{{ room.type }}</td>
+    <td style="text-align: center">{{ room.title }}</td>
+    <td style="text-align: center">{{ room.location }}</td>
+    <td style="text-align: center">{{ room.play_time }}</td>
+    <td style="text-align: center">{{ room.type }}</td>
   </tr>
   </tbody>
 </table>

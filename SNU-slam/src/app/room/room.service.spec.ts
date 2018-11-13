@@ -15,7 +15,8 @@ const mockRoomList: Room[] = [
     location: '301',
     play_time: 60,
     creation_time: new Date('December 17, 1995 03:24:00') ,
-    game_type: 3,
+    type: 3,
+    ingame: true
   }
 ];
 
@@ -28,7 +29,8 @@ const mockRoom: Room ={
   location: '301',
   play_time: 60,
   creation_time: new Date('December 17, 1995 03:24:00') ,
-  game_type: 3,
+  type: 3,
+  ingame: false
 };
 
 describe('RoomService', () => {

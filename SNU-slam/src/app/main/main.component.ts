@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Room } from '../room';
 import { RoomService } from '../room/room.service';
-import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-main',
@@ -13,8 +12,7 @@ export class MainComponent implements OnInit {
   rooms: Room[];
 
   constructor(public router: Router,
-              private roomService: RoomService,
-              public userService: UserService) { }
+              private roomService: RoomService) { }
 
   ngOnInit() {
     this.getRooms();
