@@ -12,14 +12,13 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RoomService {
-  private user_id = 1; // for testing
   private  url = 'api/room';
 
   constructor(
      private http: HttpClient
     ) { }
 
-  getAllRoom(): Observable<Room[]>{
+  getAllRoom(): Observable<Room[]> {
     return this.http.get<Room[]>(this.url);
   }
   getRoomById(id: number): Observable<Room> {
@@ -37,10 +36,6 @@ export class RoomService {
   updateRoom(room: Room ): Observable<void> {
     const url = `${this.url}/${room.id}`;
     return this.http.put<void>(url, room, httpOptions);
-  }
-  getUser(): Observable<User> {
-    const url = `api/user/${this.user_id}`;  // mock
-    return this.http.get<User>(url);
   }
   getRoomUserById(roomid: number): Observable<User[]> {
     const url = `api/user`;  // mock

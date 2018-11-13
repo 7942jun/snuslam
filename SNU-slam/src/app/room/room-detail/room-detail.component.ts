@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../user';
 import { Room } from '../../room';
-import { TeamlistComponent } from '../teamlist/teamlist.component';
 import { RoomService } from '../room.service';
 import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-
+import { AuthService } from '../../auth/auth.service';
 import { interval } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
@@ -26,8 +24,8 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   blueteam: User[];
   alive = true;
   source = interval(500).pipe(
-    takeWhile(() => this.alive)
-  );
+    takeWhile(() => this.alive
+  ));
 
 
   host_id: number;
@@ -36,6 +34,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private roomService: RoomService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -45,17 +44,14 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit() {
-    this.roomService.getUser().subscribe(
-      (user) => {
-        this.user = user;
-      }
-    );
+    this.user = this.authService.getUser();
+    console.log(this.user);
     this.refreshData();
 
   }
   getRoom(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.roomService.getRoomById(0).subscribe(
+    this.roomService.getRoomById(id).subscribe(
       room => {
         this.room = room;
         this.host_id = room.host_id;
@@ -68,6 +64,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     this.roomService.getRoomUserById(id).subscribe(
       users => {
         this.users = users;
+
         this.redteam  = users.filter( user => user.team === 1);
         this.blueteam = users.filter( user => user.team === 2);
       }
@@ -109,7 +106,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
         () => {}
       );
     } else {
-      alert( "Numbers of people in the two teams is not equal!")
+      alert( 'Numbers of people in the two teams is not equal!');
     }
   }
   gamestarted() {

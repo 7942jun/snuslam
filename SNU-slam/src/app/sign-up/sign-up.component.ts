@@ -31,9 +31,13 @@ export class SignUpComponent implements OnInit {
       return;
     }
 
-    this.userService.postUser(this.newUser).subscribe();
-    this.goBack();
-    alert("Sign up success!");
+    this.userService.postUser(this.newUser).subscribe(
+      user => {
+        this.goBack();
+        alert('Sign up success!');
+      }
+    );
+
   }
 
   goBack() {
