@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { interval } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 
 
@@ -23,7 +24,10 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   users: User[];
   redteam: User[];
   blueteam: User[];
-  source = interval(500);
+  alive = true;
+  source = interval(500).pipe(
+    takeWhile(() => this.alive)
+  );
 
 
   host_id: number;
@@ -37,6 +41,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy() {
+    this.alive = false;
 
   }
   ngOnInit() {
@@ -49,7 +54,6 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
 
   }
   getRoom(): void {
-    console.log('fuck');
     const id = +this.route.snapshot.paramMap.get('id');
     this.roomService.getRoomById(0).subscribe(
       room => {
@@ -60,7 +64,6 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     );
   }
   getUserlist(): void {
-    console.log('u1');
     const id = +this.route.snapshot.paramMap.get('id');
     this.roomService.getRoomUserById(id).subscribe(
       users => {
@@ -73,10 +76,18 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
 
 
   onChangeTeam() {
-    if (this.user.team === 1) {
-      this.user.team = 2;
+    if (this.user.team !== 0) {
+      if (this.user.team === 1) {
+        this.user.team = 2;
+      } else {
+        this.user.team = 1;
+      }
     } else {
-      this.user.team = 1;
+      if ( this.redteam.length > this.blueteam.length ) {
+        this.user.team = 2;
+      } else {
+        this.user.team = 1;
+      }
     }
 
     this.roomService.changeTeam(this.user).subscribe(
@@ -91,16 +102,20 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     });
   }
   start() {
-    const newroom = this.room;
-    newroom.ingame = true;
-    this.roomService.updateRoom(newroom).subscribe(
-      () => {}
-    );
+    if ( this.redteam.length === this.blueteam.length ) {
+      const newroom = this.room;
+      newroom.ingame = true;
+      this.roomService.updateRoom(newroom).subscribe(
+        () => {}
+      );
+    } else {
+      alert( "Numbers of people in the two teams is not equal!")
+    }
   }
   gamestarted() {
     console.log(this.isStarted);
     if (this.isStarted ) {
-      this.router.navigate(['/room/create']);
+      this.router.navigate([`/room/${this.room.id}/ingame`]);
     }
   }
   goBack() {
