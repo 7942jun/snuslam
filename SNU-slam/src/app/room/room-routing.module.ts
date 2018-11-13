@@ -7,8 +7,7 @@ import { IngameComponent } from './ingame/ingame.component';
 const roomRoutes: Routes = [
   { path: 'room', component: RoompageComponent},
   { path: 'room/create', component: RoomcreateComponent},
-  { path: 'room/:id', component: RoomDetailComponent},
-  { path: 'room/:id/ingame', component: IngameComponent }
+  { path: 'room/:id', component: RoomDetailComponent}
 ];
 
 @NgModule({

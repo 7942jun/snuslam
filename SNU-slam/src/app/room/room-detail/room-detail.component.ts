@@ -22,6 +22,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   users: User[];
   redteam: User[];
   blueteam: User[];
+  play_time: number;
   alive = true;
   source = interval(500).pipe(
     takeWhile(() => this.alive
@@ -56,6 +57,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
         this.room = room;
         this.host_id = room.host_id;
         this.isStarted = room.ingame;
+        this.play_time = room.play_time;
       }
     );
   }
@@ -112,8 +114,9 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   gamestarted() {
     console.log(this.isStarted);
     if (this.isStarted ) {
-      this.router.navigate([`/room/${this.room.id}/ingame`]);
-    }
+      this.alive = false;
+       //this.router.navigate([`/room/${this.room.id}/ingame`]);
+     }
   }
   goBack() {
     if (this.room.guests_id.length > 0) {

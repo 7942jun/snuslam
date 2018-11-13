@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
 
 @Component({
   selector: 'app-ingame',
   templateUrl: './ingame.component.html',
   styleUrls: ['./ingame.component.css']
 })
-export class IngameComponent implements OnInit {
+export class IngameComponent implements OnChanges {
+  @Input()
+  isStarted: boolean;
 
-  constructor() { }
+  @Input()
+  play_time: number;
 
-  ngOnInit() {
+  time = new Date();
+
+
+  constructor(
+
+  ) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for ( let propname in changes) {
+      if ( propname === 'isStarted') {
+        this.time.setMinutes(this.time.getMinutes() + this.play_time);
+
+
+    }
   }
-
 }
+}
+

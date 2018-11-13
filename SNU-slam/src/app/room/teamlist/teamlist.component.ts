@@ -8,12 +8,17 @@ import { User } from '../../user';
 })
 export class TeamlistComponent implements OnInit {
   @Input()
+  play_time: number;
+  @Input()
   redteam: User[];
   @Input()
   blueteam: User[];
+  @Input()
+  isStarted: boolean;
   @Output()
   changeteam: EventEmitter<void> = new EventEmitter();
   constructor() {}
+
 
   ngOnInit() {
   }

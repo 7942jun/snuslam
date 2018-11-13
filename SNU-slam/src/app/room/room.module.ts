@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from '../in-memory-data.service';
 import { IngameComponent } from './ingame/ingame.component';
-
+import { CountdownTimerModule } from 'ngx-countdown-timer';
 @NgModule({
   imports: [
     FormsModule,
@@ -21,6 +21,7 @@ import { IngameComponent } from './ingame/ingame.component';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ),
+    CountdownTimerModule.forRoot()
   ],
   declarations: [
     RoomlistComponent,

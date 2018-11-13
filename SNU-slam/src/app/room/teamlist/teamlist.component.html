@@ -44,8 +44,14 @@
   </tbody>
 </table>
 
-
-
-<div style="text-align: center">
+<div *ngIf="!isStarted" style="text-align: center">
   <button class="change team btn btn-default" (click)="change()" style="width: 100px">Change</button>
+</div>
+
+
+<div *ngIf="isStarted">
+  <app-ingame
+  [isStarted] = "inStarted"
+  [play_time] = "play_time"
+  ></app-ingame>
 </div>
