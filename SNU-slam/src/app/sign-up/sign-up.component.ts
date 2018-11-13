@@ -20,7 +20,7 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
-    if (!this.newUser.email || !this.newUser.password || !this.newUser.nickname) {
+    if (!this.newUser.email || !this.newUser.password || !this.newUser.username) {
       alert("enter information");
       return;
     }
