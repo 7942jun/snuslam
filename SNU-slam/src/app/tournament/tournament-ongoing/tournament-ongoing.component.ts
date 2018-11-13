@@ -27,7 +27,7 @@ export class TournamentOngoingComponent implements OnInit {
       .subscribe(tournament => this.tournament = tournament);
   }
 
-  result1(team: number): void {
+  result1(team: number, id: string): void {
     if (team < 3) {
       this.tournament.result1[0] = team;
     }
@@ -43,6 +43,8 @@ export class TournamentOngoingComponent implements OnInit {
 
     this.tournamentService.updateTournament(this.tournament)
       .subscribe();
+
+    document.getElementById(id).style.backgroundColor = 'red';
   }
 
   result2(team: number): void {
@@ -99,5 +101,9 @@ export class TournamentOngoingComponent implements OnInit {
   final(): string {
     return this.tournament.result3[0] == -1 ? '' : 'Team ' + this.tournament.result3[0];
   }
+
+
+
+
 
 }
