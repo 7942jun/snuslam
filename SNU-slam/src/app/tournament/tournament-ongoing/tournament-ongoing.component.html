@@ -1,7 +1,22 @@
-<div *ngIf = "tournament">
-<article id="container">
-    
-  <section>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div style="position: absolute; top: 110px; right: 170px;">
+  <button routerLink="/" style="width: 100px" class="btn btn-default">Sign out</button>
+</div>
+
+<div style="position: absolute; top: 110px; left: 100px;">
+  <button routerLink="/tournament" class="btn btn-default" style="width: 100px">Back</button>
+</div>
+
+
+<div style="position: relative; left: 33%;" *ngIf = "tournament">
+  <article id="container">
+
+    <section>
       <div id = "r11" (click) = "result1(1, 'r11')">Team 1</div>
       <div id = "r12" (click) = "result1(2, 'r12')">Team 2</div>
       <div id = "r13" (click) = "result1(3, 'r13')">Team 3</div>
@@ -10,57 +25,56 @@
       <div id = "r16" (click) = "result1(6, 'r16')">Team 6</div>
       <div id = "r17" (click) = "result1(7, 'r17')">Team 7</div>
       <div id = "r18" (click) = "result1(8, 'r18')">Team 8</div>
-  </section>
-  
-  <div class="connecter">
+    </section>
+
+    <div class="connecter">
       <div></div>
       <div></div>
       <div></div>
       <div></div>
-  </div>
-  
-  <div class="line">
+    </div>
+
+    <div class="line">
       <div></div>
       <div></div>
       <div></div>
       <div></div>
-  </div>
-  
-  <section id="quarterFinals">
+    </div>
+
+    <section id="quarterFinals">
       <div id = "r21" (click) = "result2(this.tournament.result1[0], 'r21')">{{quarterFinals(0)}}</div>
       <div id = "r22" (click) = "result2(this.tournament.result1[1], 'r22')">{{quarterFinals(1)}}</div>
       <div id = "r23" (click) = "result2(this.tournament.result1[2], 'r23')">{{quarterFinals(2)}}</div>
       <div id = "r24" (click) = "result2(this.tournament.result1[3], 'r24')">{{quarterFinals(3)}}</div>
-  </section>
-  
-  <div class="connecter" id="conn2">
+    </section>
+
+    <div class="connecter" id="conn2">
       <div></div>
       <div></div>
-  </div>
-  
-  <div class="line" id="line2">
+    </div>
+
+    <div class="line" id="line2">
       <div></div>
       <div></div>
-  </div>
-  
-  <section id="semiFinals">
+    </div>
+
+    <section id="semiFinals">
       <div id = "r31" (click) = "result3(this.tournament.result2[0], 'r31')">{{semiFinals(0)}}</div>
       <div id = "r32" (click) = "result3(this.tournament.result2[1], 'r32')">{{semiFinals(1)}}</div>
-  </section>
-  
-  <div class="connecter" id="conn3">
-      <div></div>
-  </div>
-  
-  <div class="line" id="line3">
-      <div></div>
-  </div>
-  
-  <section id="final">
-      <div id = "r4">{{final()}}</div>
-  </section>
+    </section>
 
-</article>
+    <div class="connecter" id="conn3">
+      <div></div>
+    </div>
+
+    <div class="line" id="line3">
+      <div></div>
+    </div>
+
+    <section id="final">
+      <div id = "r4">{{final()}}</div>
+    </section>
+
+  </article>
 </div>
-  
-  
+

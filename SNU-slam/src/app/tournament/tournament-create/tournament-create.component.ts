@@ -12,14 +12,10 @@ export class TournamentCreateComponent implements OnInit {
 
   tournaments: Tournament[];
 
-  title = '';
-  prize = '';
-  game_type3 = false;
-  game_type5 = false;
-  total_team4 = false;
-  total_team8 = false;
-  game_type = this.game_type3 == true ? 3 : 5;
-  total_team = this.total_team4 == true ? 4 : 8;
+  title;
+  prize;
+  game_type;
+  total_team;
   teams: number[];
   result1 = [-1, -1, -1, -1];
   result2 = [-1, -1];
@@ -39,51 +35,14 @@ export class TournamentCreateComponent implements OnInit {
       .subscribe(tournaments => this.tournaments = tournaments);
   }
 
-  checkTitle(): boolean {
-    let temp;
-    temp = this.title.trim();
-    if (temp.length == 0 || temp.length  > 30) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-  checkPrize(): boolean {
-    let temp;
-    temp = this.prize.trim();
-    if (temp.length == 0 || temp.length  > 30) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-  checkGameType(): boolean {
-    if ((this.game_type3 == false && this.game_type5 == false) ||
-        (this.game_type3 == true && this.game_type5 == true)) {
-          return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-  checkTotalTeams(): boolean {
-    if ((this.total_team4 == false && this.total_team8 == false) ||
-        (this.total_team4 == true && this.total_team8 == true)) {
-          return true;
-    }
-    else {
-      return false;
-    }
-  }
-
   addTournament(): void {
+    if (this.title.trim().length == 0 || this.prize.trim().length == 0 ||
+      this.game_type == null || this.total_team == null) {
+      return;
+    }
+
     const check = confirm('Title: ' + this.title + '\n' + 'Type: ' + this.game_type + ':' + this.game_type + '\n'
-      + 'Total Teams: ' + this.total_team + '팀' + '\n' + 'Prize: ' + this.prize + '\n' + 'Is it correct?');
+      + 'Total Teams: ' + this.total_team + ' teams' + '\n' + 'Prize: ' + this.prize + '\n' + 'Is it correct?');
 
     if (check) {
       this.tournamentService.addTournament(

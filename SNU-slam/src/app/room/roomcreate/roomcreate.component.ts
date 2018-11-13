@@ -26,6 +26,14 @@ export class RoomcreateComponent implements OnInit {
     this.id = this.authservice.getUser().id;
   }
   createroom() {
+    if (this.title.trim().length == 0 || this.location.trim().length == 0 ||
+      this.play_time == null || this.type == null) {
+      return;
+    }
+
+    const check = confirm('Title: ' + this.title + '\n' + 'Location: ' + this.location + '\n' + 'Play time: ' +
+      this.play_time + ' min' + '\n' + 'Type: ' + this.type + ':' + this.type + '\n' + 'Is it correct?');
+
     const newroom = {
       title: this.title,
       host_id: this.id,
@@ -34,8 +42,11 @@ export class RoomcreateComponent implements OnInit {
       play_time: this.play_time,
       type: this.type
     };
-    this.roomService.addRoom( newroom as Room ).subscribe(
-      room => this.router.navigate([`room/${room.id}`])
-    );
+    if (check) {
+      this.roomService.addRoom( newroom as Room ).subscribe(
+        room => this.router.navigate([`room/${room.id}`])
+      );
+    }
+
   }
 }
