@@ -6,6 +6,6 @@ export class Room {
   location: string;
   play_time: number;
   creation_time: Date;
-  game_type: number;
+  type: number;
   ingame: boolean;
 }

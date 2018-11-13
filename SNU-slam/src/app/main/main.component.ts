@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { Room } from "../room";
-import { RoomService } from "../room/room.service";
-import { UserService } from "../services/user.service";
+import { Router } from '@angular/router';
+import { Room } from '../room';
+import { RoomService } from '../room/room.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-main',

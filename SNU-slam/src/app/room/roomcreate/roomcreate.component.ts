@@ -13,8 +13,7 @@ export class RoomcreateComponent implements OnInit {
   title: string;
   location: string;
   play_time: number;
-  creation_time: Date;
-  game_type: number;
+  type: number;
 
   constructor(
     private roomService: RoomService,
@@ -28,14 +27,14 @@ export class RoomcreateComponent implements OnInit {
       }
     );
   }
-  createroom(){
+  createroom() {
     const newroom = {
       title: this.title,
       host_id: this.id,
       guests_id: [],
       location: this.location,
       play_time: this.play_time,
-      game_type: this.game_type
+      type: this.type
     };
     this.roomService.addRoom( newroom as Room ).subscribe(
       room => this.router.navigate([`room/${room.id}`])

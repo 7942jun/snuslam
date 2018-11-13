@@ -23,9 +23,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   users: User[];
   redteam: User[];
   blueteam: User[];
-  source = interval(1000);
-
-
+  source = interval(500);
 
 
   host_id: number;
@@ -77,12 +75,8 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   onChangeTeam() {
     if (this.user.team === 1) {
       this.user.team = 2;
-      // this.redteam = this.redteam.filter( user => user.id !== this.user.id );
-      // this.blueteam.push(this.user);
     } else {
       this.user.team = 1;
-      // this.blueteam = this.blueteam.filter( user => user.id !== this.user.id );
-      // this.redteam.push(this.user);
     }
 
     this.roomService.changeTeam(this.user).subscribe(
