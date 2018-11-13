@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map } from "rxjs/operators";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -11,6 +12,7 @@ const httpOptions = {
 })
 export class AuthService {
   isLoggedIn = false;
+  current_user: User;
 
   redirectUrl: string;
 
@@ -21,12 +23,21 @@ export class AuthService {
       .pipe(map(user => {
         if (user && user.token) {
           this.isLoggedIn = true;
+          this.current_user = user;
         }
       }));
   }
 
   logout(): void {
     this.isLoggedIn = false;
+  }
+  getUser(): User {
+    if ( this.isLoggedIn) {
+      return this.current_user;
+    } else {
+      return;
+    }
+
   }
 
 }
