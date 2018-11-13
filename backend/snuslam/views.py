@@ -2,11 +2,13 @@ from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from .models import Profile, Room, Team, Tournament
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.views.decorators.csrf import csrf_exempt
 import json
 
+@csrf_exempt
 def user(request):
 	if request.method == 'GET':
-		user_list = [user.profile.json() for user in User.objects.all()]
+		user_list = [profile.json() for profile in Profile.objects.all()]
 		return HttpResponse(json.dumps(user_list), content_type='appication/json')
 	elif request.method == 'POST':
 		#todo: 중복 체크 구현
@@ -23,13 +25,14 @@ def user(request):
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
+@csrf_exempt
 def user_detail(request, id):
 	if request.method == 'GET':
 		try:
-			user = User.objects.get(id=id)
-		except User.DoesNotExist:
+			profile = Profile.objects.get(id=id)
+		except Profile.DoesNotExist:
 			return HttpResponse(status=404)
-		return HttpResponse(json.dumps(user.profile.json()), content_type='application/json')
+		return HttpResponse(json.dumps(profile.json()), content_type='application/json')
 	elif request.method == 'PUT':
 		try:
 			user = User.objects.get(id=id)
@@ -86,6 +89,7 @@ def sign_out(request):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
+@csrf_exempt
 def room(request):
 	if request.method == 'GET':
 		room_list = [room.json() for room in Room.objects.all()]
@@ -99,7 +103,8 @@ def room(request):
 		host = User.objects.get(id=data['host'])
 		room = Room(title=title, host=host, location=location, play_time=play_time, type=type)
 		room.save()
-		return HttpResponse(status=201)
+		response_dict = {'id':room.id}
+		return HttpResponse(json.dumps(response_dict), content_type='application/json', status=201)
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 

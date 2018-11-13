@@ -10,7 +10,7 @@ import { TeamlistComponent } from './teamlist/teamlist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from '../in-memory-data.service';
-import { DetectStartComponent } from './detect-start/detect-start.component';
+import { IngameComponent } from './ingame/ingame.component';
 
 @NgModule({
   imports: [
@@ -21,7 +21,6 @@ import { DetectStartComponent } from './detect-start/detect-start.component';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ),
-  
   ],
   declarations: [
     RoomlistComponent,
@@ -29,7 +28,7 @@ import { DetectStartComponent } from './detect-start/detect-start.component';
     RoomcreateComponent,
     RoomDetailComponent,
     TeamlistComponent,
-    DetectStartComponent
+    IngameComponent
   ]
 
 })
