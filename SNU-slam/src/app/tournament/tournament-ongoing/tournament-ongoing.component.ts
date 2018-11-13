@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./tournament-ongoing.component.css']
 })
 export class TournamentOngoingComponent implements OnInit {
-  @Input() tournament: Tournament;
+  tournament: Tournament;
   constructor(
     private tournamentService: TournamentService,
     private router: Router,
@@ -19,12 +19,37 @@ export class TournamentOngoingComponent implements OnInit {
 
   ngOnInit() {
       this.getTournament();
+      this.updateColor();
   }
 
   getTournament(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.tournamentService.getTournamentById(id)
       .subscribe(tournament => this.tournament = tournament);
+  }
+
+  updateColor(): void {
+    for (let i = 0; i < 4; i++) {
+      if ( this.tournament.result1[i] != -1) {
+        const id = 'r1' + this.tournament.result1[i];
+        document.getElementById(id).style.backgroundColor = 'red';
+      }
+    }
+
+    for (let i = 0; i < 2; i++) {
+      if ( this.tournament.result2[i] != -1) {
+        const temp = Math.floor(this.tournament.result2[i] / 2) + 1;
+        const id = 'r2' + temp;
+        document.getElementById(id).style.backgroundColor = 'red';
+      }
+    }
+
+    if ( this.tournament.result3[0] != -1) {
+      const temp = Math.floor(this.tournament.result3[0] / 4) + 1;
+      const id = 'r3' + temp;
+      document.getElementById(id).style.backgroundColor = 'red';
+      document.getElementById('r4').style.backgroundColor = 'red';
+    }
   }
 
   result1(team: number, id: string): void {
@@ -47,7 +72,7 @@ export class TournamentOngoingComponent implements OnInit {
     document.getElementById(id).style.backgroundColor = 'red';
   }
 
-  result2(team: number): void {
+  result2(team: number, id: string): void {
     if (team == -1) {
       return;
     }
@@ -60,10 +85,11 @@ export class TournamentOngoingComponent implements OnInit {
       }
       this.tournamentService.updateTournament(this.tournament)
         .subscribe();
+      document.getElementById(id).style.backgroundColor = 'red'
     }
   }
 
-  result3(team: number): void {
+  result3(team: number, id: string): void {
     if (team == -1) {
       return;
     }
@@ -71,6 +97,8 @@ export class TournamentOngoingComponent implements OnInit {
       this.tournament.result3[0] = team;
       this.tournamentService.updateTournament(this.tournament)
         .subscribe();
+      document.getElementById(id).style.backgroundColor = 'red';
+      document.getElementById('r4').style.backgroundColor = 'red';
     }
   }
 
