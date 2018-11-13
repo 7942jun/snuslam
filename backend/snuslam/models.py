@@ -4,7 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Profile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE) 
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	teams_id = models.ManyToManyField(User, related_name='%(class)s_teams')
 	position = models.CharField(max_length=100)
 	wins = models.IntegerField(default=0)
 	loses = models.IntegerField(default=0)
@@ -15,6 +16,7 @@ class Profile(models.Model):
 			'email': self.user.email,
 			'password': self.user.password,
 			'username': self.user.username,
+			'teams_id': [user.id for user in self.teams_id.all()],
 			'position': self.position,
 			'wins': self.wins,
 			'loses': self.loses,
