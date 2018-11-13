@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Room } from '../room';
 import { RoomService } from '../room/room.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -11,8 +12,11 @@ import { RoomService } from '../room/room.service';
 export class MainComponent implements OnInit {
   rooms: Room[];
 
-  constructor(public router: Router,
-              private roomService: RoomService) { }
+  constructor(
+    public router: Router,
+    private roomService: RoomService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.getRooms();
@@ -23,7 +27,9 @@ export class MainComponent implements OnInit {
   }
 
   sign_in() {
-    this.router.navigate(['room']);
+    this.authService.login().subscribe(
+      user =>  this.router.navigate(['room'])
+    );
   }
 
   court1() {

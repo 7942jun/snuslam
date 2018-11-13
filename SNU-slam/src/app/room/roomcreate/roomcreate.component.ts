@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RoomService } from '../room.service';
 import { Room } from '../../room';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-roomcreate',
@@ -18,14 +19,11 @@ export class RoomcreateComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private router: Router,
+    private authservice: AuthService
   ) { }
 
   ngOnInit() {
-    this.roomService.getUser().subscribe(
-      (user) => {
-        this.id = user.id;
-      }
-    );
+    this.id = this.authservice.getUser().id;
   }
   createroom() {
     if (this.title.trim().length == 0 || this.location.trim().length == 0 ||
