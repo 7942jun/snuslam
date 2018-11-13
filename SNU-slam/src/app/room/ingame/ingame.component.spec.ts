@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetectStartComponent } from './detect-start.component';
+import { IngameComponent } from './ingame.component';
 
-describe('DetectStartComponent', () => {
-  let component: DetectStartComponent;
-  let fixture: ComponentFixture<DetectStartComponent>;
+describe('IngameComponent', () => {
+  let component: IngameComponent;
+  let fixture: ComponentFixture<IngameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetectStartComponent ]
+      declarations: [ IngameComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DetectStartComponent);
+    fixture = TestBed.createComponent(IngameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
