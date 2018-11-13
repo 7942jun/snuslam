@@ -10,17 +10,20 @@ class Profile(models.Model):
 	wins = models.IntegerField(default=0)
 	loses = models.IntegerField(default=0)
 	point = models.IntegerField(default=0)
-	
+	team = models.IntegerField(default=0)
+
 	def json(self):
 		return {
+			'id': self.id,
 			'email': self.user.email,
 			'password': self.user.password,
 			'username': self.user.username,
-			'teams_id': [user.id for user in self.teams_id.all()],
+			'teams': [user.id for user in self.teams_id.all()],
 			'position': self.position,
 			'wins': self.wins,
 			'loses': self.loses,
-			'point': self.point
+			'point': self.point,
+			'team': self.team
 		}
 	
 	#User의 save()가 호출됐을 때 Profile 자동으로 생성 및 연결
@@ -41,6 +44,7 @@ class Team(models.Model):
 
 	def json(self):
 		return {
+			'id': self.id,
 			'name': self.name,
 			'leader': self.leader.id,
 			'members': [user.id for user in self.members.all()]
@@ -60,6 +64,7 @@ class Room(models.Model):
 
 	def json(self):
 		return {
+			'id': self.id,
 			'title': self.title,
 			'location': self.location,
 			'play_time': self.play_time,
@@ -78,6 +83,7 @@ class Tournament(models.Model):
 
 	def json(self):
 		return {
+			'id': self.id,
 			'title': self.title,
 			'host': self.host.id,
 			'teams': [team.id for team in self.teams.all()],
