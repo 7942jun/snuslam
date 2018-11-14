@@ -3,7 +3,13 @@ from .models import Profile, Room, Team, Tournament
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
 import json
+
+def chat(request):
+	context={}
+	return render(request, 'room.html', context)
+
 
 @csrf_exempt
 def user(request):
