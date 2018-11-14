@@ -19,13 +19,15 @@ export class TournamentOngoingComponent implements OnInit {
 
   ngOnInit() {
       this.getTournament();
-      this.updateColor();
+      // this.updateColor();
   }
 
   getTournament(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.tournamentService.getTournamentById(id)
-      .subscribe(tournament => this.tournament = tournament);
+      .subscribe(tournament => {
+                  this.tournament = tournament;
+                  });
   }
 
   updateColor(): void {
@@ -38,14 +40,14 @@ export class TournamentOngoingComponent implements OnInit {
 
     for (let i = 0; i < 2; i++) {
       if ( this.tournament.result2[i] != -1) {
-        const temp = Math.floor(this.tournament.result2[i] / 2) + 1;
+        const temp = Math.floor((this.tournament.result2[i] - 1) / 2) + 1;
         const id = 'r2' + temp;
         document.getElementById(id).style.backgroundColor = 'red';
       }
     }
 
     if ( this.tournament.result3[0] != -1) {
-      const temp = Math.floor(this.tournament.result3[0] / 4) + 1;
+      const temp = Math.floor((this.tournament.result3[0] - 1) / 4) + 1;
       const id = 'r3' + temp;
       document.getElementById(id).style.backgroundColor = 'red';
       document.getElementById('r4').style.backgroundColor = 'red';
@@ -85,7 +87,7 @@ export class TournamentOngoingComponent implements OnInit {
       }
       this.tournamentService.updateTournament(this.tournament)
         .subscribe();
-      document.getElementById(id).style.backgroundColor = 'red'
+      document.getElementById(id).style.backgroundColor = 'red';
     }
   }
 
@@ -95,6 +97,7 @@ export class TournamentOngoingComponent implements OnInit {
     }
     else {
       this.tournament.result3[0] = team;
+      this.tournament.state = 4; // 종료
       this.tournamentService.updateTournament(this.tournament)
         .subscribe();
       document.getElementById(id).style.backgroundColor = 'red';
