@@ -141,6 +141,15 @@ def room_detail(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
+
+def room_user(request, id):
+	if request.method == 'GET':
+		user_list = [Profile.objects.get(id=user.id).json() for user in Room.objects.get(id=id).guests.all()]
+		return HttpResponse(json.dumps(user_list), content_type='application/json')
+	else:
+return HttpResponseNotAllowed(['GET'])
+
+
 def tournament(request):
 	if request.method == 'GET':
 		tournament_list = [tournament.json() for tournament in Tournament.objects.all()]

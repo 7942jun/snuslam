@@ -56,11 +56,7 @@ class Room(models.Model):
 	guests = models.ManyToManyField(User, related_name='%(class)s_users')
 	location = models.CharField(max_length=100)
 	play_time = models.IntegerField(default=0)
-	creation_time = models.DateTimeField(auto_now_add=True)
 	type = models.IntegerField(default=0)
-
-	def getDate(self):
-		return self.creation_time
 
 	def json(self):
 		return {
@@ -71,7 +67,6 @@ class Room(models.Model):
 			'type': self.type,
 			'host': self.host.id,
 			'guests': [user.id for user in self.guests.all()],
-			'creation_time': str(self.creation_time)
 		}
 
 class Tournament(models.Model):
