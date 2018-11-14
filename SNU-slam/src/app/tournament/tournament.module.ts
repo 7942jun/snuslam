@@ -9,6 +9,8 @@ import { TournamentCreateComponent } from './tournament-create/tournament-create
 import { TournamentParticipateComponent } from './tournament-participate/tournament-participate.component';
 import { TournamentOngoingComponent } from './tournament-ongoing/tournament-ongoing.component';
 import { TournamentRoutingModule } from './tournament-routing.module';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from '../in-memory-data.service';
 
 @NgModule({
   declarations: [TournamentComponent, TournamentCreateComponent, TournamentParticipateComponent, TournamentOngoingComponent],
@@ -17,7 +19,8 @@ import { TournamentRoutingModule } from './tournament-routing.module';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    TournamentRoutingModule
+    TournamentRoutingModule,
+    
   ]
 })
 export class TournamentModule { }

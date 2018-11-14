@@ -30,7 +30,7 @@ import { InMemoryDataService } from './in-memory-data.service';
     AppRoutingModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+     )
   ],
   providers: [],
   bootstrap: [AppComponent]
