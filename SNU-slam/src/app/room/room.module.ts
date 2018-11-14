@@ -18,9 +18,9 @@ import { CountdownTimerModule } from 'ngx-countdown-timer';
     CommonModule,
     RoomRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // ),
     CountdownTimerModule.forRoot()
   ],
   declarations: [
