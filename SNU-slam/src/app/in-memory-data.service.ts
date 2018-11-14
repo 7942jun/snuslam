@@ -28,5 +28,3 @@ export class InMemoryDataService implements InMemoryDbService {
         return {room, tournament, team, user};
       }
     }
-
-      

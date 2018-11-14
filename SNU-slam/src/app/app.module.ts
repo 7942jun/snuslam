@@ -28,9 +28,9 @@ import { InMemoryDataService } from './in-memory-data.service';
     TournamentModule,
     RoomModule,
     AppRoutingModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // )
   ],
   providers: [],
   bootstrap: [AppComponent]

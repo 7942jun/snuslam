@@ -46,7 +46,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.user = this.authService.getUser();
-    console.log(this.user);
+    
     this.refreshData();
 
   }
