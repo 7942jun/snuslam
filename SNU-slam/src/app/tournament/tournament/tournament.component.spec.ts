@@ -14,9 +14,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 const mockTournamentList: Tournament[] = [
   {id: 1, title: 'test1', host: 1, teams: [1, 2, 3, 4], game_type: 3,
-    total_team: 4, result: [1, 2, 3, 4], reward: 'test1', state: 2},
+    total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'test1', state: 2},
   {id: 2, title: 'test2', host: 2, teams: [1, 2, 3, 4], game_type: 5,
-    total_team: 4, result: [1, 2, 3, 4], reward: 'test2', state: 2}
+    total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'test2', state: 2}
 ];
 
 

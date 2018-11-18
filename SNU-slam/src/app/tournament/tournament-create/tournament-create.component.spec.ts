@@ -9,12 +9,14 @@ import { TournamentService } from '../tournament.service';
 import { of, Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { Tournament } from '../../tournament';
+import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
+import { ExpectedConditions } from 'protractor';
 
 const mockTournamentList: Tournament[] = [
   {id: 1, title: 'test1', host: 1, teams: [1, 2, 3, 4], game_type: 3,
-    total_team: 4, result: [1, 2, 3, 4], reward: 'test1', state: 2},
+    total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'test1', state: 2},
   {id: 2, title: 'test2', host: 2, teams: [1, 2, 3, 4], game_type: 5,
-    total_team: 4, result: [1, 2, 3, 4], reward: 'test2', state: 2}
+    total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'test2', state: 2}
 ];
 
 describe('TournamentCreateComponent', () => {
@@ -49,6 +51,7 @@ describe('TournamentCreateComponent', () => {
     component = fixture.componentInstance;
     tournamentService = TestBed.get(TournamentService);
     tournamentService.getTournaments.and.returnValue(of(mockTournamentList));
+    tournamentService.addTournament.and.returnValue(of(null));
     fixture.detectChanges();
   });
 
@@ -62,5 +65,37 @@ describe('TournamentCreateComponent', () => {
     expect(component.tournaments).toEqual(mockTournamentList);
     expect(tournamentService.getTournaments).toHaveBeenCalled();
   }));
+
+  it('should not add tournament when there is a missing content', () => {
+    component.title = '';
+    component.prize = '';
+    component.game_type = null;
+    component.total_team = null;
+    component.addTournament();
+  });
+
+  it('should add tournament', () => {
+    component.title = 'title';
+    component.game_type = 3;
+    component.total_team = 4;
+    component.prize = 'prize';
+    const string = 'Title: ' + component.title + '\n' + 'Type: ' + component.game_type + ':' + component.game_type + '\n'
+      + 'Total Teams: ' + component.total_team + ' teams' + '\n' + 'Prize: ' + component.prize + '\n' + 'Is it correct?';
+    const check = true;
+    expect(check).toEqual(true);
+    component.addTournament();
+    tournamentService.addTournament.and.returnValue(of(null));
+    expect(tournamentService.addTournament).toHaveBeenCalled();
+  });
+
+  it('should not add tournament when click cancle of confirm message', () => {
+    component.title = 'title';
+    component.game_type = 3;
+    component.total_team = 4;
+    component.prize = 'prize';
+    const check = false;
+    expect(check).toEqual(false);
+    component.addTournament();
+  });
 
 });

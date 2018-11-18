@@ -7,10 +7,10 @@ import { TournamentService } from './tournament.service';
 
 const mockTournamentList: Tournament[] = [
   {id: 1, title: 'test1', host: 1, teams: [1, 2, 3, 4], game_type: 3,
-    total_team: 4, result: [1, 2, 3, 4], reward: 'test1', state: 1}
+    total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'test1', state: 1}
 ];
 const mockTournament: Tournament = {id: 1, title: 'test1', host: 1, teams: [1, 2, 3, 4], game_type: 3,
-total_team: 4, result: [1, 2, 3, 4], reward: 'test1', state: 1};
+total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'test1', state: 1};
 // state of tournament. 1: 승인 중, 2: 신청 중, 3: 진행 중, 4: 종료
 
 
@@ -41,6 +41,12 @@ describe('TournamentService', () => {
     const req = httpTestingController.expectOne(tournamentsUrl);
     expect(req.request.method).toEqual('GET');
     req.flush(mockTournamentList);
+  }));
+
+  it('should get tournament of certain id with get request', async(() => {
+    tournamentService.getTournamentById(1).subscribe(
+      data => {expect(data).toEqual(mockTournament); }
+    );
   }));
 
   it('should update tournament with put request', async(() => {
