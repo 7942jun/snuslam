@@ -55,23 +55,16 @@ export class TournamentOngoingComponent implements OnInit {
   }
 
   result1(team: number, id: string): void {
-    if (team < 3) {
-      this.tournament.result1[0] = team;
+    const temp = Math.floor((team - 1) / 2);
+    if (this.tournament.result1[temp] == -1 ) {
+      const check = confirm('Team ' + team + ' won the game. Is it true?');
+      if (check) {
+        this.tournament.result1[temp] = team;
+        this.tournamentService.updateTournament(this.tournament)
+        .subscribe();
+        document.getElementById(id).style.backgroundColor = 'red';
+      }
     }
-    else if (team < 5) {
-      this.tournament.result1[1] = team;
-    }
-    else if (team < 7 ) {
-      this.tournament.result1[2] = team;
-    }
-    else {
-      this.tournament.result1[3] = team;
-    }
-
-    this.tournamentService.updateTournament(this.tournament)
-      .subscribe();
-
-    document.getElementById(id).style.backgroundColor = 'red';
   }
 
   result2(team: number, id: string): void {
@@ -79,15 +72,16 @@ export class TournamentOngoingComponent implements OnInit {
       return;
     }
     else {
-      if (team < 5) {
-        this.tournament.result2[0] = team;
-      }
-      else {
-        this.tournament.result2[1] = team;
-      }
-      this.tournamentService.updateTournament(this.tournament)
+      const temp = Math.floor((team - 1) / 4);
+      if (this.tournament.result2[temp] == -1) {
+        const check = confirm('Team ' + team + ' won the game. Is it true?');
+        if (check) {
+          this.tournament.result2[temp] = team;
+          this.tournamentService.updateTournament(this.tournament)
         .subscribe();
-      document.getElementById(id).style.backgroundColor = 'red';
+        document.getElementById(id).style.backgroundColor = 'red';
+        }
+      }
     }
   }
 
@@ -96,12 +90,17 @@ export class TournamentOngoingComponent implements OnInit {
       return;
     }
     else {
-      this.tournament.result3[0] = team;
-      this.tournament.state = 4; // 종료
-      this.tournamentService.updateTournament(this.tournament)
-        .subscribe();
-      document.getElementById(id).style.backgroundColor = 'red';
-      document.getElementById('r4').style.backgroundColor = 'red';
+      if (this.tournament.result3[0] == -1) {
+        const check = confirm('Team ' + team + ' won the game. Is it true?');
+        if (check) {
+          this.tournament.result3[0] = team;
+          this.tournament.state = 4; // 종료
+          this.tournamentService.updateTournament(this.tournament)
+            .subscribe();
+          document.getElementById(id).style.backgroundColor = 'red';
+          document.getElementById('r4').style.backgroundColor = 'red';
+        }
+      }
     }
   }
 
