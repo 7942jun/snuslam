@@ -20,14 +20,9 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login() {
-    return this.http.post<any>(`/api/sign_in/`, { email: 'swpp1@snu.ac.kr' , password: '11' }, httpOptions)
-      .pipe(map(user => {
-        if (user && user.token) {
-          this.isLoggedIn = true;
-          this.current_user = user;
-          console.log(this.current_user);
-        }
-      }));
+    const user = { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 };
+    this.isLoggedIn = true;
+    this.current_user = user;
   }
 
   // mock login
@@ -42,8 +37,9 @@ export class AuthService {
   logout(): void {
     this.isLoggedIn = false;
   }
+
   getUser(): User {
-    if ( this.isLoggedIn) {
+    if ( this.isLoggedIn ) {
       return this.current_user;
     } else {
       return;

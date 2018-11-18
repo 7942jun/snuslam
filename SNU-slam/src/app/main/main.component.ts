@@ -27,9 +27,8 @@ export class MainComponent implements OnInit {
   }
 
   sign_in() {
-    this.authService.login().subscribe(
-      user =>  this.router.navigate(['room'])
-    );
+    this.authService.login();
+    this.router.navigate(['room']);
   }
 
   court1() {
