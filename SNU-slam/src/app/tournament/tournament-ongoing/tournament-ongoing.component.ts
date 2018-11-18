@@ -49,8 +49,9 @@ export class TournamentOngoingComponent implements OnInit {
     if ( this.tournament.result3[0] != -1) {
       const temp = Math.floor((this.tournament.result3[0] - 1) / 4) + 1;
       const id = 'r3' + temp;
+      const id2 = 'r4';
       document.getElementById(id).style.backgroundColor = 'red';
-      document.getElementById('r4').style.backgroundColor = 'red';
+      document.getElementById(id2).style.backgroundColor = 'red';
     }
   }
 

@@ -68,7 +68,37 @@ describe('TournamentOngoingComponent', () => {
     tournamentService.getTournamentById.and.returnValue(of(mockTournament));
     component.ngOnInit();
     expect(component.tournament).toEqual(mockTournament);
-    expect(tournamentService.getTournaments).toHaveBeenCalled();
+    expect(tournamentService.getTournamentById).toHaveBeenCalled();
   }));
+
+  it('should not update color when there is no result', () => {
+    component.tournament.result1 = [-1, -1, -1, -1];
+    component.tournament.result2 = [-1, -1];
+    component.tournament.result3 = [-1];
+    component.updateColor();
+  });
+
+  it('should update color when there is a result1', async(() => {
+    component.tournament.result1 = [1, -1, -1, -1];
+    const id = 'r1' + component.tournament.result1[0];
+    component.updateColor();
+  }));
+
+  it('should update color when there is a result2', async(() => {
+    component.tournament.result2 = [1, -1];
+    const temp = Math.floor((component.tournament.result2[0] - 1) / 2) + 1;
+    const id = 'r2' + temp;
+    component.updateColor();
+  }));
+
+  it('should update color when there is a result3', async(() => {
+    component.tournament.result3 = [1];
+    const temp = Math.floor((component.tournament.result3[0] - 1) / 2) + 1;
+    const id = 'r3' + temp;
+    const id2 = 'r4';
+    component.updateColor();
+  }));
+
+  //it('should not react when there')
 
 });
