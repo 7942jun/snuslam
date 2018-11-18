@@ -5,8 +5,8 @@ import { RoomService } from '../room.service';
 import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
-import { interval } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+// import { interval } from 'rxjs';
+// import { takeWhile } from 'rxjs/operators';
 
 
 
@@ -16,17 +16,17 @@ import { takeWhile } from 'rxjs/operators';
   templateUrl: './room-detail.component.html',
   styleUrls: ['./room-detail.component.css']
 })
-export class RoomDetailComponent implements OnInit, OnDestroy {
+export class RoomDetailComponent implements OnInit { //, OnDestroy
   user: User;
   room: Room;
   users: User[];
   redteam: User[];
   blueteam: User[];
   play_time: number;
-  alive = true;
-  source = interval(500).pipe(
-    takeWhile(() => this.alive
-  ));
+  // alive = true;
+  // source = interval(500).pipe(
+  //   takeWhile(() => this.alive
+  // ));
 
 
   host_id: number;
@@ -40,14 +40,15 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngOnDestroy() {
-    this.alive = false;
+  // ngOnDestroy() {
+  //   this.alive = false;
 
-  }
+  // }
   ngOnInit() {
     this.user = this.authService.getUser();
-    
-    this.refreshData();
+    this.getRoom();
+    this.getUserlist();
+//    this.refreshData();
 
   }
   getRoom(): void {
@@ -93,13 +94,13 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
       () => {}
     );
   }
-  refreshData() {
-    this.source.subscribe(val => {
-      this.getRoom();
-      this.getUserlist();
-      this.gamestarted();
-    });
-  }
+  // refreshData() {
+  //   this.source.subscribe(val => {
+  //     this.getRoom();
+  //     this.getUserlist();
+  //     this.gamestarted();
+  //   });
+  // }
   start() {
     if ( this.redteam.length === this.blueteam.length ) {
       const newroom = this.room;
@@ -111,13 +112,11 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
       alert( 'Numbers of people in the two teams is not equal!');
     }
   }
-  gamestarted() {
-    console.log(this.isStarted);
-    if (this.isStarted ) {
-      this.alive = false;
-       //this.router.navigate([`/room/${this.room.id}/ingame`]);
-     }
-  }
+  // gamestarted() {
+  //   if (this.isStarted ) {
+  //     this.alive = false;
+  //    }
+  // }
   goBack() {
     if (this.room.guests_id.length > 0) {
       const newroom = this.room;

@@ -20,13 +20,15 @@ export class IngameComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    for ( let propname in changes) {
-      if ( propname === 'isStarted') {
-        this.time.setMinutes(this.time.getMinutes() + this.play_time);
+    // for ( let propname in changes) {
+    //   if ( propname === 'isStarted') {
+    if (changes['isStarted']) {
+      this.time.setMinutes(this.time.getMinutes() + this.play_time);
 
 
     }
   }
 }
-}
 
+
+// (zeroTrigger)="yourOwnFunction($event)"

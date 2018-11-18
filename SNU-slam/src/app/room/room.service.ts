@@ -20,23 +20,22 @@ export class RoomService {
 
   getAllRoom(): Observable<Room[]> {
     return this.http.get<Room[]>(this.url);
-  }
+  }  // tested
   getRoomById(id: number): Observable<Room> {
     const url = `${this.url}/${id}`;
     return this.http.get<Room>(url);
-
-  }
+  }  // tested
   addRoom(room: Room): Observable<Room> {
     return this.http.post<Room>(this.url, room, httpOptions);
-  }
+  }  // tested
   deleteRoomById(id: number): Observable<void> {
     const url = `${this.url}/${id}`;
     return this.http.delete<void>(url);
-  }
+  }  // tested
   updateRoom(room: Room ): Observable<void> {
     const url = `${this.url}/${room.id}`;
     return this.http.put<void>(url, room, httpOptions);
-  }
+  } // tested
   getRoomUserById(roomid: number): Observable<User[]> {
     const url = `api/user`;  // mock
     return this.http.get<User[]>(url);
