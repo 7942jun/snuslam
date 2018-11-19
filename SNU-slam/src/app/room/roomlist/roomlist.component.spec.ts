@@ -39,6 +39,10 @@ describe('RoomlistComponent', () => {
   });
 
   it('should create', async(() => {
+    fixture = TestBed.createComponent(RoomlistComponent);
+    component = fixture.componentInstance;
+    component.roomlist = mockRoomList;
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   }));
 });
