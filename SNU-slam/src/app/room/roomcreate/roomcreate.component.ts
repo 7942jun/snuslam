@@ -44,7 +44,8 @@ export class RoomcreateComponent implements OnInit {
     };
     if (check) {
       this.roomService.addRoom( newroom as Room ).subscribe(
-        room => this.router.navigate([`room/${room.id}`])
+        // room => this.router.navigate([`room/${room.id}`])
+        room => {}
       );
     }
 
