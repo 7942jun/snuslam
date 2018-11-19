@@ -21,6 +21,8 @@ export class TournamentCreateComponent implements OnInit {
   result2 = [-1, -1];
   result3 = [-1];
 
+  check: boolean;
+
   constructor(
     private tournamentService: TournamentService,
     private router: Router,
