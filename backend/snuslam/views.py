@@ -41,12 +41,13 @@ def user_detail(request, id):
 		return HttpResponse(json.dumps(profile.json()), content_type='application/json')
 	elif request.method == 'PUT':
 		try:
-			user = User.objects.get(id=id)
-		except User.DoesNotExist:
+			user = Profile.objects.get(id=id)
+		except Profile.DoesNotExist:
 			return HttpResponse(status=404)
 		data = json.loads(request.body.decode())		
-		user.profile.wins += data['win']
-		user.profile.loses += data['lose']
+		#user.profile.wins += data['win']
+		#user.profile.loses += data['lose']
+		user.team = data['team']
 		user.save()
 		return HttpResponse(status=200)
 	elif request.method == 'DELETE':
@@ -59,12 +60,12 @@ def user_detail(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
-def rank(requeset):
+def rank(request):
 	if request.method == 'GET':
-		#todo: rank 구현하기
-		pass
+		rank_list = [profile.json() for profile in Profile.objects.all()]
+		return HttpResponse(json.dumps(rank_list), content_type='appication/json')
 	else:
-		return HttpResponse(status=405)
+		return HttpResponseNotAllowed(['GET'])
 
 def sign_in(request):
 	if request.method == 'POST':
@@ -145,9 +146,11 @@ def room_detail(request, id):
 def room_user(request, id):
 	if request.method == 'GET':
 		user_list = [Profile.objects.get(id=user.id).json() for user in Room.objects.get(id=id).guests.all()]
+		host_profile = Profile.objects.get(id=Room.objects.get(id=id).host.id)
+		user_list.insert(0, host_profile.json())
 		return HttpResponse(json.dumps(user_list), content_type='application/json')
 	else:
-return HttpResponseNotAllowed(['GET'])
+		return HttpResponseNotAllowed(['GET'])
 
 
 def tournament(request):
