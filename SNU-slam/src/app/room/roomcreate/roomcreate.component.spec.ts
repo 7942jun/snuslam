@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule} from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ describe('RoomcreateComponent', () => {
     const roomSpy = jasmine.createSpyObj('RoomService', ['addRoom']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
     const authSpy = jasmine.createSpyObj('AuthService', ['getUser']);
+    const componentSpy = jasmine.createSpyObj('RoomcreateComponent', ['createroom']);
     TestBed.configureTestingModule({
       declarations: [ RoomcreateComponent ],
       imports: [
@@ -29,6 +30,7 @@ describe('RoomcreateComponent', () => {
         { provide: RoomService, useValue: roomSpy},
         { provide: Router,      useValue: routerSpy },
         { provide: AuthService, useValue: authSpy },
+        { provide: RoomcreateComponent, useValue: componentSpy},
       ],
     })
     .compileComponents();
@@ -67,9 +69,13 @@ describe('RoomcreateComponent', () => {
     component.location = 'nat';
     component.play_time = 60;
     component.type = 1;
+    const string = 'Title: ' + component.title + '\n' + 'Location: ' + component.location + '\n' + 'Play time: ' +
+    component.play_time + ' min' + '\n' + 'Type: ' + component.type + ':' + component.type + '\n' + 'Is it correct?';
+    spyOn(window, 'confirm').and.returnValue(true);
+    component.createroom();
+    expect(window.confirm).toHaveBeenCalledWith(string);
     const check = true;
     expect(check).toEqual(true);
-    component.createroom();
     roomService.addRoom.and.returnValue(of(null));
     expect(roomService.addRoom).toHaveBeenCalled();
   });

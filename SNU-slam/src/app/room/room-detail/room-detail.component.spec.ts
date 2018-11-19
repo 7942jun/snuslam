@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Room } from '../../room';
 import { User } from '../../user';
+import { Router, ActivatedRoute } from '@angular/router';
 import { RoomDetailComponent } from './room-detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule} from '@angular/common/http/testing';
@@ -9,7 +10,14 @@ import { RoomService } from '../room.service';
 import { Component , Input, Output, EventEmitter } from '@angular/core';
 import { of } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
+import { convertToParamMap} from '@angular/router';
+import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
 
+const mockRoom: Room =  { id: 1, title: 'room_0', host_id: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false };
+
+const mockUserList: User[] = [
+ { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 }
+];
 @Component({selector: 'app-teamlist', template: ''})
 export class MockTeamlistComponent {
   @Input()
@@ -30,7 +38,10 @@ describe('RoomDetailComponent', () => {
   let roomService: jasmine.SpyObj<RoomService>;
   let authService: jasmine.SpyObj<AuthService>;
   beforeEach(async(() => {
-    const roomSpy = jasmine.createSpyObj('RoomService', ['getAllRoom']);
+    const roomSpy = jasmine.createSpyObj('RoomService', ['deleteRoomById', 'updateRoom', 'changeTeam', 'getRoomUserById', 'getRoomById']);
+    const authSpy = jasmine.createSpyObj('AuthService', ['getUser']);
+    const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
+    const routeSpy = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
     TestBed.configureTestingModule({
       declarations: [
         RoomDetailComponent,
@@ -42,7 +53,16 @@ describe('RoomDetailComponent', () => {
         FormsModule
       ],
       providers: [
-        { provide: RoomService, useValue: }
+        { provide: RoomService, useValue: roomSpy},
+        { provide: Router,      useValue: routerSpy },
+        { provide: AuthService, useValue: authSpy },
+        { provide: ActivatedRoute,       useValue: {
+          snapshot: {
+            paramMap: convertToParamMap({
+              id: '1'
+            })
+          }
+        } },
       ]
     })
     .compileComponents();
@@ -51,10 +71,26 @@ describe('RoomDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomDetailComponent);
     component = fixture.componentInstance;
+    authService = TestBed.get(AuthService);
+    authService.getUser.and.returnValue(1);
+    roomService = TestBed.get(RoomService);
+    roomService.getRoomById.and.returnValue(of(mockRoom));
+    roomService.getRoomUserById.and.returnValue(of(mockUserList));
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', async(() => {
     expect(component).toBeTruthy();
-  });
+  }));
+  it('should retrivce rooms and user at ngOnInit', async(() => {
+    // authService.getUser.and.returnValue(1);
+    // roomService.getRoomById.and.returnValue(of(mockRoom));
+     roomService.getRoomUserById.and.returnValue(of(mockUserList));
+    // component.ngOnInit();
+    // expect(component.room).toEqual(mockRoom);
+    // expect(component.users).toEqual(mockUserList);
+    // expect(roomService.getRoomById).toHaveBeenCalled();
+    // expect(roomService.getRoomUserById).toHaveBeenCalled();
+    // expect(authService.getUser).toHaveBeenCalled();
+  }));
 });
