@@ -76,23 +76,23 @@ export class RoomDetailComponent implements OnInit { //, OnDestroy
 
 
   onChangeTeam() {
-    if (this.user.team !== 0) {
-      if (this.user.team === 1) {
-        this.user.team = 2;
-      } else {
-        this.user.team = 1;
-      }
-    } else {
-      if ( this.redteam.length > this.blueteam.length ) {
-        this.user.team = 2;
-      } else {
-        this.user.team = 1;
-      }
-    }
+    // if (this.user.team !== 0) {
+    //   if (this.user.team === 1) {
+    //     this.user.team = 2;
+    //   } else {
+    //     this.user.team = 1;
+    //   }
+    // } else {
+    //   if ( this.redteam.length > this.blueteam.length ) {
+    //     this.user.team = 2;
+    //   } else {
+    //     this.user.team = 1;
+    //   }
+    // }
 
-    this.roomService.changeTeam(this.user).subscribe(
-      () => {}
-    );
+    // this.roomService.changeTeam(this.user).subscribe(
+    //   () => {}
+    // );
   }
   // refreshData() {
   //   this.source.subscribe(val => {
@@ -102,15 +102,15 @@ export class RoomDetailComponent implements OnInit { //, OnDestroy
   //   });
   // }
   start() {
-    if ( this.redteam.length === this.blueteam.length ) {
-      const newroom = this.room;
-      newroom.ingame = true;
-      this.roomService.updateRoom(newroom).subscribe(
-        () => {}
-      );
-    } else {
-      alert( 'Numbers of people in the two teams is not equal!');
-    }
+    // if ( this.redteam.length === this.blueteam.length ) {
+    //   const newroom = this.room;
+    //   newroom.ingame = true;
+    //   this.roomService.updateRoom(newroom).subscribe(
+    //     () => {}
+    //   );
+    // } else {
+    //   alert( 'Numbers of people in the two teams is not equal!');
+    // }
   }
   // gamestarted() {
   //   if (this.isStarted ) {
@@ -118,22 +118,22 @@ export class RoomDetailComponent implements OnInit { //, OnDestroy
   //    }
   // }
   goBack() {
-    if (this.room.guests_id.length > 0) {
-      const newroom = this.room;
-      if (this.user.id === this.host_id) {
-        newroom.host_id = newroom.guests_id.shift();
-      } else {
-        newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
-      }
-      this.roomService.updateRoom( newroom ).subscribe(
-        () => this.router.navigate(['/room'])
-      );
-    }
-    else {
-    this.roomService.deleteRoomById(this.room.id).subscribe(
-      () => this.router.navigate(['/room'])
-      );
-    }
+    // if (this.room.guests_id.length > 0) {
+    //   const newroom = this.room;
+    //   if (this.user.id === this.host_id) {
+    //     newroom.host_id = newroom.guests_id.shift();
+    //   } else {
+    //     newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
+    //   }
+    //   this.roomService.updateRoom( newroom ).subscribe(
+    //     () => this.router.navigate(['/room'])
+    //   );
+    // }
+    // else {
+    // this.roomService.deleteRoomById(this.room.id).subscribe(
+    //   () => this.router.navigate(['/room'])
+    //   );
+    // }
   }
 
 
