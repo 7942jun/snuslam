@@ -54,24 +54,6 @@ describe('MainComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call court1', () => {
-    spyOn(window, 'alert');
-    component.court1();
-    expect(window.alert).toHaveBeenCalledWith("기숙사 운동장\n코트 2개\n샤워장 있음");
-  })
-
-  it('should call court2', () => {
-    spyOn(window, 'alert');
-    component.court2();
-    expect(window.alert).toHaveBeenCalledWith("대운동장\n코트 2개\n샤워장 없음");
-  })
-
-  it('should call court3', () => {
-    spyOn(window, 'alert');
-    component.court3();
-    expect(window.alert).toHaveBeenCalledWith("301동 주차장\n코트4개\n샤워장 없음");
-  })
-
   it('should call sign_in', () =>{
     component.sign_in();
     expect(mainComponent.sign_in).toHaveBeenCalled();
