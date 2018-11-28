@@ -1,7 +1,31 @@
+<ng-template #content let-modal>
+  <form [formGroup]="signInForm" [class.error]="!signInForm.valid" (submit)="sign_in()">
+    <div class="modal-header">
+      <h4 class="modal-title">Sign In</h4>
+    </div>
+    <div class="modal-body">
+      <div>
+        <label class="control-label">Email:</label>
+        <input type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)"
+               [formControl]="signInForm.controls['email']">
+      </div>
+      <div>
+        <label class="control-label">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password"
+               [formControl]="signInForm.controls['password']">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-light" [disabled]="!signInForm.valid">Sign In</button>
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </form>
+</ng-template>
+
 <div style="position: absolute; top: 90px; right: 170px;">
-  <button (click)="sign_in()" style="width: 100px" class="btn btn-default">Sign in</button>
+  <button style="width: 100px" class="btn btn-light" (click)="openModal(content)">Sign in</button>
   <br>
-  <button routerLink="/sign_up" style="width: 100px" class="btn btn-default">Sign up</button>
+  <button routerLink="/sign_up" style="width: 100px" class="btn btn-light">Sign up</button>
 </div>
 
 <div class="container-fluid">
@@ -9,7 +33,7 @@
   <div class="row">
     <div class="col-lg-6" style="text-align: center">
       <h2 style="text-align: center">SNU map</h2>
-      <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif" style="height: 60%; width: 60%"/>
+      <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif" style="height: 85%; width: 60%"/>
       <div style="position: absolute; top: 28%; left: 40%;">
         <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
                (click)="court1()" style="height: 100%; width: 100%;">
