@@ -13,8 +13,6 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 })
 export class MainComponent implements OnInit {
   rooms: Room[];
-  email: string;
-  password: string;
 
   signInForm = new FormGroup({
     email: new FormControl('',[ Validators.required ]),
@@ -39,18 +37,6 @@ export class MainComponent implements OnInit {
   sign_in() {
     this.authService.login();
     this.router.navigate(['room']);
-  }
-
-  court1() {
-    alert("기숙사 운동장\n코트 2개\n샤워장 있음");
-  }
-
-  court2() {
-    alert("대운동장\n코트 2개\n샤워장 없음");
-  }
-
-  court3() {
-    alert("301동 주차장\n코트4개\n샤워장 없음");
   }
 
   openModal(content) {
