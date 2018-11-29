@@ -14,13 +14,15 @@ import { RoomModule } from './room/room.module';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     MainComponent,
-    RankComponent
+    RankComponent,
+    SignInComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -34,6 +36,9 @@ import { InMemoryDataService } from './in-memory-data.service';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
      )
+  ],
+  exports: [
+    SignInComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

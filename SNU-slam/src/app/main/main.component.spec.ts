@@ -1,10 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from "@angular/router";
 import { MainComponent } from './main.component';
-import { AuthService } from "../auth/auth.service";
 import { RoomService } from "../room/room.service";
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from "rxjs";
+import { RoomModule } from "../room/room.module";
+import { SignInComponent } from "../sign-in/sign-in.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 const mockRoomList = [
   { id: 0, title: 'room_0', host_id: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false },
@@ -14,27 +18,29 @@ const mockRoomList = [
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
-  let mainComponent: jasmine.SpyObj<MainComponent>;
   let roomService: jasmine.SpyObj<RoomService>;
-  let router: jasmine.SpyObj<Router>;
 
   beforeEach(async(() => {
-    const mainSpy = jasmine.createSpyObj('MainComponent',
-      [ 'court1', 'court2', 'court3', 'sign_in' ]);
+    const roomSpy = jasmine.createSpyObj('RoomService',
+      ['getAllRoom']);
     const routerSpy = jasmine.createSpyObj('Router',
       [ 'navigate' ]);
     const authSpy = jasmine.createSpyObj('AuthService',
       ['login']);
-    const roomSpy = jasmine.createSpyObj('RoomService',
-      ['getAllRoom']);
+    const modalSpy = jasmine.createSpyObj('NgbModal',
+      ['open']);
+    const signInSpy = jasmine.createSpyObj('SIgnInComponent',
+      ['sign_in']);
 
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
-      declarations: [ MainComponent ],
-      providers: [ { provide: Router, useValue: routerSpy },
-        { provide: MainComponent, useValue: mainSpy },
+      imports: [ HttpClientTestingModule, RoomModule, FormsModule, ReactiveFormsModule ],
+      declarations: [ MainComponent, SignInComponent ],
+      providers: [
+        { provide: RoomService, useValue: roomSpy },
+        { provide: SignInComponent, useValue: signInSpy },
+        { provide: Router, useValue: routerSpy },
         { provide: AuthService, useValue: authSpy },
-        { provide: RoomService, useValue: roomSpy }]
+        { provide: NgbModal, useValue: modalSpy }]
     })
     .compileComponents();
   }));
@@ -42,11 +48,8 @@ describe('MainComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MainComponent);
     component = fixture.componentInstance;
-    mainComponent = TestBed.get(MainComponent);
-    mainComponent.sign_in();
     roomService = TestBed.get(RoomService);
     roomService.getAllRoom.and.returnValue(of(mockRoomList));
-    router = TestBed.get(Router);
     fixture.detectChanges();
   });
 
@@ -54,10 +57,10 @@ describe('MainComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call sign_in', () =>{
-    component.sign_in();
-    expect(mainComponent.sign_in).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalled();
+  it('should get all rooms', () => {
+    component.ngOnInit();
+    expect(component.rooms).toEqual(mockRoomList);
+    expect(roomService.getAllRoom).toHaveBeenCalled();
   })
 
 });
