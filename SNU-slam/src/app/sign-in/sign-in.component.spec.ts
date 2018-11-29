@@ -5,12 +5,14 @@ import { Router } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import {Location} from "@angular/common";
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
   let signInComponent: jasmine.SpyObj<SignInComponent>;
   let router: jasmine.SpyObj<Router>;
+  let location: jasmine.SpyObj<Location>;
 
   beforeEach(async(() => {
     const routerSpy = jasmine.createSpyObj('Router',
@@ -21,6 +23,7 @@ describe('SignInComponent', () => {
       ['open']);
     const signInSpy = jasmine.createSpyObj('SIgnInComponent',
       ['sign_in']);
+    const location = jasmine.createSpyObj('Location', ['back']);
 
     TestBed.configureTestingModule({
       declarations: [ SignInComponent ],
@@ -28,7 +31,8 @@ describe('SignInComponent', () => {
         { provide: SignInComponent, useValue: signInSpy },
         { provide: Router, useValue: routerSpy },
         { provide: AuthService, useValue: authSpy },
-        { provide: NgbModal, useValue: modalSpy }
+        { provide: NgbModal, useValue: modalSpy },
+        { provide: Location, useValue: location }
       ],
       imports: [ ReactiveFormsModule, FormsModule ]
     })
@@ -41,6 +45,7 @@ describe('SignInComponent', () => {
     fixture.detectChanges();
     signInComponent = TestBed.get(SignInComponent);
     router = TestBed.get(Router);
+    location = TestBed.get(Location);
   });
 
   it('should create', () => {
@@ -55,6 +60,11 @@ describe('SignInComponent', () => {
   it('should call navigate', () => {
     component.sign_in();
     expect(router.navigate).toHaveBeenCalled();
+  })
+
+  it('should call goBack', () => {
+    component.goBack();
+    expect(location.back).toHaveBeenCalled();
   })
 
 });

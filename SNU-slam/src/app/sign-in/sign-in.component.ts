@@ -3,6 +3,7 @@ import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,6 +20,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private authService: AuthService,
+    private location: Location,
     public router: Router
   ) { }
 
@@ -30,8 +32,16 @@ export class SignInComponent implements OnInit {
     this.router.navigate(['room']);
   }
 
+  sign_out() {
+    this.authService.logout();
+  }
+
   openModal(content) {
     this.modalService.open(content, { centered: true });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

@@ -23,7 +23,6 @@ const mockSearchedUserList: User[] = [
 describe('RankComponent', () => {
   let component: RankComponent;
   let fixture: ComponentFixture<RankComponent>;
-  let location: jasmine.SpyObj<Location>;
   let userService: jasmine.SpyObj<UserService>;
 
   beforeEach(async(() => {
@@ -31,11 +30,11 @@ describe('RankComponent', () => {
       [ 'getUsers', 'search', 'goBack' ]);
     const userSpy = jasmine.createSpyObj('UserService',
       ['postUser', 'getUsers', 'getUserById', 'searchUsers' ]);
-    const location = jasmine.createSpyObj('Location', ['back']);
+
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
       declarations: [ RankComponent ],
-      providers: [ { provide: Location, useValue: location },
+      providers: [
         { provide: UserService, useValue: userSpy },
         { provide: RankComponent, useValue: rankComponent }]
     })
@@ -50,7 +49,6 @@ describe('RankComponent', () => {
     userService = TestBed.get(UserService);
     userService.getUsers.and.returnValue(of(mockUserList));
     userService.searchUsers.and.returnValue(of(mockSearchedUserList));
-    location = TestBed.get(Location);
     fixture.detectChanges();
   });
 
@@ -63,8 +61,4 @@ describe('RankComponent', () => {
     expect(component.searched_users).toEqual(mockSearchedUserList);
   });
 
-  it('should call goBack', () => {
-    component.goBack();
-    expect(location.back).toHaveBeenCalled();
-  })
 });

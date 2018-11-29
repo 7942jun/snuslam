@@ -25,7 +25,6 @@ import { SignInComponent } from './sign-in/sign-in.component';
     SignInComponent
   ],
   imports: [
-    AppModule,
     ReactiveFormsModule,
     NgbModule,
     BrowserModule,
