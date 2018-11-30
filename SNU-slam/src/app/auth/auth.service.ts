@@ -19,20 +19,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login() {
-    const user = { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 };
-    this.isLoggedIn = true;
-    this.current_user = user;
-  }
-
-  // mock login
-  // login(): Observable<User> {
+  // login() {
+  //   const user = { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 };
   //   this.isLoggedIn = true;
-  //   this.current_user =  { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 };
-  //   const url = 'api/user/1';
-  //   return this.http.get<User>(url);
-
+  //   this.current_user = user;
   // }
+
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>('/api/sign_in', { email: email, password: password }, httpOptions);
+  }
 
   logout(): void {
     this.isLoggedIn = false;
