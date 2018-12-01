@@ -1,0 +1,18 @@
+<ng-template #dorm>코트 6개<br>샤워장 있음<br></ng-template>
+<ng-template #ground>코트 2개<br>샤워장 있음<br></ng-template>
+<ng-template #engineering>코트 4개<br>샤워장 없음<br></ng-template>
+
+<h2 style="text-align: center">SNU map</h2>
+<img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif" style="height: 85%; width: 60%"/>
+<div style="position: absolute; top: 25%; left: 37%;">
+  <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+         [ngbPopover]="dorm" popoverTitle="기숙사" placement="top" width="100px" height="30px">
+</div>
+<div style="position: absolute; top: 75%; left: 32%;">
+  <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+         [ngbPopover]="ground" popoverTitle="대운동장" placement="top" width="100px" height="30px">
+</div>
+<div style="position: absolute; top: 28%; left: 63%;">
+  <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
+         [ngbPopover]="engineering" popoverTitle="301동" placement="top" width="100px" height="30px">
+</div>

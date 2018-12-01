@@ -1,33 +1,8 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<div style="position: absolute; top: 90px; right: 170px;">
-  <button (click)="sign_in()" style="width: 100px" class="btn btn-default">Sign in</button>
-  <br>
-  <button routerLink="/sign_up" style="width: 100px" class="btn btn-default">Sign up</button>
-</div>
-
 <div class="container-fluid">
 
   <div class="row">
     <div class="col-lg-6" style="text-align: center">
-      <h2 style="text-align: center">SNU map</h2>
-      <img src="http://www.snu.ac.kr/about/images/ab0801_tab2_map.gif" style="height: 60%; width: 60%"/>
-      <div style="position: absolute; top: 28%; left: 40%;">
-        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
-               (click)="court1()" style="height: 100%; width: 100%;">
-      </div>
-      <div style="position: absolute; top: 77%; left: 35.5%;">
-        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
-               (click)="court2()" style="height: 100%; width: 100%;">
-      </div>
-      <div style="position: absolute; top: 30%; left: 66%;">
-        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/Red_Circle%28small%29.svg"
-               (click)="court3()" style="height: 100%; width: 100%;">
-      </div>
+      <app-map></app-map>
     </div>
     <div class="col-lg-1"></div>
     <div class="col-lg-4" style="text-align: center">

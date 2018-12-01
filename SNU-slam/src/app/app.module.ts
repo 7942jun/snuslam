@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,15 +14,19 @@ import { RoomModule } from './room/room.module';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     MainComponent,
-    RankComponent
+    RankComponent,
+    SignInComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    NgbModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -31,6 +36,9 @@ import { InMemoryDataService } from './in-memory-data.service';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
      )
+  ],
+  exports: [
+    SignInComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

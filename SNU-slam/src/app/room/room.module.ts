@@ -12,8 +12,11 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from '../in-memory-data.service';
 import { IngameComponent } from './ingame/ingame.component';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
+import { MapComponent } from './map/map.component';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 @NgModule({
   imports: [
+    NgbModule,
     FormsModule,
     CommonModule,
     RoomRoutingModule,
@@ -29,8 +32,11 @@ import { CountdownTimerModule } from 'ngx-countdown-timer';
     RoomcreateComponent,
     RoomDetailComponent,
     TeamlistComponent,
-    IngameComponent
+    IngameComponent,
+    MapComponent
+  ],
+  exports: [
+    MapComponent
   ]
-
 })
 export class RoomModule { }
