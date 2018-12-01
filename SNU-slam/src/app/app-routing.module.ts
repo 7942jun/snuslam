@@ -7,11 +7,9 @@ import { RankComponent } from "./rank/rank.component";
 import { AuthGuard } from "./auth/auth.guard";
 
 const routes: Routes = [
-  { path: '', component: MainComponent , pathMatch: 'full'},
+  { path: '', component: MainComponent},
   { path: 'sign_up', component: SignUpComponent },
-  { path: 'rank',
-    component: RankComponent,
-    canActivate: [AuthGuard]
+  { path: 'rank', component: RankComponent, canActivate: [AuthGuard]
   },
 ];
 

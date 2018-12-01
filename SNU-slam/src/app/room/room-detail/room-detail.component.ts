@@ -58,10 +58,21 @@ export class RoomDetailComponent implements OnInit {
       }
     );
   }
+  refreshUserlist(): void {
+    const id = this.room.id;
+    this.roomService.getRoomUserById(id).subscribe(
+      users => {
+        this.users = users;
+        this.redteam  = users.filter( user => user.team === 1);
+        this.blueteam = users.filter( user => user.team === 2);
+      }
+    );
+  }
 
   refresh(): void {
     this.getRoom();
-    this.getUserlist();
+    this.refreshUserlist();
+    console.log('ff');
   }
 
 
@@ -81,7 +92,7 @@ export class RoomDetailComponent implements OnInit {
     }
 
     this.roomService.changeTeam(this.user).subscribe(
-      () => {}
+      () => this.refresh()
     );
   }
 
@@ -90,7 +101,7 @@ export class RoomDetailComponent implements OnInit {
       const newroom = this.room;
       newroom.ingame = true;
       this.roomService.updateRoom(newroom).subscribe(
-        () => {}
+        () => this.refresh()
       );
     } else {
       alert( 'Numbers of people in the two teams is not equal!');
@@ -98,7 +109,11 @@ export class RoomDetailComponent implements OnInit {
   }
 
   goBack() {
-    if (this.room.guests_id.length > 0) {
+    this.refresh();
+    if (this.isStarted) {
+      alert( 'Game started! You are not allowed to leave the room!' );
+    }
+    else if (this.room.guests_id.length > 0) {
       const newroom = this.room;
       if (this.user.id === this.host_id) {
         newroom.host_id = newroom.guests_id.shift();
