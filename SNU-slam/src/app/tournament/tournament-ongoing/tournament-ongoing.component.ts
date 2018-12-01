@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Tournament } from 'src/app/tournament';
+import { Tournament } from '../../tournament';
+import { Team } from '../../team';
 import { TournamentService } from '../tournament.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { TeamService } from '../team.service';
 
 @Component({
   selector: 'app-tournament-ongoing',
@@ -10,16 +12,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class TournamentOngoingComponent implements OnInit {
   tournament: Tournament;
+  teams: Team[] = [];
+
   constructor(
     private tournamentService: TournamentService,
-    private router: Router,
+    private teamService: TeamService,
     private route: ActivatedRoute,
 
   ) { }
 
   ngOnInit() {
       this.getTournament();
-      // this.updateColor();
+      // this.getTeams();
   }
 
   getTournament(): void {
@@ -27,8 +31,24 @@ export class TournamentOngoingComponent implements OnInit {
     this.tournamentService.getTournamentById(id)
       .subscribe(tournament => {
                   this.tournament = tournament;
+                  for (let i = 0; i < tournament.teams.length; i++) {
+                    this.teamService.getTeamById(tournament.teams[i])
+                      .subscribe(team => {
+                        this.teams.push(team);
+                      });
+                  }
                   });
   }
+  /*
+  getTeams(): void {
+    for (let i = 0; i < this.tournament.teams.length; i++) {
+      this.teamService.getTeamById(this.tournament.teams[i])
+        .subscribe(team => {
+          this.teams.push(team);
+        });
+    }
+  }
+  */
 
   updateColor(): void {
     for (let i = 0; i < 4; i++) {
@@ -132,9 +152,4 @@ export class TournamentOngoingComponent implements OnInit {
   final(): string {
     return this.tournament.result3[0] == -1 ? '' : 'Team ' + this.tournament.result3[0];
   }
-
-
-
-
-
 }
