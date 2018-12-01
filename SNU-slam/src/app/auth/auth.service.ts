@@ -12,8 +12,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  private authurl = '/api/user/';
   isLoggedIn = false;
-  current_user: User;
+  public current_user: User;
 
   redirectUrl: string;
 
@@ -23,6 +24,20 @@ export class AuthService {
     const user = { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 };
     this.isLoggedIn = true;
     this.current_user = user;
+  }
+  getCSRFCookie(): string {
+    const cookies = document.cookie.split(';');
+    cookies.forEach(cookie => {
+      const splitted = cookie.trim().split('=');
+      if (splitted[0] == 'csrftoken' ) {
+        return splitted[1];
+      }
+    });
+    return '';
+  }
+  getToken(): Observable<string> {
+    const url = `${this.authurl}token`;
+    return this.http.get<string>(url);
   }
 
   // mock login
