@@ -6,7 +6,6 @@ import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
-
 @Component({
   selector: 'app-room-detail',
   templateUrl: './room-detail.component.html',
@@ -83,9 +82,6 @@ export class RoomDetailComponent implements OnInit {
         () => this.router.navigate(['/room'])
         );
       }
-
-
-
   }
 
 
@@ -116,6 +112,7 @@ export class RoomDetailComponent implements OnInit {
   }
 
   start() {
+    this.refresh();
     if ( this.redteam.length === this.blueteam.length ) {
       const newroom = this.room;
       newroom.ingame = true;
@@ -129,24 +126,27 @@ export class RoomDetailComponent implements OnInit {
 
   goBack() {
     this.refresh();
-    if (this.isStarted) {
-      alert( 'Game started! You are not allowed to leave the room!' );
-    }
-    else if (this.room.guests_id.length > 0) {
-      const newroom = this.room;
-      if (this.user.id === this.host_id) {
-        newroom.host_id = newroom.guests_id.shift();
-      } else {
-        newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
+    const check = confirm('Do you want to leave the room?');
+    if (check) {
+      if (this.isStarted) {
+        alert( 'Game started! You are not allowed to leave the room!' );
       }
-      this.roomService.updateRoom( newroom ).subscribe(
+      else if (this.room.guests_id.length > 0) {
+        const newroom = this.room;
+        if (this.user.id === this.host_id) {
+          newroom.host_id = newroom.guests_id.shift();
+        } else {
+          newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
+        }
+        this.roomService.updateRoom( newroom ).subscribe(
+          () => this.router.navigate(['/room'])
+        );
+      }
+      else {
+      this.roomService.deleteRoomById(this.room.id).subscribe(
         () => this.router.navigate(['/room'])
-      );
-    }
-    else {
-    this.roomService.deleteRoomById(this.room.id).subscribe(
-      () => this.router.navigate(['/room'])
-      );
+        );
+      }
     }
   }
 
