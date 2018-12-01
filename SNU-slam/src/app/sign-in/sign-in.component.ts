@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Location } from '@angular/common';
 
 @Component({
@@ -36,8 +36,8 @@ export class SignInComponent implements OnInit {
 
   sign_in() {
     this.authService.login(this.email.value, this.password.value).subscribe(user => {
-      this.authService.current_user = user;
       if (user != undefined) {
+        this.authService.current_user = user;
         this.authService.isLoggedIn = true;
       }
     });

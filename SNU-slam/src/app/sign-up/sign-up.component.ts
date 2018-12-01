@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { User } from '../user';
 import { UserService } from "../services/user.service";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-sign-up',
@@ -34,8 +33,12 @@ export class SignUpComponent implements OnInit {
 
     this.userService.postUser(this.newUser).subscribe(
       user => {
-        this.goBack();
-        alert('Sign up success!');
+        if (user.id > 0) {
+          this.goBack();
+          alert('Sign up success!');
+        } else {
+          alert('Sign up failed!');
+        }
       }
     );
 

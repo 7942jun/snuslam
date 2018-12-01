@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
 import { Observable, of } from 'rxjs';
+import { map } from "rxjs/operators";
+import {UserService} from "../services/user.service";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -14,23 +15,27 @@ const httpOptions = {
 export class AuthService {
   isLoggedIn = false;
   current_user: User;
+  private token: string;
 
-  redirectUrl: string;
-
-  constructor(private http: HttpClient) { }
-
-  // login() {
-  //   const user = { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 };
-  //   this.isLoggedIn = true;
-  //   this.current_user = user;
-  // }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>('/api/sign_in', { email: email, password: password }, httpOptions);
+    return this.http.post<any>('/api/sign_in', { email: email, password: password }, httpOptions)
+      .pipe(map(user => {
+        if (user && user.token) {
+          this.current_user = JSON.parse(user);
+          this.isLoggedIn = true;
+          this.token = user['token'];
+        }
+      }));
   }
 
   logout(): void {
     this.isLoggedIn = false;
+    this.current_user = undefined;
+    this.token = '';
   }
 
   getUser(): User {

@@ -15,6 +15,8 @@ import { RoomModule } from './room/room.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { UserService } from "./services/user.service";
+import { AuthService } from "./auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,10 @@ import { SignInComponent } from './sign-in/sign-in.component';
   exports: [
     SignInComponent
   ],
-  providers: [],
+  providers: [
+    UserService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
