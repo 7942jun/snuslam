@@ -62,6 +62,7 @@ export class AuthGuard implements CanActivate {
     return true;
   }
   checkRoom(): boolean {
+    //if (this.authService.isInRoom()) {}
     return true;
   }
 

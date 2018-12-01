@@ -11,7 +11,7 @@ import { RoomService } from '../room.service';
 })
 export class RoompageComponent implements OnInit {
   roomlist: Room[];
-  
+
   constructor(private roomService: RoomService) { }
 
   ngOnInit() {

@@ -74,26 +74,45 @@ export class RoomDetailComponent implements OnInit {
     this.refreshUserlist();
     console.log('ff');
   }
+  onFinished(team: any) {
+    if ( team == null ) {
+
+    }
+    else {
+      this.roomService.deleteRoomById(this.room.id).subscribe(
+        () => this.router.navigate(['/room'])
+        );
+      }
+
+
+
+  }
 
 
   onChangeTeam() {
-    if (this.user.team !== 0) {
-      if (this.user.team === 1) {
-        this.user.team = 2;
-      } else {
-        this.user.team = 1;
-      }
-    } else {
-      if ( this.redteam.length > this.blueteam.length ) {
-        this.user.team = 2;
-      } else {
-        this.user.team = 1;
-      }
+    this.refresh();
+    if (this.isStarted) {
+      alert('Game is started! You cannot change your team');
     }
+    else {
+      if (this.user.team !== 0) {
+        if (this.user.team === 1) {
+          this.user.team = 2;
+        } else {
+          this.user.team = 1;
+        }
+      } else {
+        if ( this.redteam.length > this.blueteam.length ) {
+          this.user.team = 2;
+        } else {
+          this.user.team = 1;
+        }
+      }
 
-    this.roomService.changeTeam(this.user).subscribe(
-      () => this.refresh()
-    );
+      this.roomService.changeTeam(this.user).subscribe(
+        () => this.refresh()
+      );
+    }
   }
 
   start() {

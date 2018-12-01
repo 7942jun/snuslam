@@ -9,8 +9,9 @@
       <div *ngIf="!isStarted" class="well">
         <h3>Title: {{ room.title }}</h3>
         <h4>Location: {{ room.location }} Game type: {{ room.type }}:{{ room.type }} Play time: {{ room.play_time }}</h4>
+        <button (click) = "refresh()">Refresh</button>
       </div>
-      <div *ngIf="isStarted">Game Started!!!!!!!!!!!!!!!!!!!111</div> 
+      <div *ngIf="isStarted">Game Started!!!!!!!!!!!!!!!!!!!111</div>
       <br>
       <div style="text-align: left">
         <h4>Chatting1: SWPP is so hard!</h4>
@@ -22,11 +23,13 @@
     <div class="col-lg-2"></div>
     <div class="col-lg-4" style="text-align: center">
       <app-teamlist
+      [isHost] = "host_id == user.id"
       [play_time] = "play_time"
       [redteam] = "redteam"
       [blueteam] = "blueteam"
       [isStarted] = "isStarted"
       (changeteam) = "onChangeTeam($event)"
+      (isFinished) = "onFinished($event)"
       ></app-teamlist>
     </div>
     <div class="col-lg-1"></div>

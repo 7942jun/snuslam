@@ -2,6 +2,6 @@
   ingame works!{{play_time}}
 </p>
 <div>
-Timer 
+Timer
 </div>
-<countdown-timer [end]="time"></countdown-timer>
+<countdown-timer [end]="time" (zeroTrigger)="end($event)"></countdown-timer>
