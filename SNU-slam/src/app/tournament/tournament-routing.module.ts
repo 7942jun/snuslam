@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 import { TournamentComponent } from './tournament/tournament.component';
 import { TournamentCreateComponent } from './tournament-create/tournament-create.component';
 import { TournamentOngoingComponent } from './tournament-ongoing/tournament-ongoing.component';
+import { TournamentParticipateComponent } from './tournament-participate/tournament-participate.component';
 
 
 const tournamentRoutes: Routes = [
   { path: 'tournament', component: TournamentComponent},
   { path: 'tournament/create', component: TournamentCreateComponent},
-  { path: 'tournament/ongoing/:id', component: TournamentOngoingComponent}
+  { path: 'tournament/ongoing/:id', component: TournamentOngoingComponent},
+  { path: 'tournament/participate/:id', component: TournamentParticipateComponent}
 ];
 
 
