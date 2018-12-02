@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { UserService } from "../services/user.service";
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,7 +24,7 @@ export class SignInComponent implements OnInit {
     public router: Router
   ) {
     this.signInForm = formBuilder.group({
-      email: new FormControl('',[ Validators.required ]),
+      email: new FormControl('', [ Validators.required ]),
       password: new FormControl('', [ Validators.required ])
     });
     this.email = this.signInForm.controls['email'];
