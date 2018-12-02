@@ -15,7 +15,7 @@ def chat(request):
 def user(request):
 	if request.method == 'GET':
 		user_list = [profile.json() for profile in Profile.objects.all()]
-		return HttpResponse(json.dumps(user_list), content_type='appication/json')
+		return HttpResponse(json.dumps(user_list), content_type='application/json')
 	elif request.method == 'POST':
 		#todo: 중복 체크 구현
 		data = json.loads(request.body.decode())
@@ -27,7 +27,7 @@ def user(request):
 		position = data['position']
 		user.profile.position = position
 		user.profile.save()		
-		return HttpResponse(status=201)
+		return HttpResponse(json.dumps(user.profile.json()), content_type='application/json', status=201)
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
@@ -63,10 +63,11 @@ def user_detail(request, id):
 def rank(request):
 	if request.method == 'GET':
 		rank_list = [profile.json() for profile in Profile.objects.all()]
-		return HttpResponse(json.dumps(rank_list), content_type='appication/json')
+		return HttpResponse(json.dumps(rank_list), content_type='application/json')
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
+@csrf_exempt
 def sign_in(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode())
@@ -77,10 +78,12 @@ def sign_in(request):
 		except User.DoesNotExist:
 			return HttpResponse(status=401)
 		username = temp.username
+		profile = Profile.objects.get(id=temp.id)
+		response_dic = profile.json()
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
-			return HttpResponse(status=204)
+			return HttpResponse(json.dumps(response_dic), content_type='application/json', status=200)
 		else:
 			return HttpResponse(status=401)
 	else:
@@ -100,7 +103,7 @@ def sign_out(request):
 def room(request):
 	if request.method == 'GET':
 		room_list = [room.json() for room in Room.objects.all()]
-		return HttpResponse(json.dumps(room_list), content_type='appication/json')
+		return HttpResponse(json.dumps(room_list), content_type='application/json')
 	elif request.method == 'POST':
 		data = json.loads(request.body.decode())
 		title = data['title']
@@ -230,6 +233,7 @@ def team_detail(request, id):
 		team.members.add(user)
 		team.save()
 		return HttpResponse(status=200)
+		user3.save()
 	elif request.method == 'DELETE':
 		try:
 			team = Team.objects.get(id=id)
@@ -239,4 +243,3 @@ def team_detail(request, id):
 		return HttpResponse(status=200)
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
-

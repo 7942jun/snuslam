@@ -34,6 +34,7 @@ class UserTestCase(TestCase):
 		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
 		self.assertEqual(response.status_code, 201)
 		self.assertEqual(1, User.objects.all().count())
+		self.assertIn('1234', response.content.decode())
 
 		user = User.objects.get(id=1)
 		self.assertEqual(user.profile.position, 'guard')
@@ -87,7 +88,8 @@ class SignInOutTestCase(TestCase):
 		
 		#올바른 sign_in 
 		response = client.post('/api/sign_in', json.dumps({'email':'1111@gmail.com', 'password':'1234'}), content_type='application/json')
-		self.assertEqual(response.status_code, 204)
+		self.assertEqual(response.status_code, 200)
+		self.assertIn('user1', response.content.decode())
 
 		#사용자가 로그인 되어있을 때 sign_out
 		response = client.get('/api/sign_out')
@@ -203,6 +205,7 @@ class RoomTestCase(TestCase):
 		new_room_json = {'title':'room3!', 'host':3, 'location':'somewhere', 'play_time':20, 'type':8}
 		response = client.post('/api/room', json.dumps(new_room_json), content_type='application/json')
 		self.assertEqual(response.status_code, 201)
+		self.assertIn('3', response.content.decode())
 
 		#'/room/:id'에 get이 잘 작동하는지 확인
 		response = client.get('/api/room/3')
