@@ -72,18 +72,17 @@ def rank(request):
 @csrf_exempt
 def sign_in(request):
 	if request.method == 'POST':
-		#data = json.loads(request.body.decode())
-		#email = data['email']
-		#password = data['password']
-		username = request.POST.get('email', False)
-		password = request.POST.get('password', False)
-		#profile = Profile.objects.get(id=temp.id)
-		#response_dic = profile.json()
+		data = json.loads(request.body.decode())
+		email = data['email']
+		password = data['password']
+		try:
+			username = User.objects.get(email=email).username
+		except User.DoesNotExist:
+			return HttpResponse(status=401)
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
-			return HttpResponse(status=200)
-			#return HttpResponse(json.dumps(user.profile.json()), content_type='application/json', status=200)
+			return HttpResponse(json.dumps(user.profile.json()), content_type='application/json', status=200)
 		else:
 			return HttpResponse(status=401)
 	else:
