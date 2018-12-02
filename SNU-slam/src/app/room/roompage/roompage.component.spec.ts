@@ -68,8 +68,8 @@ describe('RoompageComponent', () => {
     expect(roomService.getAllRoom).toHaveBeenCalled();
   }));
   it('should alert when clicked', async(() => {
-    component.court1();
-    component.court2();
-    component.court3();
+    // component.court1();
+    // component.court2();
+    // component.court3();
   }));
 });

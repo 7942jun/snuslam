@@ -21,7 +21,7 @@ describe('AuthService', () => {
   });
 
   it('should login', () => {
-    authService.login()
+    authService.login();
     expect(authService.current_user.email).toBe('swpp1@snu.ac.kr');
     expect(authService.isLoggedIn).toBeTruthy();
   });
