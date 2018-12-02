@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TournamentService } from '../tournament.service';
 import { TeamService } from '../team.service';
+import { UserService } from '../../services/user.service';
 import { of, Observable } from 'rxjs';
 import { Tournament } from '../../tournament';
 import { User } from '../../user';

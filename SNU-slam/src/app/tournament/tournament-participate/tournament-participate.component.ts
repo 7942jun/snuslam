@@ -5,7 +5,7 @@ import { TournamentService } from '../tournament.service';
 import { TeamService } from '../team.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { UserService } from "../../services/user.service";
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-tournament-participate',
