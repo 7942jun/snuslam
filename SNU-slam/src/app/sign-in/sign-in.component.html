@@ -6,12 +6,12 @@
     <div class="modal-body">
       <div>
         <label class="control-label">Email:</label>
-        <input type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)"
+        <input id="email" type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)"
                [formControl]="signInForm.controls['email']">
       </div>
       <div>
         <label class="control-label">Password:</label>
-        <input type="password" class="form-control" placeholder="Enter password"
+        <input id="password" type="password" class="form-control" placeholder="Enter password"
                [formControl]="signInForm.controls['password']">
       </div>
     </div>

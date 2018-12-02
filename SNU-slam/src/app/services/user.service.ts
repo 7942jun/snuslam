@@ -12,9 +12,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  private user: User;
 
-  private userUrl = '/api/user/';
+  isLoggedIn = false;
+  current_user: User;
+
+  private userUrl = '/api/user';
+  private signUrl = '/api/sign_in';
 
   constructor(private http: HttpClient) { }
 
@@ -43,6 +46,44 @@ export class UserService {
       .pipe(tap(_ => this.log(`found users matching "${term}"`)),
         catchError(this.handleError<User[]>('searchUsers', []))
     );
+  }
+
+  login(email: string, password: string): Observable<User> {
+    const data = JSON.stringify({ email: email, password: password });
+    return this.http.post<User>(this.signUrl, data, httpOptions);
+    // .pipe(user => {
+    //   console.log(user);
+    //   // if (user > 0) {
+    //   //   this.isLoggedIn = true;
+    //   //   alert('Sign in success!');
+    //   // } else {
+    //   //   alert('Sign in failed!');
+    //   // }
+    // });
+  }
+
+  getCSRFHeaders(): HttpHeaders {
+    let token = '';
+    if (document.cookie) {
+      token = document.cookie.split('csrftoken=')[1].split(';')[0];
+    }
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': token
+    });
+  }
+
+  logout(): void {
+    this.isLoggedIn = false;
+    this.current_user = undefined;
+  }
+
+  getUser(): User {
+    if ( this.isLoggedIn ) {
+      return this.current_user;
+    } else {
+      return;
+    }
   }
 
   private log(message: string) {

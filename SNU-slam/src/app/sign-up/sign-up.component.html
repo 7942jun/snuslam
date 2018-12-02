@@ -1,32 +1,40 @@
-<div style="position: absolute; top: 110px; left: 100px;">
-  <button (click)="goBack()" class="btn btn-default" style="width: 100px">Back</button>
-</div>
-
 <div class="container">
   <h1 style="text-align: center">Sign Up</h1>
   <br>
   <br>
-  <label class="control-label col-sm-2">Email:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Email:</label>
     <input type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)" [(ngModel)]="newUser.email">
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-2">Password:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Password:</label>
     <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="newUser.password">
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-2">Password Confirm:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Password Confirm:</label>
     <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="pw_confirm">
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-2">Nickname:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Nickname:</label>
     <input type="string" class="form-control" placeholder="Enter nickname" [(ngModel)]="newUser.username">
+  </div>
+  <br>
+  <br>
+  <div class="col-sm-10">
+    <label class="control-label col-sm-2">Position:</label>
+    <select class="form-control" [(ngModel)]="newUser.position">
+      <option>SG</option>
+      <option>PG</option>
+      <option>SF</option>
+      <option>PF</option>
+      <option>C</option>
+    </select>
   </div>
 </div>
 <br>
