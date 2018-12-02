@@ -7,7 +7,7 @@ import { Team } from '../team';
 import { TeamService } from './team.service';
 
 const mockTeam: Team = {id: 1, name: 'team1name', leader_id: 1,
-  members_id: [],  tournament_id: 1};
+  members_id: []};
 
 describe('TeamService', () => {
   let httpClient: HttpClient;
