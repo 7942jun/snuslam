@@ -5,7 +5,6 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	teams_id = models.ManyToManyField(User, related_name='%(class)s_teams')
 	position = models.CharField(max_length=100)
 	wins = models.IntegerField(default=0)
 	loses = models.IntegerField(default=0)
@@ -18,7 +17,6 @@ class Profile(models.Model):
 			'email': self.user.email,
 			'password': self.user.password,
 			'username': self.user.username,
-			'teams': [user.id for user in self.teams_id.all()],
 			'position': self.position,
 			'wins': self.wins,
 			'loses': self.loses,
@@ -38,16 +36,16 @@ class Profile(models.Model):
 		instance.profile.save()
 
 class Team(models.Model):
-	leader = models.ForeignKey(User, on_delete=models.CASCADE)
-	members = models.ManyToManyField(User, related_name='%(class)s_users')
+	leader_id = models.ForeignKey(User, on_delete=models.CASCADE)
+	members_id = models.ManyToManyField(User, related_name='%(class)s_users')
 	name = models.CharField(max_length=20)
 
 	def json(self):
 		return {
 			'id': self.id,
 			'name': self.name,
-			'leader': self.leader.id,
-			'members': [user.id for user in self.members.all()]
+			'leader_id': self.leader_id.id,
+			'members_id': [user.id for user in self.members_id.all()]
 		}
 
 class Room(models.Model):
@@ -73,7 +71,12 @@ class Tournament(models.Model):
 	title = models.CharField(max_length=100)
 	host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_user')
 	teams = models.ManyToManyField(Team, related_name='%(class)s_teams')
-	type = models.IntegerField(default=0)
+	game_type = models.IntegerField(default=0)
+	total_team = models.IntegerField(default=0)
+	result1 = models.ManyToManyField(Team, related_name='%(class)s_result1')
+	result2 = models.ManyToManyField(Team, related_name='%(class)s_result2')
+	result3 = models.ManyToManyField(Team, related_name='%(class)s_result3')
+	state = models.IntegerField(default=0)
 	reward = models.CharField(max_length=100)
 
 	def json(self):
@@ -82,6 +85,11 @@ class Tournament(models.Model):
 			'title': self.title,
 			'host': self.host.id,
 			'teams': [team.id for team in self.teams.all()],
-			'type': self.type,
+			'result1': [team.id for team in self.result1.all()],
+			'result2': [team.id for team in self.result2.all()],
+			'result3': [team.id for team in self.result3.all()],
+			'total_team': self.total_team,
+			'game_type': self.game_type,
+			'state': self.state,
 			'reward': self.reward
 		}
