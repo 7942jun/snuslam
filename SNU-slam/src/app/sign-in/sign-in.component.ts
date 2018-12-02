@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Location } from '@angular/common';
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: 'app-sign-in',
@@ -18,7 +18,7 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private authService: AuthService,
+    private userService: UserService,
     private location: Location,
     private formBuilder: FormBuilder,
     public router: Router
@@ -35,17 +35,11 @@ export class SignInComponent implements OnInit {
   }
 
   sign_in() {
-    this.authService.login(this.email.value, this.password.value).subscribe(user => {
-      if (user != undefined) {
-        this.authService.current_user = user;
-        this.authService.isLoggedIn = true;
-        this.router.navigate(['room']);
-      }
-    });
+    this.userService.login(this.email.value, this.password.value).subscribe();
   }
 
   sign_out() {
-    this.authService.logout();
+    this.userService.logout();
   }
 
   openModal(content) {

@@ -33,14 +33,11 @@ export class SignUpComponent implements OnInit {
 
     this.userService.postUser(this.newUser).subscribe(
       user => {
-        console.log(user);
         if (user.id > 0) {
           this.goBack();
           alert('Sign up success!');
-        } else {
-          alert('Sign up failed!');
         }
-      }
+      }, () => alert('Sign up failed!')
     );
 
   }

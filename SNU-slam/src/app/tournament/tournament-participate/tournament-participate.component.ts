@@ -5,7 +5,7 @@ import { TournamentService } from '../tournament.service';
 import { TeamService } from '../team.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-tournament-participate',
@@ -21,14 +21,14 @@ export class TournamentParticipateComponent implements OnInit {
   constructor(
     private tournamentService: TournamentService,
     private teamService: TeamService,
-    private authService: AuthService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
 
   ngOnInit() {
     this.getTournament();
-    this.leaderId = this.authService.getUser();
+    this.leaderId = this.userService.getUser();
   }
 
   getTournament(): void {

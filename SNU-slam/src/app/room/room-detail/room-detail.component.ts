@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../user';
 import { Room } from '../../room';
 import { RoomService } from '../room.service';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-room-detail',
@@ -24,13 +24,13 @@ export class RoomDetailComponent implements OnInit {
 
   constructor(
     private roomService: RoomService,
-    private authService: AuthService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.user = this.authService.getUser();
+    this.user = this.userService.getUser();
     this.getRoom();
     this.getUserlist();
 
