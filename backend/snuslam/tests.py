@@ -34,7 +34,7 @@ class UserTestCase(TestCase):
 		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
 		self.assertEqual(response.status_code, 201)
 		self.assertEqual(1, User.objects.all().count())
-		self.assertIn('1234', response.content.decode())
+		self.assertIn('raa', response.content.decode())
 
 		user = User.objects.get(id=1)
 		self.assertEqual(user.profile.position, 'guard')
@@ -164,12 +164,12 @@ class ModelTestCase(TestCase):
 		self.assertEqual(Team.objects.get(id=1).leader_id, user)
 		self.assertEqual(Team.objects.get(id=1).members_id.count(), 0)
 
-		tournament = Tournament(title='My Life for Aiur', host=user, game_type=8, reward='$1000')
+		tournament = Tournament(title='My Life for Aiur', host=1, game_type=8, reward='$1000')
 		tournament.save()
 
 		self.assertEqual(Tournament.objects.all().count(), 1)
 		self.assertEqual(Tournament.objects.get(id=1).title, 'My Life for Aiur')
-		self.assertEqual(Tournament.objects.get(id=1).host, user)
+		self.assertEqual(Tournament.objects.get(id=1).host, 1)
 		self.assertEqual(Tournament.objects.get(id=1).teams.count(), 0)
 		self.assertEqual(Tournament.objects.get(id=1).game_type, 8)
 		self.assertEqual(Tournament.objects.get(id=1).reward, '$1000')
@@ -324,9 +324,9 @@ class TournamentTestCase(TestCase):
 		team2.save()
 		team3 = Team(name='team3!', leader_id=user3)
 		team3.save()
-		tournament = Tournament(title='tournament1!', host=user, game_type=8, reward='reward1')
+		tournament = Tournament(title='tournament1!', host=1, game_type=8, reward='reward1')
 		tournament.save()
-		tournament2 = Tournament(title='tournament2!', host=user2, game_type=4, reward='reward2')
+		tournament2 = Tournament(title='tournament2!', host=2, game_type=4, reward='reward2')
 		tournament2.save()
 
 	def test_tournament(self):
