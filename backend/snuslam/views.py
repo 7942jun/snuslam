@@ -155,7 +155,7 @@ def room_user(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
-
+@csrf_exempt
 def tournament(request):
 	if request.method == 'GET':
 		tournament_list = [tournament.json() for tournament in Tournament.objects.all()]

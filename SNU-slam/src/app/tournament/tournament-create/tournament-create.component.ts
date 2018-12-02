@@ -12,10 +12,10 @@ export class TournamentCreateComponent implements OnInit {
 
   tournaments: Tournament[];
 
-  title;
-  prize;
-  game_type;
-  total_team;
+  title: string;
+  prize: string;
+  game_type: number;
+  total_team: number;
   teams: number[];
   result1 = [-1, -1, -1, -1];
   result2 = [-1, -1];

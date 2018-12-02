@@ -76,7 +76,7 @@ class Tournament(models.Model):
 	result1 = models.ManyToManyField(Team, related_name='%(class)s_result1')
 	result2 = models.ManyToManyField(Team, related_name='%(class)s_result2')
 	result3 = models.ManyToManyField(Team, related_name='%(class)s_result3')
-	state = models.IntegerField(default=0)
+	state = models.IntegerField(default=1)
 	reward = models.CharField(max_length=100)
 
 	def json(self):
