@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { RoomService } from '../room.service';
 import { RoomcreateComponent } from './roomcreate.component';
 import { of } from 'rxjs';
-import { AuthService } from '../../auth/auth.service';
 import { Room } from '../../room';
 
 const mockRoom: Room = { 
@@ -25,13 +24,13 @@ describe('RoomcreateComponent', () => {
   let component: RoomcreateComponent;
   let fixture: ComponentFixture<RoomcreateComponent>;
   let roomService: jasmine.SpyObj<RoomService>;
-  let authService: jasmine.SpyObj<AuthService>;
+  let userService: jasmine.SpyObj<UserService>;
   let httpClient: HttpClient;
 
   beforeEach(async(() => {
     const roomSpy = jasmine.createSpyObj('RoomService', ['addRoom']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
-    const authSpy = jasmine.createSpyObj('AuthService', ['getUser']);
+    const userSpy = jasmine.createSpyObj('UserService', ['getUser']);
     const componentSpy = jasmine.createSpyObj('RoomcreateComponent', ['createroom']);
     TestBed.configureTestingModule({
       declarations: [ RoomcreateComponent ],
@@ -43,7 +42,7 @@ describe('RoomcreateComponent', () => {
       providers: [
         { provide: RoomService, useValue: roomSpy},
         { provide: Router,      useValue: routerSpy },
-        { provide: AuthService, useValue: authSpy },
+        { provide: UserService, useValue: userSpy },
         { provide: RoomcreateComponent, useValue: componentSpy},
       ],
     })
@@ -53,8 +52,8 @@ describe('RoomcreateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomcreateComponent);
     component = fixture.componentInstance;
-    authService = TestBed.get(AuthService);
-    authService.getUser.and.returnValue(1);
+    userService = TestBed.get(UserService);
+    userService.getUser.and.returnValue(1);
     roomService = TestBed.get(RoomService);
     roomService.addRoom.and.returnValue(of(mockRoom));
     fixture.detectChanges();
@@ -64,11 +63,11 @@ describe('RoomcreateComponent', () => {
     expect(component).toBeTruthy();
   });
   it('should get user id at ngOnInit', async(() => {
-    authService.getUser.and.returnValue(1);
+    userService.getUser.and.returnValue(1);
     component.ngOnInit();
     component.id = 1;
     expect(component.id).toEqual(1);
-    expect(authService.getUser).toHaveBeenCalled();
+    expect(userService.getUser).toHaveBeenCalled();
   }));
   it('should not add room when there is a missing content', () => {
     component.title = '';
