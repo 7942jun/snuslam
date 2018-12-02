@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TournamentService } from '../tournament.service';
 import { TeamService } from '../team.service';
+import { UserService } from '../../services/user.service';
 import { of, Observable } from 'rxjs';
 import { Tournament } from '../../tournament';
 import { User } from '../../user';
@@ -66,7 +67,7 @@ describe('TournamentParticipateComponent', () => {
     tournamentService.getTournamentById.and.returnValue(of(mockTournament));
     tournamentService.updateTournament.and.returnValue(of(null));
     teamService = TestBed.get(TeamService);
-    userService = TestBed.get(userService);
+    userService = TestBed.get(UserService);
     userService.getUser.and.returnValue(of(mockUser));
     fixture.detectChanges();
   });

@@ -11,8 +11,8 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UserService } from "../services/user.service";
 
 const mockRoomList = [
-  { id: 0, title: 'room_0', host_id: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false },
-  { id: 5, title: 'room_5', host_id: 5, guests_id: [], location: 'nat', play_time: 120, creation_time: new Date("2015-04-25"), type: 3, ingame: false}
+  { id: 0, title: 'room_0', host: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false },
+  { id: 5, title: 'room_5', host: 5, guests_id: [], location: 'nat', play_time: 120, creation_time: new Date("2015-04-25"), type: 3, ingame: false}
 ];
 
 describe('MainComponent', () => {

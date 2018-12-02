@@ -10,7 +10,7 @@ import { RoomService } from './room.service';
 const mockRoomList: Room[] = [
   { id: 1,
     title: 'test1',
-    host_id: 1,
+    host: 1,
     guests_id: [2, 3, 4],
     location: '301',
     play_time: 60,
@@ -24,7 +24,7 @@ const mockRoomList: Room[] = [
 const mockRoom: Room ={
   id: 1,
   title: 'test1',
-  host_id: 1,
+  host: 1,
   guests_id: [2, 3, 4],
   location: '301',
   play_time: 60,

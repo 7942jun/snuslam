@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignInComponent } from './sign-in.component';
-import { Router } from "@angular/router";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Location } from "@angular/common";
+import { Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Location } from '@angular/common';
+import { UserService } from '../services/user.service';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -22,7 +23,7 @@ describe('SignInComponent', () => {
       ['open']);
     const signInSpy = jasmine.createSpyObj('SIgnInComponent',
       ['sign_in']);
-    const location = jasmine.createSpyObj('Location', ['back']);
+    const locationSpy = jasmine.createSpyObj('Location', ['back']);
 
     TestBed.configureTestingModule({
       declarations: [ SignInComponent ],
@@ -54,16 +55,16 @@ describe('SignInComponent', () => {
   it('should call sign_in', () => {
     signInComponent.sign_in();
     expect(signInComponent.sign_in).toHaveBeenCalled();
-  })
+  });
 
   it('should call navigate', () => {
     component.sign_in();
     expect(router.navigate).toHaveBeenCalled();
-  })
+  });
 
   it('should call goBack', () => {
     component.goBack();
     expect(location.back).toHaveBeenCalled();
-  })
+  });
 
 });
