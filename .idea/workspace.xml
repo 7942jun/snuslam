@@ -2,67 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ae023b5-fa16-4105-866b-ea328b3fae9d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/team.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/team.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/snuslam/.views.py.swp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/auth/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/auth/auth.guard.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/in-memory-data.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/in-memory-data.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/ingame/ingame.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/ingame/ingame.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/ingame/ingame.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/ingame/ingame.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/ingame/ingame.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/room-detail/room-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/room-detail/room-detail.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/room-detail/room-detail.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/room-detail/room-detail.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/room-detail/room-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/room-detail/room-detail.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/room-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/room-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/room.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/room.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/roomcreate/roomcreate.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/roomcreate/roomcreate.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/roomcreate/roomcreate.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/roomcreate/roomcreate.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/roomlist/roomlist.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/roomlist/roomlist.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/roomlist/roomlist.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/roomlist/roomlist.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/roompage/roompage.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/roompage/roompage.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/roompage/roompage.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/roompage/roompage.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/roompage/roompage.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/roompage/roompage.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/teamlist/teamlist.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/teamlist/teamlist.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/teamlist/teamlist.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/teamlist/teamlist.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/room/teamlist/teamlist.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/room/teamlist/teamlist.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/services/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/sign-up/sign-up.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/sign-up/sign-up.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/sign-up/sign-up.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/sign-up/sign-up.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-create/tournament-create.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-create/tournament-create.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-create/tournament-create.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-create/tournament-create.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-create/tournament-create.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-create/tournament-create.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-ongoing/tournament-ongoing.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-ongoing/tournament-ongoing.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-ongoing/tournament-ongoing.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-ongoing/tournament-ongoing.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-ongoing/tournament-ongoing.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-ongoing/tournament-ongoing.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-participate/tournament-participate.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-participate/tournament-participate.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-participate/tournament-participate.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-participate/tournament-participate.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament/tournament.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament/tournament.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament/tournament.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/SNU-slam/src/app/tournament/tournament/tournament.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.coverage" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.coverage" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/snuslam/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0002_remove_tournament_max_team.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0003_remove_tournament_admin_approval.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0004_auto_20181112_2209.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0005_auto_20181112_2214.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0006_auto_20181112_2228.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0007_auto_20181112_2231.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0008_remove_tournament_result.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0009_profile_teams_id.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/migrations/0010_profile_team.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/snuslam/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/snuslam/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/snuslam/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -89,10 +30,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="html" value="1" />
           <entry key="ts" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="HTML" value="1" />
+          <entry key="TypeScript" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="ts" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="TypeScript" value="1" />
         </counts>
@@ -104,11 +57,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SNU-slam/src/app/auth/auth.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-30">
-              <caret line="13" column="26" lean-forward="true" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+            <state relative-caret-position="156">
+              <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SNU-slam/src/app/sign-up/sign-up.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -122,6 +84,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.ts" />
+        <option value="$PROJECT_DIR$/SNU-slam/src/app/sign-up/sign-up.component.html" />
+        <option value="$PROJECT_DIR$/SNU-slam/src/app/auth/auth.service.ts" />
       </list>
     </option>
   </component>
@@ -1730,18 +1694,18 @@
       <option name="presentableId" value="Default" />
       <updated>1543731954358</updated>
       <workItem from="1543731955873" duration="29000" />
-      <workItem from="1543743638886" duration="987000" />
+      <workItem from="1543743638886" duration="1113000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1016000" />
+    <option name="totallyTimeSpent" value="1142000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="204" y="60" width="1395" height="798" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18075801" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18075801" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" weight="0.3218563" />
@@ -1754,7 +1718,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32934132" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32934132" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1826,10 +1790,17 @@
     <entry file="file://$PROJECT_DIR$/SNU-slam/src/app/sign-in/sign-in.component.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/SNU-slam/src/app/sign-up/sign-up.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SNU-slam/src/app/auth/auth.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-30">
-          <caret line="13" column="26" lean-forward="true" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+        <state relative-caret-position="156">
+          <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>

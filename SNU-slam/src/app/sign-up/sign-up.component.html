@@ -2,37 +2,37 @@
   <h1 style="text-align: center">Sign Up</h1>
   <br>
   <br>
-  <label class="control-label col-sm-2">Email:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Email:</label>
     <input type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)" [(ngModel)]="newUser.email">
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-2">Password:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Password:</label>
     <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="newUser.password">
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-2">Password Confirm:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Password Confirm:</label>
     <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="pw_confirm">
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-2">Nickname:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Nickname:</label>
     <input type="string" class="form-control" placeholder="Enter nickname" [(ngModel)]="newUser.username">
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-2">Position:</label>
   <div class="col-sm-10">
+    <label class="control-label col-sm-2">Position:</label>
     <select class="form-control" [(ngModel)]="newUser.position">
-      <option>PG</option>
       <option>SG</option>
-      <option>PF</option>
+      <option>PG</option>
       <option>SF</option>
+      <option>PF</option>
       <option>C</option>
     </select>
   </div>

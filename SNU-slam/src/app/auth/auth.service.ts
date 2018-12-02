@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
 import { Observable, of } from 'rxjs';
+<<<<<<< HEAD
 import { map } from 'rxjs/operators';
+=======
+import { map } from "rxjs/operators";
+>>>>>>> 1ad610184a96c89998029b2e426b733e81f0ce2b
 
 const httpOptions = {
   headers: this.getCSRFHeaders()
