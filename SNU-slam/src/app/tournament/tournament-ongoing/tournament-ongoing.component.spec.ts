@@ -4,14 +4,10 @@ import { TournamentOngoingComponent } from './tournament-ongoing.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule} from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TournamentService } from '../tournament.service';
 import { of, Observable } from 'rxjs';
-import { Location } from '@angular/common';
 import { Tournament } from '../../tournament';
-import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
-import { ExpectedConditions } from 'protractor';
-import { convertToParamMap} from '@angular/router';
 
 
 const mockTournament: Tournament = {id: 1, title: 'test1', host: 1, teams: [1, 2, 3, 4], game_type: 3,
@@ -38,7 +34,7 @@ describe('TournamentOngoingComponent', () => {
       providers: [
         { provide: TournamentService, useValue: tournamentSpy},
         { provide: Router,            useValue: routerSpy },
-        { provide: ActivatedRoute,       useValue: {
+        { provide: ActivatedRoute,    useValue: {
           snapshot: {
             paramMap: convertToParamMap({
               id: '1'

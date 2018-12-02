@@ -90,4 +90,21 @@ describe('TournamentComponent', () => {
     expect(tournamentService.deleteTournament).toHaveBeenCalled();
   }));
 
+  it('should return 승인 중 when state is 1', () => {
+    const returnValue = component.state(1);
+    expect(returnValue).toEqual('승인 중');
+  });
+  it('should return 신청 중 when state is 2', () => {
+    const returnValue = component.state(2);
+    expect(returnValue).toEqual('신청 중');
+  });
+  it('should return 진행 중 when state is 3', () => {
+    const returnValue = component.state(3);
+    expect(returnValue).toEqual('진행 중');
+  });
+  it('should return 종료 when state is 4', () => {
+    const returnValue = component.state(4);
+    expect(returnValue).toEqual('종료');
+  });
+
 });

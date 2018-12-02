@@ -17,6 +17,7 @@ export class TournamentParticipateComponent implements OnInit {
   name;
   leaderId;
   team: Team;
+  id;
   constructor(
     private tournamentService: TournamentService,
     private teamService: TeamService,
@@ -31,8 +32,8 @@ export class TournamentParticipateComponent implements OnInit {
   }
 
   getTournament(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.tournamentService.getTournamentById(id)
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.tournamentService.getTournamentById(this.id)
       .subscribe(tournament => {
                   this.tournament = tournament;
                   });
@@ -45,13 +46,17 @@ export class TournamentParticipateComponent implements OnInit {
     const check = confirm('Your team name: ' + this.name + '\n' + 'Is it correct?');
 
     if (check) {
-      this.getTournament();
+      this.tournamentService.getTournamentById(this.id)
+      .subscribe(tournament => {
+                  this.tournament = tournament;
+                  });
       if (this.tournament.state != 2) {
         alert('Tournament has already started!');
+        this.router.navigateByUrl(`tournament`);
       }
       else {
         this.teamService.addTeam(
-          {name: this.name, leader_id: this.leaderId, members_id: [], tournament_id: this.tournament.id} as Team)
+          {name: this.name, leader_id: this.leaderId, members_id: []} as Team)
             .subscribe(team => {
             this.tournament.teams.push(team.id);
             if (this.tournament.teams.length == 8) {
