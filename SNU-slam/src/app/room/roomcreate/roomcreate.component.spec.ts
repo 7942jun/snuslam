@@ -9,10 +9,10 @@ import { of } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { Room } from '../../room';
 
-const mockRoom: Room = { 
+const mockRoom: Room = {
     id: 1,
     title: 'title',
-    host_id: 1,
+    host: 1,
     guests_id: [],
     location: 'nat',
     play_time: 60,

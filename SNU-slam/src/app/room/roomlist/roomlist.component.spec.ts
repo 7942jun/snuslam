@@ -8,7 +8,7 @@ import { Room } from '../../room';
 const mockRoomList: Room[] = [
   { id: 1,
     title: 'test1',
-    host_id: 1,
+    host: 1,
     guests_id: [2, 3, 4],
     location: '301',
     play_time: 60,

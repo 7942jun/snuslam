@@ -85,7 +85,7 @@ export class RoomDetailComponent implements OnInit {
   }
 
 
-  onChangeTeam() {
+  onChangeTeam(any) {
     this.refresh();
     if (this.isStarted) {
       alert('Game is started! You cannot change your team');

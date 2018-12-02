@@ -13,7 +13,7 @@ import { AuthService } from '../../auth/auth.service';
 import { convertToParamMap} from '@angular/router';
 import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
 
-const mockRoom: Room =  { id: 1, title: 'room_0', host_id: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false };
+const mockRoom: Room =  { id: 1, title: 'room_0', host: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false };
 
 const mockUserList: User[] = [
  { id: 1, email: 'swpp1@snu.ac.kr', password: '11', username : 'user_1', position: 'c', wins: 2, loses: 3, teams_id: [1], point: 1000, team: 2 },
@@ -23,6 +23,8 @@ const mockUser: User = { id: 1, email: 'swpp1@snu.ac.kr', password: '11', userna
 @Component({selector: 'app-teamlist', template: ''})
 export class MockTeamlistComponent {
   @Input()
+  isHost: boolean;
+  @Input()
   play_time: number;
   @Input()
   redteam: User[];
@@ -31,7 +33,9 @@ export class MockTeamlistComponent {
   @Input()
   isStarted: boolean;
   @Output()
-  changeteam: EventEmitter<void> = new EventEmitter();
+  changeteam: EventEmitter<any> = new EventEmitter();
+  @Output()
+  isFinished: EventEmitter<any> = new EventEmitter();
 }
 
 describe('RoomDetailComponent', () => {
@@ -94,7 +98,7 @@ describe('RoomDetailComponent', () => {
   // it('should create', async(() => {
   //   expect(component).toBeTruthy();
   // }));
-  it('should retrivce rooms and user at ngOnInit', async(() => {
+  it('should retrive rooms and user at ngOnInit', async(() => {
     expect(component).toBeTruthy();
     // authService.getUser.and.returnValue(of);
     // roomService.getRoomById.and.returnValue(of(mockRoom));
@@ -105,8 +109,8 @@ describe('RoomDetailComponent', () => {
     expect(roomService.getRoomById).toHaveBeenCalled();
     expect(roomService.getRoomUserById).toHaveBeenCalled();
     expect(authService.getUser).toHaveBeenCalled();
-    //component.start();
+    component.start();
     component.onChangeTeam();
-    // component.goBack();
+    component.goBack();
   }));
 });
