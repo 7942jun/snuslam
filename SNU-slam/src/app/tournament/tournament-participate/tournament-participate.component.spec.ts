@@ -17,7 +17,7 @@ const mockTournament: Tournament = {id: 1, title: 'test1', host: 1, teams: [], g
 total_team: 8, result1: [-1, -1, -1, -1], result2: [-1, -1], result3: [-1], reward: 'test1', state: 2};
 
 const mockTeam: Team = {id: 1, name: 'team1name', leader_id: 1,
-  members_id: [],  tournament_id: 1};
+  members_id: []};
 
 const mockUser: User = { id: 1, email: 'swpp3@snu.ac.kr', password: '11', username : 'user_3', position: 'sf', wins: 4, loses: 5, teams_id: [1], point: 1400, team: 1 };
 

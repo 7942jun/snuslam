@@ -15,7 +15,7 @@ def chat(request):
 def user(request):
 	if request.method == 'GET':
 		user_list = [profile.json() for profile in Profile.objects.all()]
-		return HttpResponse(json.dumps(user_list), content_type='appication/json')
+		return HttpResponse(json.dumps(user_list), content_type='application/json')
 	elif request.method == 'POST':
 		#todo: 중복 체크 구현
 		data = json.loads(request.body.decode())
@@ -27,7 +27,7 @@ def user(request):
 		position = data['position']
 		user.profile.position = position
 		user.profile.save()		
-		return HttpResponse(status=201)
+		return HttpResponse(json.dumps(user.profile.json()), content_type='application/json', status=201)
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
@@ -63,10 +63,11 @@ def user_detail(request, id):
 def rank(request):
 	if request.method == 'GET':
 		rank_list = [profile.json() for profile in Profile.objects.all()]
-		return HttpResponse(json.dumps(rank_list), content_type='appication/json')
+		return HttpResponse(json.dumps(rank_list), content_type='application/json')
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
+@csrf_exempt
 def sign_in(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode())
@@ -77,10 +78,12 @@ def sign_in(request):
 		except User.DoesNotExist:
 			return HttpResponse(status=401)
 		username = temp.username
+		profile = Profile.objects.get(id=temp.id)
+		response_dic = profile.json()
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
-			return HttpResponse(status=204)
+			return HttpResponse(json.dumps(response_dic), content_type='application/json', status=200)
 		else:
 			return HttpResponse(status=401)
 	else:
@@ -100,7 +103,7 @@ def sign_out(request):
 def room(request):
 	if request.method == 'GET':
 		room_list = [room.json() for room in Room.objects.all()]
-		return HttpResponse(json.dumps(room_list), content_type='appication/json')
+		return HttpResponse(json.dumps(room_list), content_type='application/json')
 	elif request.method == 'POST':
 		data = json.loads(request.body.decode())
 		title = data['title']
@@ -160,14 +163,47 @@ def tournament(request):
 	elif request.method == 'POST':
 		data = json.loads(request.body.decode())
 		title = data['title']
-		type = data['type']
+		game_type = data['game_type']
 		host = User.objects.get(id=data['host'])
 		reward = data['reward']
-		tournament = Tournament(title=title, host=host, type=type, reward=reward)
+		tournament = Tournament(title=title, host=host, game_type=game_type, reward=reward)
 		tournament.save()
 		return HttpResponse(status=201)
+	elif request.method == 'PUT':
+		data=json.loads(request.body.decode())
+		try:
+			tournament = Tournament.objects.get(id=data['id'])
+		except Tournament.DoesNotExist:
+			return HttpResponse(status=404)
+		tournament.title = data['title']
+		tournament.host = User.objects.get(id=data['host'])
+		for team in tournament.teams.all():
+			tournament.teams.remove(team)
+		for id in data['teams']:
+			tournament.teams.add(Team.objects.get(id=id))
+		tournament.game_type = data['game_type']
+		tournament.total_team = data['total_team']
+		tournament.reward = data['reward']
+		tournament.state = data['state']
+		for team in tournament.result1.all():
+			tournament.result1.remove(team)
+		for id in data['result1']:
+			tournament.result1.add(Team.objects.get(id=id))
+		
+		for team in tournament.result2.all():
+			tournament.result2.remove(team)
+		for id in data['result2']:
+			tournament.result2.add(Team.objects.get(id=id))
+		
+		for team in tournament.result3.all():
+			tournament.result3.remove(team)
+		for id in data['result3']:
+			tournament.result3.add(Team.objects.get(id=id))
+		tournament.save()
+		return HttpResponse(status=200)
+
 	else:
-		return HttpResponseNotAllowed(['GET', 'POST'])
+		return HttpResponseNotAllowed(['GET', 'POST', 'PUT'])
 
 
 def tournament_detail(request, id):
@@ -177,16 +213,6 @@ def tournament_detail(request, id):
 		except Tournament.DoesNotExist:
 			return HttpResponse(status=404)
 		return HttpResponse(json.dumps(tournament.json()), content_type='application/json')
-	elif request.method == 'PUT':
-		try:
-			tournament = Tournament.objects.get(id=id)
-		except Tournament.DoesNotExist:
-			return HttpResponse(status=404)
-		data=json.loads(request.body.decode())
-		team = Team.objects.get(id=data['team'])
-		tournament.teams.add(team)
-		tournament.save()
-		return HttpResponse(status=200)
 	elif request.method == 'DELETE':
 		try:
 			tournament = Tournament.objects.get(id=id)
@@ -195,7 +221,7 @@ def tournament_detail(request, id):
 		tournament.delete()
 		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
+		return HttpResponseNotAllowed(['GET', 'DELETE'])
 
 def team(request):
 	if request.method == 'GET':
@@ -203,9 +229,9 @@ def team(request):
 		return HttpResponse(json.dumps(team_list), content_type='appication/json')
 	elif request.method == 'POST':
 		data = json.loads(request.body.decode())
-		leader = User.objects.get(id=data['leader'])
+		leader_id = User.objects.get(id=data['leader_id'])
 		name = data['name']
-		team = Team(leader=leader, name=name)
+		team = Team(leader_id=leader_id, name=name)
 		team.save()
 		return HttpResponse(status=201)
 	else:
@@ -227,9 +253,10 @@ def team_detail(request, id):
 			return HttpResponse(status=404)
 		data=json.loads(request.body.decode())
 		user = User.objects.get(id=data['user'])
-		team.members.add(user)
+		team.members_id.add(user)
 		team.save()
 		return HttpResponse(status=200)
+		user3.save()
 	elif request.method == 'DELETE':
 		try:
 			team = Team.objects.get(id=id)
@@ -239,4 +266,3 @@ def team_detail(request, id):
 		return HttpResponse(status=200)
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
-
