@@ -56,7 +56,7 @@ export class TournamentParticipateComponent implements OnInit {
       }
       else {
         this.teamService.addTeam(
-          {name: this.name, leader_id: this.leaderId, members_id: [], tournament_id: this.tournament.id} as Team)
+          {name: this.name, leader_id: this.leaderId, members_id: []} as Team)
             .subscribe(team => {
             this.tournament.teams.push(team.id);
             if (this.tournament.teams.length == 8) {
