@@ -37,5 +37,21 @@ export class TournamentComponent implements OnInit {
     this.tournamentService.deleteTournament(tournament).subscribe();
   }
 
+  state(state: number): string {
+    // state of tournament. 1: 승인 중, 2: 신청 중, 3: 진행 중, 4: 종료
+    if (state == 1) {
+      return '승인 중';
+    }
+    else if (state == 2) {
+      return '신청 중';
+    }
+    else if (state == 3) {
+      return '진행 중';
+    }
+    else if (state == 4) {
+      return '종료';
+    }
+  }
+
 }
 

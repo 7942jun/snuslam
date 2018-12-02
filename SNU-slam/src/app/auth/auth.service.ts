@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
 import { Observable, of } from 'rxjs';
-import { map } from "rxjs/operators";
-import {UserService} from "../services/user.service";
+import { map } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+  headers: this.getCSRFHeaders()
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
   isLoggedIn = false;
   current_user: User;
   private token: string;
@@ -24,12 +24,22 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>('/api/sign_in', { email: email, password: password }, httpOptions)
       .pipe(map(user => {
-        if (user && user.token) {
-          this.current_user = JSON.parse(user);
-          this.isLoggedIn = true;
-          this.token = user['token'];
-        }
-      }));
+        this.current_user = user;
+        this.isLoggedIn = true;
+        this.token = user['token'];
+      }));c
+
+  }
+
+  getCSRFHeaders(): HttpHeaders {
+    let token = '';
+    if (document.cookie) {
+      token = document.cookie.split('csrftoken=')[1].split(';')[0];
+    }
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': token
+    });
   }
 
   logout(): void {
@@ -44,7 +54,6 @@ export class AuthService {
     } else {
       return;
     }
-
   }
 
 }

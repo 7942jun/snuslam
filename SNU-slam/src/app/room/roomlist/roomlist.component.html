@@ -15,12 +15,12 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let room of roomlist" routerLink="/room/{{room.id}}" >
+  <li *ngFor="let room of roomlist" routerLink="/room/{{ room.id }}"  >
     <td style="text-align: center">{{ room.title }}</td>
     <td style="text-align: center">{{ room.location }}</td>
     <td style="text-align: center">{{ room.play_time }}</td>
     <td style="text-align: center">{{ room.type }}:{{ room.type }}</td>
-  </tr>
+  </li>
   </tbody>
 </table>
 <div style="text-align: center">

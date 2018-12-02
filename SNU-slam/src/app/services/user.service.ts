@@ -12,6 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
+  private user: User;
 
   private userUrl = '/api/user';
 
@@ -41,7 +42,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.userUrl}/?nickname=${term}`)
       .pipe(tap(_ => this.log(`found users matching "${term}"`)),
         catchError(this.handleError<User[]>('searchUsers', []))
-    )
+    );
   }
 
   private log(message: string) {

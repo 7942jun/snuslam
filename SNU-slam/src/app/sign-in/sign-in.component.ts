@@ -39,9 +39,9 @@ export class SignInComponent implements OnInit {
       if (user != undefined) {
         this.authService.current_user = user;
         this.authService.isLoggedIn = true;
+        this.router.navigate(['room']);
       }
     });
-    this.router.navigate(['room']);
   }
 
   sign_out() {

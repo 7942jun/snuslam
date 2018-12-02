@@ -30,7 +30,7 @@ describe('TournamentCreateComponent', () => {
   beforeEach(async(() => {
     const tournamentSpy = jasmine.createSpyObj('TournamentService', ['addTournament', 'getTournaments']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
-    const componentSpy = jasmine.createSpyObj('TournamentCreateComponent', ['addTournament']);
+    // const componentSpy = jasmine.createSpyObj('TournamentCreateComponent', ['addTournament']);
     TestBed.configureTestingModule({
       declarations: [ TournamentCreateComponent ],
       imports: [
@@ -41,7 +41,7 @@ describe('TournamentCreateComponent', () => {
       providers: [
         { provide: TournamentService, useValue: tournamentSpy},
         { provide: Router,            useValue: routerSpy },
-        { provide: TournamentCreateComponent, useValue: componentSpy},
+        // { provide: TournamentCreateComponent, useValue: componentSpy},
       ],
     })
     .compileComponents();
@@ -83,13 +83,13 @@ describe('TournamentCreateComponent', () => {
     component.prize = 'prize';
     const string = 'Title: ' + component.title + '\n' + 'Type: ' + component.game_type + ':' + component.game_type + '\n'
       + 'Total Teams: ' + component.total_team + ' teams' + '\n' + 'Prize: ' + component.prize + '\n' + 'Is it correct?';
-    spyOn(window, 'confirm');
-    component.addTournament();
-    expect(window.confirm).toHaveBeenCalledWith(string);
     const check = true;
     expect(check).toEqual(true);
-    tournamentService.addTournament.and.returnValue(of(null));
+    spyOn(window, 'confirm').and.returnValue(true);
+    component.addTournament();
+    expect(window.confirm).toHaveBeenCalled();
     expect(tournamentService.addTournament).toHaveBeenCalled();
+    tournamentService.addTournament.and.returnValue(of(null));
   }));
 
   it('should not add tournament when click cancle of confirm message', () => {

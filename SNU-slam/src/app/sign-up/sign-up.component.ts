@@ -20,7 +20,7 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
-    if (!this.newUser.email || !this.newUser.password || !this.newUser.username) {
+    if (!this.newUser.email || !this.newUser.password || !this.newUser.username || !this.newUser.position) {
       alert("enter information");
       return;
     }
@@ -33,6 +33,7 @@ export class SignUpComponent implements OnInit {
 
     this.userService.postUser(this.newUser).subscribe(
       user => {
+        console.log(user);
         if (user.id > 0) {
           this.goBack();
           alert('Sign up success!');

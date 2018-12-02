@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-ingame',
@@ -11,6 +11,10 @@ export class IngameComponent implements OnChanges {
 
   @Input()
   play_time: number;
+  @Output()
+  isDone: EventEmitter<void> = new EventEmitter();
+
+
 
   time = new Date();
 
@@ -20,13 +24,11 @@ export class IngameComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    for ( let propname in changes) {
-      if ( propname === 'isStarted') {
-        this.time.setMinutes(this.time.getMinutes() + this.play_time);
-
-
+    if (changes['isStarted']) {
+      this.time.setMinutes(this.time.getMinutes() + this.play_time);
     }
   }
+  end() {
+    this.isDone.emit();
+  }
 }
-}
-
