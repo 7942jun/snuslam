@@ -67,7 +67,7 @@ describe('TournamentParticipateComponent', () => {
     tournamentService.getTournamentById.and.returnValue(of(mockTournament));
     tournamentService.updateTournament.and.returnValue(of(null));
     teamService = TestBed.get(TeamService);
-    userService = TestBed.get(userService);
+    userService = TestBed.get(UserService);
     userService.getUser.and.returnValue(of(mockUser));
     fixture.detectChanges();
   });

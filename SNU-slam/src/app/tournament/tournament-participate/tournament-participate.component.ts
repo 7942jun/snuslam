@@ -28,7 +28,7 @@ export class TournamentParticipateComponent implements OnInit {
 
   ngOnInit() {
     this.getTournament();
-    this.leaderId = this.userService.getUser();
+    this.leaderId = this.userService.getUser().id;
   }
 
   getTournament(): void {
