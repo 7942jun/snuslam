@@ -69,7 +69,7 @@ class Room(models.Model):
 
 class Tournament(models.Model):
 	title = models.CharField(max_length=100)
-	host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_user')
+	host = models.IntegerField(default=0)
 	teams = models.ManyToManyField(Team, related_name='%(class)s_teams')
 	game_type = models.IntegerField(default=0)
 	total_team = models.IntegerField(default=0)
@@ -83,7 +83,7 @@ class Tournament(models.Model):
 		return {
 			'id': self.id,
 			'title': self.title,
-			'host': self.host.id,
+			'host': self.host,
 			'teams': [team.id for team in self.teams.all()],
 			'result1': [team.id for team in self.result1.all()],
 			'result2': [team.id for team in self.result2.all()],

@@ -22,7 +22,9 @@ def user(request):
 		email = data['email']
 		password = data['password']
 		username = data['username']
-		user = User(email=email, password=password, username=username)
+		user = User(email=email, username=username)
+		user.set_password(password)
+		user.is_active = True
 		user.save()
 		position = data['position']
 		user.profile.position = position
@@ -74,16 +76,13 @@ def sign_in(request):
 		email = data['email']
 		password = data['password']
 		try:
-			temp = User.objects.get(email=email)
+			username = User.objects.get(email=email).username
 		except User.DoesNotExist:
 			return HttpResponse(status=401)
-		username = temp.username
-		profile = Profile.objects.get(id=temp.id)
-		response_dic = profile.json()
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
-			return HttpResponse(json.dumps(response_dic), content_type='application/json', status=200)
+			return HttpResponse(json.dumps(user.profile.json()), content_type='application/json', status=200)
 		else:
 			return HttpResponse(status=401)
 	else:
@@ -164,7 +163,7 @@ def tournament(request):
 		data = json.loads(request.body.decode())
 		title = data['title']
 		game_type = data['game_type']
-		host = User.objects.get(id=data['host'])
+		host = data['host']
 		reward = data['reward']
 		tournament = Tournament(title=title, host=host, game_type=game_type, reward=reward)
 		tournament.save()
@@ -176,7 +175,7 @@ def tournament(request):
 		except Tournament.DoesNotExist:
 			return HttpResponse(status=404)
 		tournament.title = data['title']
-		tournament.host = User.objects.get(id=data['host'])
+		tournament.host = data['host']
 		for team in tournament.teams.all():
 			tournament.teams.remove(team)
 		for id in data['teams']:
