@@ -15,7 +15,6 @@ export class IngameComponent implements OnChanges {
   isDone: EventEmitter<void> = new EventEmitter();
 
 
-
   time = new Date();
 
 

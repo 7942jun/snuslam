@@ -36,7 +36,7 @@ export class RoomcreateComponent implements OnInit {
 
     const newroom = {
       title: this.title,
-      host_id: this.id,
+      host: this.id,
       guests_id: [],
       location: this.location,
       play_time: this.play_time,

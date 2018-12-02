@@ -40,7 +40,7 @@ export class RoomDetailComponent implements OnInit {
     this.roomService.getRoomById(id).subscribe(
       room => {
         this.room = room;
-        this.host_id = room.host_id;
+        this.host_id = room.host;
         this.isStarted = room.ingame;
         this.play_time = room.play_time;
       }
@@ -131,10 +131,10 @@ export class RoomDetailComponent implements OnInit {
       if (this.isStarted) {
         alert( 'Game started! You are not allowed to leave the room!' );
       }
-      else if (this.room.guests_id.length > 0) {
+      else if (this.room.guests_id) {
         const newroom = this.room;
         if (this.user.id === this.host_id) {
-          newroom.host_id = newroom.guests_id.shift();
+          newroom.host = newroom.guests_id.shift();
         } else {
           newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
         }
