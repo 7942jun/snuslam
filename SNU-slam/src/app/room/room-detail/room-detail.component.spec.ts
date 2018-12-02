@@ -111,6 +111,8 @@ describe('RoomDetailComponent', () => {
     expect(userService.getUser).toHaveBeenCalled();
     //component.start();
     //component.onChangeTeam(any);
+    component.refreshUserlist();
+    //component.onFinished(mockUserList);
     component.goBack();
   }));
 });
