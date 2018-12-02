@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { UserService } from './user.service';
 import { User } from '../user';
+import { Router } from "@angular/router";
 
 const mockUserList: User[] = [
   { id: 1, email: 'iluvswpp@snu.ac.kr', password: 'q1w2e3r4', username: 'Nicolas', position: 'C',
@@ -19,12 +20,17 @@ describe('UserService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   let userService: UserService;
-  const userApi = '/api/user/';
+  const userApi = '/api/user';
 
   beforeEach(() => {
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    const httpSpy = jasmine.createSpyObj('HttpClient', ['post', 'get']);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [UserService]
+      providers: [
+        UserService,
+        { provide: 'API_URL', useValue: userApi },
+        { provide: Router, useValue: routerSpy }]
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);

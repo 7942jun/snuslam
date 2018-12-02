@@ -35,7 +35,6 @@ export class SignInComponent implements OnInit {
 
   ngOnInit() { }
 
-
   sign_in() {
     this.userService.login(this.email.value, this.password.value).subscribe(user => {
       if (user.id > 0) {

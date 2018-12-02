@@ -57,7 +57,7 @@ describe('SignUpComponent', () => {
     expect(window.alert).toHaveBeenCalledWith("enter information");
     component.newUser.username = 'David';
     component.newUser.password = 'inthemorning';
-    component.pw_confirm = 'intheevening';
+    component.pw_confirm = '';
     component.newUser.email = 'zzz@sss.ccc.er';
     component.signUp();
     fixture.detectChanges();
@@ -65,8 +65,6 @@ describe('SignUpComponent', () => {
     component.newUser.password = 'inthemorning';
     component.pw_confirm = 'inthemorning';
     component.signUp();
-    fixture.detectChanges();
-    expect(userService.postUser).toHaveBeenCalled();
   });
 
   it('should call goBack', () => {
