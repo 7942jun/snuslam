@@ -1,6 +1,27 @@
 from django.test import TestCase, Client
 import json
 
+class RankTestCase(TestCase):
+	def test_rank(self):
+		from django.contrib.auth.models import User
+		from .models import Profile
+		
+		user = User(email='7942jun@naver.com', password='1234', username='raa')
+		user.save()
+		user2 = User(email='helloworld@gmail.com', password='5678', username='python')
+		user2.save()
+		user3 = User(email='swpp@snu.ac.kr', password='9010', username='angular')
+		user3.save()
+
+		client = Client()
+
+		response = client.get('/api/user/rank')
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(json.loads(response.content.decode())), 3)
+
+		response = client.post('/api/user/rank')
+		self.assertEqual(response.status_code, 405)
+
 class UserTestCase(TestCase):
 	def test_user(self):
 		from django.contrib.auth.models import User
@@ -26,6 +47,31 @@ class UserTestCase(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(len(json.loads(response.content.decode())), 1)
 
+		response = client.get('/api/user/1')
+		self.assertEqual(response.status_code, 200)
+		self.assertIn('raa', response.content.decode())
+
+		response = client.get('/api/user/2')
+		self.assertEqual(response.status_code, 404)
+
+		response = client.put('/api/user/1', json.dumps({'team':1}), content_type='application/json')
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(Profile.objects.get(id=1).team, 1)
+
+		response = client.put('/api/user/2')
+		self.assertEqual(response.status_code, 404)
+
+		response = client.delete('/api/user/1')
+		self.assertEqual(response.status_code, 200)
+
+		response = client.get('/api/user/1')
+		self.assertEqual(response.status_code, 404)
+
+		response = client.delete('/api/user/2')
+		self.assertEqual(response.status_code, 404)
+
+		response = client.post('/api/user/1')
+		self.assertEqual(response.status_code, 405)
 
 class SignInOutTestCase(TestCase):
 	def test_sign_in_out(self):
@@ -105,9 +151,6 @@ class ModelTestCase(TestCase):
 
 		for room in Room.objects.all():
 			self.assertEqual(room.guests.count(), 0)
-		
-		import datetime
-		self.assertIs(type(room.getDate()), datetime.datetime)
 
 		team = Team(name='team1', leader=user)
 		team.save()
@@ -190,6 +233,13 @@ class RoomTestCase(TestCase):
 
 		#'/room/:id'에 post 요청이 잘 처리되는지 확인
 		response = client.post('/api/room/2')
+		self.assertEqual(response.status_code, 405)
+
+		response = client.get('/api/room/1/user')
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(json.loads(response.content.decode())), 2)
+
+		response = client.post('/api/room/1/user')
 		self.assertEqual(response.status_code, 405)
 
 class TeamTestCase(TestCase):

@@ -13,6 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+
   isLoggedIn = false;
   current_user: User;
   private token: string;
@@ -44,7 +45,6 @@ export class AuthService {
     } else {
       return;
     }
-
   }
 
 }

@@ -3,11 +3,12 @@ import { RouterModule , Routes} from '@angular/router';
 import { RoompageComponent } from './roompage/roompage.component';
 import { RoomcreateComponent} from './roomcreate/roomcreate.component';
 import { RoomDetailComponent} from './room-detail/room-detail.component';
+import { AuthGuard } from '../auth/auth.guard';
 import { IngameComponent } from './ingame/ingame.component';
 const roomRoutes: Routes = [
-  { path: 'room', component: RoompageComponent},
-  { path: 'room/create', component: RoomcreateComponent},
-  { path: 'room/:id', component: RoomDetailComponent}
+  { path: 'room', component: RoompageComponent, canActivate: [AuthGuard] },
+  { path: 'room/create', component: RoomcreateComponent , canActivate: [AuthGuard]},
+  { path: 'room/:id', component: RoomDetailComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

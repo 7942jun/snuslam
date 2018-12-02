@@ -45,7 +45,30 @@
 
 <div *ngIf="isStarted">
   <app-ingame
-  [isStarted] = "inStarted"
+  [isStarted] = "isStarted"
   [play_time] = "play_time"
+  (isDone) = "onFinishGame($event)"
   ></app-ingame>
+  <div *ngIf="isHost">
+  <button (click)= "endbutton()">Finish</button>
+  </div>
 </div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Choose Winner!</h4>
+    </div>
+    <div class="modal-body">
+      <div>
+        <label class="control-label">Blue Team</label>
+        <button  >Blue Team</button>
+      </div>
+      <div>
+        <label class="control-label">Red Team</label>
+        <button  >Red Team</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-light">Submit</button>
+    </div>
+</ng-template>
