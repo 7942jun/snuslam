@@ -32,7 +32,7 @@ describe('SignInComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: UserService, useValue: userSpy },
         { provide: NgbModal, useValue: modalSpy },
-        { provide: Location, useValue: location }
+        { provide: Location, useValue: locationSpy }
       ],
       imports: [ ReactiveFormsModule, FormsModule ]
     })
@@ -55,11 +55,6 @@ describe('SignInComponent', () => {
   it('should call sign_in', () => {
     signInComponent.sign_in();
     expect(signInComponent.sign_in).toHaveBeenCalled();
-  });
-
-  it('should call navigate', () => {
-    component.sign_in();
-    expect(router.navigate).toHaveBeenCalled();
   });
 
   it('should call goBack', () => {

@@ -3,33 +3,31 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from '../services/user.service';
 import { RankComponent } from './rank.component';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('RankComponent', () => {
     let comp: RankComponent;
     let fixture: ComponentFixture<RankComponent>;
+    let userService: jasmine.SpyObj<UserService>;
 
     beforeEach(() => {
         const locationStub = {
             back: () => ({})
         };
-        const userServiceStub = {
-            getUsers: () => ({
-                subscribe: () => ({})
-            }),
-            searchUsers: () => ({
-                subscribe: () => ({})
-            })
-        };
+        const userSpy = jasmine.createSpyObj('UserService', ['getUsers']);
         TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
             declarations: [ RankComponent ],
             schemas: [ NO_ERRORS_SCHEMA ],
             providers: [
+                { provide: 'API_URL', useValue: '/api/user'},
                 { provide: Location, useValue: locationStub },
-                { provide: UserService, useValue: userServiceStub }
+                { provide: UserService, useValue: userSpy }
             ]
         });
         fixture = TestBed.createComponent(RankComponent);
         comp = fixture.componentInstance;
+        userService = TestBed.get(UserService);
     });
 
     it('can load instance', () => {
@@ -46,10 +44,8 @@ describe('RankComponent', () => {
 
     describe('getUsers', () => {
         it('makes expected calls', () => {
-            const userServiceStub: UserService = fixture.debugElement.injector.get(UserService);
-            spyOn(userServiceStub, 'getUsers');
-            comp.getUsers();
-            expect(userServiceStub.getUsers).toHaveBeenCalled();
+            userService.getUsers();
+            expect(userService.getUsers).toHaveBeenCalled();
         });
     });
 

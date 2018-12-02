@@ -30,13 +30,15 @@ describe('RankComponent', () => {
       [ 'getUsers', 'search', 'goBack' ]);
     const userSpy = jasmine.createSpyObj('UserService',
       ['postUser', 'getUsers', 'getUserById', 'searchUsers' ]);
+    const locationSpy = jasmine.createSpyObj('Location', ['back']);
 
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
       declarations: [ RankComponent ],
       providers: [
         { provide: UserService, useValue: userSpy },
-        { provide: RankComponent, useValue: rankComponent }]
+        { provide: RankComponent, useValue: rankComponent },
+        { provide: Location, useValue: locationSpy }]
     })
     .compileComponents();
   }));
