@@ -2,10 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignInComponent } from './sign-in.component';
 import { Router } from "@angular/router";
-import { AuthService } from "../auth/auth.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import {Location} from "@angular/common";
+import { Location } from "@angular/common";
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -17,7 +16,7 @@ describe('SignInComponent', () => {
   beforeEach(async(() => {
     const routerSpy = jasmine.createSpyObj('Router',
       [ 'navigate' ]);
-    const authSpy = jasmine.createSpyObj('AuthService',
+    const userSpy = jasmine.createSpyObj('UserService',
       ['login']);
     const modalSpy = jasmine.createSpyObj('NgbModal',
       ['open']);
@@ -30,7 +29,7 @@ describe('SignInComponent', () => {
       providers: [
         { provide: SignInComponent, useValue: signInSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: AuthService, useValue: authSpy },
+        { provide: UserService, useValue: userSpy },
         { provide: NgbModal, useValue: modalSpy },
         { provide: Location, useValue: location }
       ],

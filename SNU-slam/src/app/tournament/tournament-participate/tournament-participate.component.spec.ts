@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TournamentService } from '../tournament.service';
 import { TeamService } from '../team.service';
-import { AuthService } from '../../auth/auth.service';
 import { of, Observable } from 'rxjs';
 import { Tournament } from '../../tournament';
 import { User } from '../../user';
@@ -28,12 +27,12 @@ describe('TournamentParticipateComponent', () => {
   let httpClient: HttpClient;
   let tournamentService: jasmine.SpyObj<TournamentService>;
   let teamService: jasmine.SpyObj<TeamService>;
-  let authService: jasmine.SpyObj<AuthService>;
+  let userService: jasmine.SpyObj<UserService>;
 
   beforeEach(async(() => {
     const tournamentSpy = jasmine.createSpyObj('TournamentService', ['updateTournament', 'getTournamentById']);
     const teamSpy = jasmine.createSpyObj('TeamService', ['addTeam']);
-    const authSpy = jasmine.createSpyObj('AuthService', ['getUser']);
+    const userSpy = jasmine.createSpyObj('UserService', ['getUser']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
     TestBed.configureTestingModule({
       declarations: [ TournamentParticipateComponent ],
@@ -45,7 +44,7 @@ describe('TournamentParticipateComponent', () => {
       providers: [
         { provide: TournamentService, useValue: tournamentSpy},
         { provide: TeamService, useValue: teamSpy},
-        { provide: AuthService, useValue: authSpy},
+        { provide: UserService, useValue: userSpy},
         { provide: Router,            useValue: routerSpy },
         { provide: ActivatedRoute,    useValue: {
           snapshot: {
@@ -67,8 +66,8 @@ describe('TournamentParticipateComponent', () => {
     tournamentService.getTournamentById.and.returnValue(of(mockTournament));
     tournamentService.updateTournament.and.returnValue(of(null));
     teamService = TestBed.get(TeamService);
-    authService = TestBed.get(AuthService);
-    authService.getUser.and.returnValue(of(mockUser));
+    userService = TestBed.get(userService);
+    userService.getUser.and.returnValue(of(mockUser));
     fixture.detectChanges();
   });
 
@@ -78,12 +77,12 @@ describe('TournamentParticipateComponent', () => {
 
   it('should get tournament and user at ngOnInit', async(() => {
     tournamentService.getTournamentById.and.returnValue(of(mockTournament));
-    authService.getUser.and.returnValue(of(mockUser));
+    userService.getUser.and.returnValue(of(mockUser));
     component.leaderId = 1;
     component.ngOnInit();
     expect(component.tournament).toEqual(mockTournament);
     expect(tournamentService.getTournamentById).toHaveBeenCalled();
-    expect(authService.getUser).toHaveBeenCalled();
+    expect(userService.getUser).toHaveBeenCalled();
   }));
 
   it('should not register team when user not type team name', () => {

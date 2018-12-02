@@ -9,9 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { RoomService } from '../room.service';
 import { Component , Input, Output, EventEmitter } from '@angular/core';
 import { of } from 'rxjs';
-import { AuthService } from '../../auth/auth.service';
 import { convertToParamMap} from '@angular/router';
 import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
+import {UserService} from "../../services/user.service";
 
 const mockRoom: Room =  { id: 1, title: 'room_0', host: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false };
 
@@ -42,11 +42,11 @@ describe('RoomDetailComponent', () => {
   let component: RoomDetailComponent;
   let fixture: ComponentFixture<RoomDetailComponent>;
   let roomService: jasmine.SpyObj<RoomService>;
-  let authService: jasmine.SpyObj<AuthService>;
+  let userService: jasmine.SpyObj<UserService>;
 
   beforeEach(async(() => {
     const roomSpy = jasmine.createSpyObj('RoomService', ['deleteRoomById', 'updateRoom', 'changeTeam', 'getRoomUserById', 'getRoomById']);
-    const authSpy = jasmine.createSpyObj('AuthService', ['getUser']);
+    const userSpy = jasmine.createSpyObj('UserService', ['getUser']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
     const routeSpy = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
     TestBed.configureTestingModule({
@@ -60,7 +60,7 @@ describe('RoomDetailComponent', () => {
         FormsModule
       ],
       providers: [
-        { provide: AuthService, useValue: authSpy },
+        { provide: UserService, useValue: userSpy },
         { provide: RoomService, useValue: roomSpy},
         { provide: Router,      useValue: routerSpy },
         { provide: ActivatedRoute,       useValue: {
@@ -75,8 +75,8 @@ describe('RoomDetailComponent', () => {
     .compileComponents();
     // fixture = TestBed.createComponent(RoomDetailComponent);
     // component = fixture.componentInstance;
-    // authService = TestBed.get(AuthService);
-    // authService.getUser.and.returnValue(1);
+    // userService = TestBed.get(UserService);
+    // userService.getUser.and.returnValue(1);
     // roomService = TestBed.get(RoomService);
     // roomService.getRoomById.and.returnValue(of(mockRoom));
     // roomService.getRoomUserById.and.returnValue(of(mockUserList));
@@ -87,8 +87,8 @@ describe('RoomDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomDetailComponent);
     component = fixture.componentInstance;
-    authService = TestBed.get(AuthService);
-    authService.getUser.and.returnValue(of(mockUser));
+    userService = TestBed.get(UserService);
+    userService.getUser.and.returnValue(of(mockUser));
     roomService = TestBed.get(RoomService);
     roomService.getRoomById.and.returnValue(of(mockRoom));
     roomService.getRoomUserById.and.returnValue(of(mockUserList));
@@ -100,7 +100,7 @@ describe('RoomDetailComponent', () => {
   // }));
   it('should retrive rooms and user at ngOnInit', async(() => {
     expect(component).toBeTruthy();
-    // authService.getUser.and.returnValue(of);
+    // userService.getUser.and.returnValue(of);
     // roomService.getRoomById.and.returnValue(of(mockRoom));
     // roomService.getRoomUserById.and.returnValue(of(mockUserList));
     component.ngOnInit();
@@ -108,8 +108,13 @@ describe('RoomDetailComponent', () => {
     expect(component.users).toEqual(mockUserList);
     expect(roomService.getRoomById).toHaveBeenCalled();
     expect(roomService.getRoomUserById).toHaveBeenCalled();
+<<<<<<< HEAD
     expect(authService.getUser).toHaveBeenCalled();
     component.start();
+=======
+    expect(userService.getUser).toHaveBeenCalled();
+    //component.start();
+>>>>>>> e0cb3f55a1ebf5562879c252418295d473fcfed3
     component.onChangeTeam();
     component.goBack();
   }));

@@ -16,7 +16,6 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { UserService } from "./services/user.service";
-import { AuthService } from "./auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -47,8 +46,7 @@ import { AuthService } from "./auth/auth.service";
     SignInComponent
   ],
   providers: [
-    UserService,
-    AuthService
+    UserService
   ],
   bootstrap: [AppComponent]
 })

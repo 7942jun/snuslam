@@ -7,8 +7,8 @@ import { RoomModule } from "../room/room.module";
 import { SignInComponent } from "../sign-in/sign-in.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AuthService } from "../auth/auth.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { UserService } from "../services/user.service";
 
 const mockRoomList = [
   { id: 0, title: 'room_0', host: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false },
@@ -25,7 +25,7 @@ describe('MainComponent', () => {
       ['getAllRoom']);
     const routerSpy = jasmine.createSpyObj('Router',
       [ 'navigate' ]);
-    const authSpy = jasmine.createSpyObj('AuthService',
+    const userSpy = jasmine.createSpyObj('UserService',
       ['login']);
     const modalSpy = jasmine.createSpyObj('NgbModal',
       ['open']);
@@ -39,7 +39,7 @@ describe('MainComponent', () => {
         { provide: RoomService, useValue: roomSpy },
         { provide: SignInComponent, useValue: signInSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: AuthService, useValue: authSpy },
+        { provide: UserService, useValue: userSpy },
         { provide: NgbModal, useValue: modalSpy }]
     })
     .compileComponents();
