@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Output} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
+import { Router } from "@angular/router";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -13,13 +14,16 @@ const httpOptions = {
 })
 export class UserService {
 
-  isLoggedIn = false;
+  isLoggedIn: boolean;
   current_user: User;
 
   private userUrl = '/api/user';
   private signUrl = '/api/sign_in';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   postUser(user: User): Observable<User> {
     return this.http.post<User>(this.userUrl, user, httpOptions)
@@ -51,15 +55,6 @@ export class UserService {
   login(email: string, password: string): Observable<User> {
     const data = JSON.stringify({ email: email, password: password });
     return this.http.post<User>(this.signUrl, data, httpOptions);
-    // .pipe(user => {
-    //   console.log(user);
-    //   // if (user > 0) {
-    //   //   this.isLoggedIn = true;
-    //   //   alert('Sign in success!');
-    //   // } else {
-    //   //   alert('Sign in failed!');
-    //   // }
-    // });
   }
 
   getCSRFHeaders(): HttpHeaders {
@@ -76,6 +71,7 @@ export class UserService {
   logout(): void {
     this.isLoggedIn = false;
     this.current_user = undefined;
+    this.router.navigate(['/']);
   }
 
   getUser(): User {

@@ -16,6 +16,8 @@ export class SignInComponent implements OnInit {
   email: AbstractControl;
   password: AbstractControl;
 
+  isLoggedIn: boolean;
+
   constructor(
     private modalService: NgbModal,
     private userService: UserService,
@@ -31,15 +33,28 @@ export class SignInComponent implements OnInit {
     this.password = this.signInForm.controls['password'];
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
 
   sign_in() {
-    this.userService.login(this.email.value, this.password.value).subscribe();
+    this.userService.login(this.email.value, this.password.value).subscribe(user => {
+      if (user.id > 0) {
+        console.log(user);
+        this.isLoggedIn = true;
+        this.userService.isLoggedIn = true;
+        this.userService.current_user = user;
+        alert('Sign in success');
+        this.router.navigate(['/room']);
+      } else {
+        alert('Sign in failed');
+      }
+    });
+    this.isLoggedIn = this.userService.isLoggedIn;
   }
 
   sign_out() {
     this.userService.logout();
+    this.isLoggedIn = this.userService.isLoggedIn;
   }
 
   openModal(content) {
