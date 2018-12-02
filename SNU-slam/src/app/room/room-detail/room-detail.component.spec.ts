@@ -11,7 +11,7 @@ import { Component , Input, Output, EventEmitter } from '@angular/core';
 import { of } from 'rxjs';
 import { convertToParamMap} from '@angular/router';
 import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
-import {UserService} from "../../services/user.service";
+import { UserService } from "../../services/user.service";
 
 const mockRoom: Room =  { id: 1, title: 'room_0', host: 1, guests_id: [2, 3, 4], location: 'eng' , play_time: 60, creation_time: new Date("2015-03-25") , type: 2, ingame: false };
 
@@ -32,8 +32,8 @@ export class MockTeamlistComponent {
   blueteam: User[];
   @Input()
   isStarted: boolean;
-  @Output()
-  changeteam: EventEmitter<any> = new EventEmitter();
+  // @Output()
+  // changeteam: EventEmitter<any> = new EventEmitter();
   @Output()
   isFinished: EventEmitter<any> = new EventEmitter();
 }
@@ -108,14 +108,9 @@ describe('RoomDetailComponent', () => {
     expect(component.users).toEqual(mockUserList);
     expect(roomService.getRoomById).toHaveBeenCalled();
     expect(roomService.getRoomUserById).toHaveBeenCalled();
-<<<<<<< HEAD
-    expect(authService.getUser).toHaveBeenCalled();
-    component.start();
-=======
     expect(userService.getUser).toHaveBeenCalled();
     //component.start();
->>>>>>> e0cb3f55a1ebf5562879c252418295d473fcfed3
-    component.onChangeTeam();
+    //component.onChangeTeam(any);
     component.goBack();
   }));
 });

@@ -7,6 +7,7 @@ import { RoomService } from '../room.service';
 import { RoomcreateComponent } from './roomcreate.component';
 import { of } from 'rxjs';
 import { Room } from '../../room';
+import { UserService } from '../../services/user.service';
 
 const mockRoom: Room = {
     id: 1,
