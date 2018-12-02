@@ -11,6 +11,7 @@ matrix:
         - pip install channels
       before_script:
         - cd backend
+        - python3 manage.py makemigrations
         - python3 manage.py migrate
       script:
         - coverage run --branch --source="./snuslam" manage.py test
