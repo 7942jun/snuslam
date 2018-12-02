@@ -24,8 +24,6 @@ export class TeamlistComponent implements OnInit {
   isFinished: EventEmitter<any> = new EventEmitter();
 
 
-
-
   constructor(
     private modalService: NgbModal
   ) {}

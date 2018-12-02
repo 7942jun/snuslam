@@ -33,9 +33,9 @@ import { SignInComponent } from './sign-in/sign-in.component';
     TournamentModule,
     RoomModule,
     AppRoutingModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-     )
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    //  )
   ],
   exports: [
     SignInComponent

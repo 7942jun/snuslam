@@ -1,7 +1,7 @@
 export class Room {
   id: number;
   title: string;
-  host_id: number;
+  host: number;
   guests_id: number[];
   location: string;
   play_time: number;

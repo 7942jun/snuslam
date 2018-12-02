@@ -13,6 +13,12 @@ export class MockRoomlistComponent {
   @Input()
   roomlist: Room[];
 }
+@Component({selector: 'app-map', template: ''})
+export class MockMapComponent { }
+
+@Component({selector: 'router-outlet', template: ''})
+class RouterOutletStubComponent { }
+
 const mockRoomList: Room[] = [
     { id: 1,
       title: 'test1',
@@ -36,7 +42,9 @@ describe('RoompageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         RoompageComponent,
-        MockRoomlistComponent
+        MockRoomlistComponent,
+        MockMapComponent,
+        RouterOutletStubComponent
         ],
       imports: [
         HttpClientTestingModule,
