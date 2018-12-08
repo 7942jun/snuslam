@@ -52,7 +52,7 @@ export class SignInComponent implements OnInit {
   }
 
   sign_out() {
-    this.userService.logout();
+    this.userService.logout().subscribe();
     this.isLoggedIn = this.userService.isLoggedIn;
   }
 
