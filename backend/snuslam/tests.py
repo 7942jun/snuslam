@@ -1,6 +1,20 @@
 from django.test import TestCase, Client
 import json
 
+class BlogTestCase(TestCase):
+	def test_csrf(self):
+		client = Client(enforce_csrf_checks=True)
+		
+		new_user_json = {'email':'7942jun@naver.com', 'password':'1234', 'username':'raa', 'position':'guard'}
+		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
+		self.assertEqual(response.status_code, 403)
+
+		response = client.get('/api/token')
+		csrftoken = response.cookies['csrftoken'].value  # Get csrf token from cookie
+
+		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+		self.assertEqual(response.status_code, 201) # Pass csrf protection
+
 class RankTestCase(TestCase):
 	def test_rank(self):
 		from django.contrib.auth.models import User
