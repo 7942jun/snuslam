@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from .models import Profile, Room, Team, Tournament
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.shortcuts import render
 import json
 
@@ -10,6 +10,12 @@ def chat(request):
 	context={}
 	return render(request, 'room.html', context)
 
+@ensure_csrf_cookie
+def token(request):
+	if request.method == 'GET':
+		return JsonResponse({'successed': True, 'message': 'token successed'})
+	else:
+		return HttpResponseNotAllowed(['GET'])
 
 @csrf_exempt
 def user(request):
