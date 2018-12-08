@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from .models import Profile, Room, Team, Tournament
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie, csrf_protect
 from django.shortcuts import render
 import json
 
@@ -17,7 +17,6 @@ def token(request):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
-@csrf_exempt
 def user(request):
 	if request.method == 'GET':
 		user_list = [profile.json() for profile in Profile.objects.all()]
@@ -39,7 +38,7 @@ def user(request):
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
-@csrf_exempt
+
 def user_detail(request, id):
 	if request.method == 'GET':
 		try:
@@ -68,6 +67,7 @@ def user_detail(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
+@csrf_exempt
 def rank(request):
 	if request.method == 'GET':
 		rank_list = [profile.json() for profile in Profile.objects.all()]
@@ -75,7 +75,6 @@ def rank(request):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
-@csrf_exempt
 def sign_in(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode())
@@ -123,6 +122,7 @@ def room(request):
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
+@csrf_exempt
 def room_detail(request, id):
 	if request.method == 'GET':
 		try:
@@ -151,6 +151,7 @@ def room_detail(request, id):
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
 
+@csrf_exempt
 def room_user(request, id):
 	if request.method == 'GET':
 		user_list = [Profile.objects.get(id=user.id).json() for user in Room.objects.get(id=id).guests.all()]
