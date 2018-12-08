@@ -62,6 +62,8 @@ export class TournamentParticipateComponent implements OnInit {
             if (this.tournament.teams.length == 8) {
               this.tournament.state = 3;
             }
+            console.log('team length: ' + this.tournament.teams.length);
+            console.log('team state: ' + this.tournament.state);
             this.tournamentService.updateTournament(this.tournament).subscribe();
             this.router.navigateByUrl(`tournament`);
           });

@@ -163,9 +163,10 @@ def tournament(request):
 		data = json.loads(request.body.decode())
 		title = data['title']
 		game_type = data['game_type']
+		total_team = data['total_team']
 		host = data['host']
 		reward = data['reward']
-		tournament = Tournament(title=title, host=host, game_type=game_type, reward=reward)
+		tournament = Tournament(title=title, host=host, game_type=game_type, total_team=total_team, reward=reward)
 		tournament.save()
 		return HttpResponse(status=201)
 	elif request.method == 'PUT':
@@ -233,7 +234,8 @@ def team(request):
 		name = data['name']
 		team = Team(leader_id=leader_id, name=name)
 		team.save()
-		return HttpResponse(status=201)
+		response_dict = team.json()
+		return HttpResponse(json.dumps(response_dict), content_type = 'application/json', status=201)
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
@@ -257,7 +259,6 @@ def team_detail(request, id):
 		team.members_id.add(user)
 		team.save()
 		return HttpResponse(status=200)
-		user3.save()
 	elif request.method == 'DELETE':
 		try:
 			team = Team.objects.get(id=id)

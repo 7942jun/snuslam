@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 export class TournamentComponent implements OnInit {
 
   tournaments: Tournament[];
-
+  
+  
   constructor(
     private tournamentService: TournamentService,
     private router: Router,
@@ -20,6 +21,8 @@ export class TournamentComponent implements OnInit {
 
   ngOnInit() {
     this.getTournaments();
+    
+    
   }
 
   getTournaments(): void {

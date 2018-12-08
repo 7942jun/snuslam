@@ -48,10 +48,11 @@ export class TournamentCreateComponent implements OnInit {
 
     if (check) {
       this.tournamentService.addTournament(
-        { title: this.title.trim(), host: 1, teams: this.teams, game_type: this.game_type,
+        { title: this.title.trim(), host: 1, teams: [], game_type: this.game_type,
           total_team: this.total_team, result1: this.result1, result2: this.result2,
           result3: this.result3, reward: this.prize.trim(), state: 1 } as Tournament)
         .subscribe(tournament => {
+          console.log(this.total_team);
           this.tournaments.push(tournament);
           this.router.navigateByUrl(`tournament`);
         });

@@ -16,7 +16,7 @@
         <tr>
           <th style="text-align: center">Title</th>
           <th style="text-align: center">Type</th>
-          <th style="text-align: center">Teams</th>
+          <th style="text-align: center">Total Teams</th>
           <th style="text-align: center">Reward</th>
           <th style="text-align: center">State</th>
           <th style="text-align: center">Delete</th>
@@ -53,7 +53,7 @@
         <tr *ngIf="tournament.state == 2" routerLink="/tournament/participate/{{ tournament.id }}" >
           <td style="text-align: center">{{ tournament.title }}</td>
           <td style="text-align: center">{{ tournament.game_type }}:{{ tournament.game_type }}</td>
-          <td style="text-align: center">{{ tournament.total_team }}</td>
+          <td style="text-align: center">{{ tournament.teams.length }}/{{ tournament.total_team }}</td>
           <td style="text-align: center">{{ tournament.reward }}</td>
           <td style="text-align: center">{{ state(tournament.state) }}</td>
           <td style="text-align: center">
