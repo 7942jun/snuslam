@@ -13,7 +13,7 @@ def chat(request):
 @ensure_csrf_cookie
 def token(request):
 	if request.method == 'GET':
-		return JsonResponse({'successed': True, 'message': 'token successed'})
+		return HttpResponse(status=200)
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
