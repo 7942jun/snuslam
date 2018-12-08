@@ -52,8 +52,8 @@ export class SignInComponent implements OnInit {
   }
 
   sign_out() {
-    this.userService.logout().subscribe();
-    this.isLoggedIn = this.userService.isLoggedIn;
+    this.isLoggedIn = false;
+    this.userService.logout().subscribe(() => this.router.navigate(['/']));
   }
 
   openModal(content) {
