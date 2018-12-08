@@ -204,7 +204,7 @@ def tournament(request):
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST', 'PUT'])
 
-
+@csrf_exempt
 def tournament_detail(request, id):
 	if request.method == 'GET':
 		try:
@@ -222,6 +222,7 @@ def tournament_detail(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET', 'DELETE'])
 
+@csrf_exempt
 def team(request):
 	if request.method == 'GET':
 		team_list = [team.json() for team in Team.objects.all()]
@@ -238,6 +239,7 @@ def team(request):
 
 	pass
 
+@csrf_exempt
 def team_detail(request, id):
 	if request.method == 'GET':
 		try:
