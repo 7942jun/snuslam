@@ -6,10 +6,6 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie, csrf_p
 from django.shortcuts import render
 import json
 
-def chat(request):
-	context={}
-	return render(request, 'room.html', context)
-
 @ensure_csrf_cookie
 def token(request):
 	if request.method == 'GET':

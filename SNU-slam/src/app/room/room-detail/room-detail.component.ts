@@ -35,6 +35,7 @@ export class RoomDetailComponent implements OnInit {
     this.getUserlist();
 
   }
+
   getRoom(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.roomService.getRoomById(id).subscribe(
@@ -46,6 +47,7 @@ export class RoomDetailComponent implements OnInit {
       }
     );
   }
+
   getUserlist(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.roomService.getRoomUserById(id).subscribe(
@@ -57,6 +59,7 @@ export class RoomDetailComponent implements OnInit {
       }
     );
   }
+
   refreshUserlist(): void {
     const id = this.room.id;
     this.roomService.getRoomUserById(id).subscribe(
