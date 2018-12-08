@@ -17,6 +17,7 @@ def token(request):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
+@csrf_exempt
 def user(request):
 	if request.method == 'GET':
 		user_list = [profile.json() for profile in Profile.objects.all()]
@@ -39,6 +40,7 @@ def user(request):
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
 
+@csrf_exempt
 def user_detail(request, id):
 	if request.method == 'GET':
 		try:
@@ -75,6 +77,7 @@ def rank(request):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
+@csrf_exempt
 def sign_in(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode())
@@ -93,6 +96,7 @@ def sign_in(request):
 	else:
 		return HttpResponseNotAllowed(['POST'])
 
+@csrf_exempt
 def sign_out(request):
 	if request.method == 'GET':
 		if request.user.is_authenticated:

@@ -13,11 +13,8 @@
       </div>
       <div *ngIf="isStarted">Game Started!!!!!!!!!!!!!!!!!!!111</div>
       <br>
-      <div style="text-align: left">
-        <h4>Chatting1: SWPP is so hard!</h4>
-        <h4>Chatting2: I want to go sleep!</h4>
-        <h4>Chatting3: SNU slam is good service.</h4>
-        <h4>Chatting4: That's amazing.</h4>
+      <div>
+        <app-chat></app-chat>
       </div>
     </div>
     <div class="col-lg-2"></div>
@@ -38,8 +35,3 @@
 <div *ngIf="user.id == host_id && !isStarted " class="col-lg-6">
   <button class="btn btn-default" style="width: 100px" (click)="start()">Start</button>
 </div>
-
-
-
-
-

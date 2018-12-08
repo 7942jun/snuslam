@@ -14,6 +14,8 @@ import { IngameComponent } from './ingame/ingame.component';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
 import { MapComponent } from './map/map.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { ChatComponent } from './chat/chat.component';
+
 @NgModule({
   imports: [
     NgbModule,
@@ -33,7 +35,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
     RoomDetailComponent,
     TeamlistComponent,
     IngameComponent,
-    MapComponent
+    MapComponent,
+    ChatComponent
   ],
   exports: [
     MapComponent
