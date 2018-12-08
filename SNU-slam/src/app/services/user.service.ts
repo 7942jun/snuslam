@@ -19,6 +19,7 @@ export class UserService {
 
   private userUrl = '/api/user';
   private signUrl = '/api/sign_in';
+  private signOutUrl = 'api/sign_out';
 
   constructor(
     private http: HttpClient,
@@ -68,10 +69,10 @@ export class UserService {
     });
   }
 
-  logout(): void {
+  logout(): Observable<User> {
     this.isLoggedIn = false;
     this.current_user = undefined;
-    this.router.navigate(['/']);
+    return this.http.get<User>(this.signOutUrl);
   }
 
   getUser(): User {

@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
       console.log('2');
       this.router.navigate(['/']);
       alert('Please sign in');
-      return true;
+      return false;
     }
 
 
@@ -70,7 +70,7 @@ export class AuthGuard implements CanActivate {
     if (this.userService.isLoggedIn) {
       return true;
     }
-    return true;
+    return false;
   }
   checkRoom(id: number): boolean {
     //if (this.authService.isInRoom()) {}
