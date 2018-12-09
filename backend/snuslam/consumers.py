@@ -5,7 +5,7 @@ import json
 
 class RoomConsumer(WebsocketConsumer):
     def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_name = 'room' + self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
         # 그룹에 Join 하는 메서드이다.
@@ -27,34 +27,34 @@ class RoomConsumer(WebsocketConsumer):
     # 아래에서는 그룹으로 메세지를 보내고 있다.
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        username = text_data_json['username']
-        message = text_data_json['message']
+        id = text_data_json['id']
+        team = text_data_json['team']
 
         # 그룹으로 메세지를 돌려보내주는 부분이다.
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'username': username,
-                'message': message
+                'id': id,
+                'team': team
             }
         )
 
     # 위의 receive 메서드에서 그룹으로 메세지를 보내면 그 메세지를 받아 처리하는 부분이다.
     def chat_message(self, event):
-        username = event['username']
-        message = event['message']
+        id = event['id']
+        team = event['team']
 
         # 클라이언트로 웹소켓을 통해 받은 메세지를 다시 보내주는 부분이다.
         self.send(text_data=json.dumps({
-            'username': username,
-            'message': message
+            'id': id,
+            'team': team
         }))
 
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_name = 'chat' + self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
         # 그룹에 Join 하는 메서드이다.

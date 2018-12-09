@@ -55,6 +55,7 @@ class Room(models.Model):
 	location = models.CharField(max_length=100)
 	play_time = models.IntegerField(default=0)
 	type = models.IntegerField(default=0)
+	ingame = models.BooleanField(default=False)
 
 	def json(self):
 		return {
@@ -64,6 +65,7 @@ class Room(models.Model):
 			'play_time': self.play_time,
 			'type': self.type,
 			'host': self.host.id,
+			'ingame': self.ingame,
 			'guests': [user.id for user in self.guests.all()],
 		}
 

@@ -32,8 +32,7 @@ export class RoomDetailComponent implements OnInit {
   ngOnInit() {
     this.user = this.userService.getUser();
     this.getRoom();
-    this.getUserlist();
-
+    //this.getUserlist();
   }
 
   getRoom(): void {
@@ -48,34 +47,34 @@ export class RoomDetailComponent implements OnInit {
     );
   }
 
-  getUserlist(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.roomService.getRoomUserById(id).subscribe(
-      users => {
-        this.users = users;
-        this.redteam  = users.filter( user => user.team === 1);
-        this.blueteam = users.filter( user => user.team === 2);
-        this.onChangeTeam();
-      }
-    );
-  }
+  // getUserlist(): void {
+  //   const id = +this.route.snapshot.paramMap.get('id');
+  //   this.roomService.getRoomUserById(id).subscribe(
+  //     users => {
+  //       this.users = users;
+  //       this.redteam  = users.filter( user => user.team === 1);
+  //       this.blueteam = users.filter( user => user.team === 2);
+  //       this.onChangeTeam();
+  //     }
+  //   );
+  // }
 
-  refreshUserlist(): void {
-    const id = this.room.id;
-    this.roomService.getRoomUserById(id).subscribe(
-      users => {
-        this.users = users;
-        this.redteam  = users.filter( user => user.team === 1);
-        this.blueteam = users.filter( user => user.team === 2);
-      }
-    );
-  }
+  // refreshUserlist(): void {
+  //   const id = this.room.id;
+  //   this.roomService.getRoomUserById(id).subscribe(
+  //     users => {
+  //       this.users = users;
+  //       this.redteam  = users.filter( user => user.team === 1);
+  //       this.blueteam = users.filter( user => user.team === 2);
+  //     }
+  //   );
+  // }
 
-  refresh(): void {
-    this.getRoom();
-    this.refreshUserlist();
-    console.log('ff');
-  }
+  // refresh(): void {
+  //   this.getRoom();
+  //   this.refreshUserlist();
+  //   console.log('ff');
+  // }
 
 
   onFinished(team: any) {
@@ -90,69 +89,69 @@ export class RoomDetailComponent implements OnInit {
   }
 
 
-  onChangeTeam() {
-    this.refresh();
-    if (this.isStarted) {
-      alert('Game is started! You cannot change your team');
-    }
-    else {
-      if (this.user.team !== 0) {
-        if (this.user.team === 1) {
-          this.user.team = 2;
-        } else {
-          this.user.team = 1;
-        }
-      } else {
-        if ( this.redteam.length > this.blueteam.length ) {
-          this.user.team = 2;
-        } else {
-          this.user.team = 1;
-        }
-      }
-
-      this.roomService.changeTeam(this.user).subscribe(
-        () => this.refresh()
-      );
-    }
-  }
+  // onChangeTeam() {
+  //   this.refresh();
+  //   if (this.isStarted) {
+  //     alert('Game is started! You cannot change your team');
+  //   }
+  //   else {
+  //     if (this.user.team !== 0) {
+  //       if (this.user.team === 1) {
+  //         this.user.team = 2;
+  //       } else {
+  //         this.user.team = 1;
+  //       }
+  //     } else {
+  //       if ( this.redteam.length > this.blueteam.length ) {
+  //         this.user.team = 2;
+  //       } else {
+  //         this.user.team = 1;
+  //       }
+  //     }
+  //
+  //     this.roomService.changeTeam(this.user).subscribe(
+  //       () => this.refresh()
+  //     );
+  //   }
+  // }
 
   start() {
-    this.refresh();
-    if ( this.redteam.length === this.blueteam.length ) {
-      const newroom = this.room;
-      newroom.ingame = true;
-      this.roomService.updateRoom(newroom).subscribe(
-        () => this.refresh()
-      );
-    } else {
-      alert( 'Numbers of people in the two teams is not equal!');
-    }
+    //this.refresh();
+    // if ( this.redteam.length === this.blueteam.length ) {
+    //   const newroom = this.room;
+    //   newroom.ingame = true;
+    //   this.roomService.updateRoom(newroom).subscribe(
+    //     //() => this.refresh()
+    //   );
+    // } else {
+    //   alert( 'Numbers of people in the two teams is not equal!');
+    // }
   }
 
   goBack() {
-    this.refresh();
-    const check = confirm('Do you want to leave the room?');
-    if (check) {
-      if (this.isStarted) {
-        alert( 'Game started! You are not allowed to leave the room!' );
-      }
-      else if (this.room.guests_id) {
-        const newroom = this.room;
-        if (this.user.id === this.host_id) {
-          newroom.host = newroom.guests_id.shift();
-        } else {
-          newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
-        }
-        this.roomService.updateRoom( newroom ).subscribe(
-          () => this.router.navigate(['/room'])
-        );
-      }
-      else {
-      this.roomService.deleteRoomById(this.room.id).subscribe(
-        () => this.router.navigate(['/room'])
-        );
-      }
-    }
+    //this.refresh();
+    // const check = confirm('Do you want to leave the room?');
+    // if (check) {
+    //   if (this.isStarted) {
+    //     alert( 'Game started! You are not allowed to leave the room!' );
+    //   }
+    //   else if (this.room.guests_id) {
+    //     const newroom = this.room;
+    //     if (this.user.id === this.host_id) {
+    //       newroom.host = newroom.guests_id.shift();
+    //     } else {
+    //       newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
+    //     }
+    //     this.roomService.updateRoom( newroom ).subscribe(
+    //       () => this.router.navigate(['/room'])
+    //     );
+    //   }
+    //   else {
+    //   this.roomService.deleteRoomById(this.room.id).subscribe(
+    //     () => this.router.navigate(['/room'])
+    //     );
+    //   }
+    // }
   }
 
 

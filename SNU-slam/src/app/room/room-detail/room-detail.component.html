@@ -19,15 +19,7 @@
     </div>
     <div class="col-lg-2"></div>
     <div class="col-lg-4" style="text-align: center">
-      <app-teamlist
-      [isHost] = "host_id == user.id"
-      [play_time] = "play_time"
-      [redteam] = "redteam"
-      [blueteam] = "blueteam"
-      [isStarted] = "isStarted"
-      (changeteam) = "onChangeTeam($event)"
-      (isFinished) = "onFinished($event)"
-      ></app-teamlist>
+      <app-list></app-list>
     </div>
     <div class="col-lg-1"></div>
   </div>

@@ -37,8 +37,13 @@ export class RoomService {
     return this.http.put<void>(url, room, httpOptions);
   } // tested
   getRoomUserById(roomid: number): Observable<User[]> {
-    const url = `api/user`;  // mock
+    const url = `api/room/${roomid}/user`;  // mock
     return this.http.get<User[]>(url);
+  }
+  AddRoomUser(roomid: number, userid: number): Observable<void> {
+    const url = `api/room/${roomid}/user`;
+    const data = JSON.stringify({ user: userid });
+    return this.http.put<void>(url, data, httpOptions);
   }
   changeTeam( user: User ): Observable<void> {
     const url = `api/user/${user.id}`;

@@ -135,9 +135,17 @@ def room_detail(request, id):
 			room = Room.objects.get(id=id)
 		except Room.DoesNotExist:
 			return HttpResponse(status=404)
-		data = json.loads(request.body.decode())		
-		user = User.objects.get(id=data['user'])
-		room.guests.add(user)
+		data = json.loads(request.body.decode())
+		room.title = data['title']
+		room.location = data['location']
+		room.play_time = data['play_time']
+		room.type = data['type']
+		room.host = User.objects.get(id=data['host'])
+		room.ingame = data['ingame']
+		for user in room.guests.all():
+			room.guests.remove(user)
+		for id in data['guests']:
+			room.guests.add(User.objects.get(id=id))
 		room.save()
 		return HttpResponse(status=200)
 	elif request.method == 'DELETE':
@@ -158,8 +166,14 @@ def room_user(request, id):
 		host_profile = Profile.objects.get(id=Room.objects.get(id=id).host.id)
 		user_list.insert(0, host_profile.json())
 		return HttpResponse(json.dumps(user_list), content_type='application/json')
+	elif request.method == 'PUT':
+		room = Room.objects.get(id=id)
+		data = json.loads(request.body.decode())
+		new_user = User.objects.get(id=data['user'])
+		room.save()
+		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET'])
+		return HttpResponseNotAllowed(['GET', 'PUT'])
 
 @csrf_exempt
 def tournament(request):
