@@ -1,32 +1,29 @@
-<div class="container" style="text-align: right">
+<div class="container">
   <h1 style="text-align: center">Create Tournament</h1>
   <br>
   <br>
-  <label class="control-label col-sm-3">Title:</label>
-  <div class="col-sm-7">
+  <label class="control-label">Title:</label>
+  <div>
     <input type="string" class="form-control" placeholder="Enter title" [(ngModel)]="title">
   </div>
   <br>
-  <br>
-  <label class="control-label col-sm-3">Game type:</label>
-  <div class="col-sm-7">
+  <div>
+    <label class="control-label">Game type:</label>
     <select class="form-control" [(ngModel)]="game_type">
       <option value = 3>3:3</option>
       <option value = 5>5:5</option>
     </select>
   </div>
   <br>
-  <br>
-  <label class="control-label col-sm-3">Total Teams:</label>
-  <div class="col-sm-7">
+  <div>
+    <label class="control-label">Total Teams:</label>
     <select class="form-control" [(ngModel)]="total_team">
       <option value = 8>8팀 참가</option>
     </select>
   </div>
   <br>
-  <br>
-  <label class="control-label col-sm-3">Prize:</label>
-  <div class="col-sm-7">
+  <div>
+    <label class="control-label">Prize:</label>
     <input type="string" class="form-control" placeholder="Enter prize" [(ngModel)]="prize">
   </div>
 </div>

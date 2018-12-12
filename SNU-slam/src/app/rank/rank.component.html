@@ -5,13 +5,13 @@
   <br>
   <div class="form-group">
     <label class="control-label col-sm-1">Nickname:</label>
-    <div class="col-sm-10">
+    <div>
       <input #searchBox type="string" class="form-control" placeholder="Enter nickname">
     </div>
-    <div class="col-sm-1">
-      <button (click)="search(searchBox.value)" class="btn btn-default" style="width: 100px">Search</button>
-    </div>
   </div>
+</div>
+<div style="text-align: center">
+  <button (click)="search(searchBox.value)" class="btn btn-default" style="width: 100px">Search</button>
 </div>
 
 <br>

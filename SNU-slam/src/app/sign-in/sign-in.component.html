@@ -36,6 +36,9 @@
   <button routerLink="/tournament" style="width: 120px; background-color: #f59797" class="btn btn-light">Tournament</button>
 </div>
 
-<div style="position: absolute; top: 9%; left: 10%">
-  <button style="width: 100px; background-color:#97c8f5" class="btn btn-light" (click)="goBack()">Back</button>
+<div *ngIf="isLoggedIn" style="position: absolute; top: 7%; left: 10%">
+  <button style="width: 120px; background-color:#97c8f5" class="btn btn-light" (click)="goBack()">Back</button>
+  <br>
+  <br>
+  <button routerLink="/rank" style="width: 120px; background-color: #97c8f5" class="btn btn-light">Rank</button>
 </div>
