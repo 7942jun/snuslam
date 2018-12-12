@@ -1,6 +1,6 @@
 {
 	"/api": {
-		"target": "http://localhost:8000",
+		"target": "ec2-54-180-99-47.ap-northeast-2.compute.amazonaws.com",
 		"secure": false,
 		"pathRewrite": {
 			"^/api": "/api"

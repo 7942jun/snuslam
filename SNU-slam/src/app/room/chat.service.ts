@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { WebsocketService } from './websocket.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface Message {
 	username: string,
@@ -12,7 +13,8 @@ export interface Message {
 @Injectable()
 export class ChatService {
   public messages: Subject<Message>;
-	CHAT_URL = 'ws://127.0.0.1:8000/ws/chat/';
+	baseUrl = environment.API_URL;
+	CHAT_URL = 'ws://' + this.baseUrl + '/ws/chat/';
 
   constructor(
 		private wsService: WebsocketService,

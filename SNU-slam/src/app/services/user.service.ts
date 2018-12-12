@@ -4,6 +4,7 @@ import { User } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from "@angular/router";
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -16,10 +17,11 @@ export class UserService {
 
   isLoggedIn: boolean;
   current_user: User;
+  baseUrl = environment.API_URL;
 
-  private userUrl = '/api/user';
-  private signUrl = '/api/sign_in';
-  private signOutUrl = 'api/sign_out';
+  private userUrl = this.baseUrl + '/api/user';
+  private signUrl = this.baseUrl + '/api/sign_in';
+  private signOutUrl = this.baseUrl + '/api/sign_out';
 
   constructor(
     private http: HttpClient,

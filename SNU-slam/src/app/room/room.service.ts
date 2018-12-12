@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Room } from '../room';
 import { User } from '../user';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -12,7 +13,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RoomService {
-  private  url = 'api/room';
+  baseUrl = environment.API_URL;
+  private url = this.baseUrl + '/api/room';
 
   constructor(
      private http: HttpClient
@@ -37,16 +39,16 @@ export class RoomService {
     return this.http.put<void>(url, room, httpOptions);
   } // tested
   getRoomUserById(roomid: number): Observable<User[]> {
-    const url = `api/room/${roomid}/user`;  // mock
+    const url = `${this.url}/${roomid}/user`;  // mock
     return this.http.get<User[]>(url);
   }
   AddRoomUser(roomid: number, userid: number): Observable<void> {
-    const url = `api/room/${roomid}/user`;
+    const url = `${this.url}/${roomid}/user`;
     const data = JSON.stringify({ user: userid });
     return this.http.put<void>(url, data, httpOptions);
   }
   changeTeam( user: User ): Observable<void> {
-    const url = `api/user/${user.id}`;
+    const url = `${this.url}/${user.id}`;
     return this.http.put<void>(url, user, httpOptions);
   }
 

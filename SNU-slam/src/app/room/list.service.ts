@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { WebsocketService } from './websocket.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface user {
 	id: number,
@@ -12,7 +13,8 @@ export interface user {
 @Injectable()
 export class ListService {
   public users: Subject<user>;
-	CHAT_URL = 'ws://127.0.0.1:8000/ws/room/';
+	baseUrl = environment.API_URL;
+	CHAT_URL = 'ws://' + this.baseUrl + '/ws/room/';
 
   constructor(
 		private wsService: WebsocketService,

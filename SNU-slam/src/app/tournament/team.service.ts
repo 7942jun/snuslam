@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Team } from '../team';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,8 +13,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TeamService {
-
-  private teamsUrl = 'api/team';
+  baseUrl = environment.API_URL;
+  private teamsUrl = this.baseUrl + '/api/team';
 
   constructor(
     private http: HttpClient,

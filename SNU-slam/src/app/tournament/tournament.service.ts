@@ -3,6 +3,7 @@ import { Tournament } from '../tournament';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,8 +13,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TournamentService {
-
-  private tournamentsUrl = 'api/tournament';
+  baseUrl = environment.API_URL;
+  private tournamentsUrl = this.baseUrl + '/api/tournament';
 
   constructor(
     private http: HttpClient,
