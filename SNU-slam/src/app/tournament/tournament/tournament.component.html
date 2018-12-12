@@ -1,75 +1,76 @@
+<h1 *ngIf="tournaments.length == 0" style="text-align: center">
+  No tournament now!
+</h1>
 <div *ngIf = "tournaments">
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-lg-6" style="text-align: center">
-      <div style="text-align: center">
-        <h2>Tournament List</h2>
-        <br>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-lg-6" style="text-align: center">
+        <div style="text-align: center">
+          <h2>Tournament List</h2>
+          <br>
+        </div>
+        
+        <table class="table table-striped table-hover" *ngIf="tournaments.length > 0">
+          <thead>
+          <tr>
+            <th style="text-align: center">Title</th>
+            <th style="text-align: center">Type</th>
+            <th style="text-align: center">Total Teams</th>
+            <th style="text-align: center">Reward</th>
+            <th style="text-align: center">State</th>
+            <th style="text-align: center">Delete</th>
+            <th style="text-align: center">Accept</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let tournament of tournaments">
+          <tr *ngIf="tournament.state == 1" >
+            <td style="text-align: center">{{ tournament.title }}</td>
+            <td style="text-align: center">{{ tournament.game_type }}:{{ tournament.game_type }}</td>
+            <td style="text-align: center">{{ tournament.total_team }}</td>
+            <td style="text-align: center">{{ tournament.reward }}</td>
+            <td style="text-align: center">{{ state(tournament.state) }}</td>
+            <td style="text-align: center">
+              <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
+            </td>
+            <td style="text-align: center">
+              <button class="change team btn btn-default" (click)="acceptTournament(tournament)">Accept</button>
+            </td>
+          </tr>
+          
+          <tr *ngIf="(tournament.state == 3) || (tournament.state == 4)" routerLink="/tournament/ongoing/{{ tournament.id }}" >
+            <td style="text-align: center">{{ tournament.title }}</td>
+            <td style="text-align: center">{{ tournament.game_type }}:{{ tournament.game_type }}</td>
+            <td style="text-align: center">{{ tournament.total_team }}</td>
+            <td style="text-align: center">{{ tournament.reward }}</td>
+            <td style="text-align: center">{{ state(tournament.state) }}</td>
+            <td style="text-align: center">
+              <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
+            </td>
+            <td>Accepted</td>
+          </tr>
+          
+          <tr *ngIf="tournament.state == 2" routerLink="/tournament/participate/{{ tournament.id }}" >
+            <td style="text-align: center">{{ tournament.title }}</td>
+            <td style="text-align: center">{{ tournament.game_type }}:{{ tournament.game_type }}</td>
+            <td style="text-align: center">{{ tournament.teams.length }}/{{ tournament.total_team }}</td>
+            <td style="text-align: center">{{ tournament.reward }}</td>
+            <td style="text-align: center">{{ state(tournament.state) }}</td>
+            <td style="text-align: center">
+              <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
+            </td>
+            <td>Accepted</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-      <h1 *ngIf="tournaments.length == 0" style="text-align: center">
-        No tournament now!
-      </h1>
-      <table class="table table-striped table-hover" *ngIf="tournaments.length > 0">
-        <thead>
-        <tr>
-          <th style="text-align: center">Title</th>
-          <th style="text-align: center">Type</th>
-          <th style="text-align: center">Total Teams</th>
-          <th style="text-align: center">Reward</th>
-          <th style="text-align: center">State</th>
-          <th style="text-align: center">Delete</th>
-          <th style="text-align: center">Accept</th>
-        </tr>
-        </thead>
-        <tbody *ngFor="let tournament of tournaments">
-        <tr *ngIf="tournament.state == 1" >
-          <td style="text-align: center">{{ tournament.title }}</td>
-          <td style="text-align: center">{{ tournament.game_type }}:{{ tournament.game_type }}</td>
-          <td style="text-align: center">{{ tournament.total_team }}</td>
-          <td style="text-align: center">{{ tournament.reward }}</td>
-          <td style="text-align: center">{{ state(tournament.state) }}</td>
-          <td style="text-align: center">
-            <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
-          </td>
-          <td style="text-align: center">
-            <button class="change team btn btn-default" (click)="acceptTournament(tournament)">Accept</button>
-          </td>
-        </tr>
-        
-        <tr *ngIf="(tournament.state == 3) || (tournament.state == 4)" routerLink="/tournament/ongoing/{{ tournament.id }}" >
-          <td style="text-align: center">{{ tournament.title }}</td>
-          <td style="text-align: center">{{ tournament.game_type }}:{{ tournament.game_type }}</td>
-          <td style="text-align: center">{{ tournament.total_team }}</td>
-          <td style="text-align: center">{{ tournament.reward }}</td>
-          <td style="text-align: center">{{ state(tournament.state) }}</td>
-          <td style="text-align: center">
-            <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
-          </td>
-          <td>Accepted</td>
-        </tr>
-        
-        <tr *ngIf="tournament.state == 2" routerLink="/tournament/participate/{{ tournament.id }}" >
-          <td style="text-align: center">{{ tournament.title }}</td>
-          <td style="text-align: center">{{ tournament.game_type }}:{{ tournament.game_type }}</td>
-          <td style="text-align: center">{{ tournament.teams.length }}/{{ tournament.total_team }}</td>
-          <td style="text-align: center">{{ tournament.reward }}</td>
-          <td style="text-align: center">{{ state(tournament.state) }}</td>
-          <td style="text-align: center">
-            <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
-          </td>
-          <td>Accepted</td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="col-sm-3"></div>
     </div>
-    <div class="col-sm-3"></div>
   </div>
-</div>
-
-<div style="text-align: center">
-  <button class="change team btn btn-default" style="width: 100px" routerLink="/tournament/create">Create</button>
-</div>
-
-</div>
+  
+  <div style="text-align: center">
+    <button class="change team btn btn-default" style="width: 100px" routerLink="/tournament/create">Create</button>
+  </div>
+  
+  </div>

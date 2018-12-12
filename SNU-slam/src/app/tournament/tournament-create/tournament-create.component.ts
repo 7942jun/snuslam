@@ -47,6 +47,10 @@ export class TournamentCreateComponent implements OnInit {
       + 'Total Teams: ' + this.total_team + ' teams' + '\n' + 'Prize: ' + this.prize + '\n' + 'Is it correct?');
 
     if (check) {
+      if(this.title.length >100 || this.prize.length > 100){
+        alert('Title and Prize should be under 100 letters');
+        return;
+      }
       this.tournamentService.addTournament(
         { title: this.title.trim(), host: 1, teams: [], game_type: this.game_type,
           total_team: this.total_team, result1: this.result1, result2: this.result2,

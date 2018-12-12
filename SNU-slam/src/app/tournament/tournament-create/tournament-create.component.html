@@ -11,23 +11,23 @@
   <label class="control-label col-sm-3">Game type:</label>
   <div class="col-sm-7">
     <select class="form-control" [(ngModel)]="game_type">
-      <option>3</option>
-      <option>5</option>
+      <option value = 3>3:3</option>
+      <option value = 5>5:5</option>
     </select>
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-3">Teams:</label>
+  <label class="control-label col-sm-3">Total Teams:</label>
   <div class="col-sm-7">
     <select class="form-control" [(ngModel)]="total_team">
-      <option>8</option>
+      <option value = 8>8팀 참가</option>
     </select>
   </div>
   <br>
   <br>
-  <label class="control-label col-sm-3">Reward:</label>
+  <label class="control-label col-sm-3">Prize:</label>
   <div class="col-sm-7">
-    <input type="string" class="form-control" placeholder="Enter reward" [(ngModel)]="prize">
+    <input type="string" class="form-control" placeholder="Enter prize" [(ngModel)]="prize">
   </div>
 </div>
 <br>

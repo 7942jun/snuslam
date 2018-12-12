@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Tournament } from '../../tournament';
 import { TournamentService } from '../tournament.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { User } from '../../user';
 
 @Component({
   selector: 'app-tournament',
@@ -11,16 +13,18 @@ import { Router } from '@angular/router';
 })
 export class TournamentComponent implements OnInit {
 
-  tournaments: Tournament[];
-  
+  tournaments: Tournament[] = [];
+  user:User = null;
   
   constructor(
     private tournamentService: TournamentService,
     private router: Router,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
     this.getTournaments();
+    this.user = this.userService.getUser()
     
     
   }
@@ -31,11 +35,17 @@ export class TournamentComponent implements OnInit {
   }
 
   acceptTournament(tournament: Tournament): void {
+    if(!this.isAdmin()){
+      return;
+    }
     tournament.state = 2;
     this.tournamentService.updateTournament(tournament).subscribe();
   }
 
   deleteTournament(tournament: Tournament): void {
+    if(!this.isAdmin()){
+      return;
+    }
     this.tournaments = this.tournaments.filter(t => t !== tournament);
     this.tournamentService.deleteTournament(tournament).subscribe();
   }
@@ -54,6 +64,10 @@ export class TournamentComponent implements OnInit {
     else if (state == 4) {
       return '종료';
     }
+  }
+
+  isAdmin(): boolean{
+    return this.user != null && this.user.email=='kimwj94@snu.ac.kr'&&this.user.username=='woojung';
   }
 
 }
