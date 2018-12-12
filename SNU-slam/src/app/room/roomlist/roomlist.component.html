@@ -1,32 +1,39 @@
-<div *ngIf = "roomlist">
-<div style="text-align: center">
-  <h2>Waiting Rooms</h2>
-  <br>
-</div>
-<h1 *ngIf="roomlist.length == 0" style="text-align: center">
-  No rooms available now!
-</h1>
-<table class="table table-striped table-hover" *ngIf="roomlist.length > 0">
-  <thead>
-  <tr>
-    <th style="text-align: center">Title</th>
-    <th style="text-align: center">Location</th>
-    <th style="text-align: center">Play time</th>
-    <th style="text-align: center">Game type</th>
-  </tr>
-  </thead>
-  <tbody>
-  <li *ngFor="let room of roomlist" routerLink="/room/{{ room.id }}"  >
-    <td style="text-align: center">{{ room.title }}</td>
-    <td style="text-align: center">{{ room.location }}</td>
-    <td style="text-align: center">{{ room.play_time }}</td>
-    <td style="text-align: center">{{ room.type }}:{{ room.type }}</td>
-  </li>
-  </tbody>
-</table>
-<div style="text-align: center">
-  <button style="width: 100px" class="btn btn-default" routerLink="/room/create">Create</button>
-</div>
-</div>
+<div *ngIf="roomlist">
+  <div class="container-fluid">
 
+    <div class="row">
 
+      <div class="col-lg-12" style="text-align: center">
+        <div style="text-align: center">
+          <h2>Waiting Rooms</h2>
+          <br>
+        </div>
+        <h1 *ngIf="roomlist.length == 0" style="text-align: center">
+          No rooms available now!
+        </h1>
+        <table class="table table-striped table-hover" *ngIf="roomlist.length > 0">
+          <thead>
+          <tr>
+            <th style="text-align: center">Title</th>
+            <th style="text-align: center">Location</th>
+            <th style="text-align: center">Play time</th>
+            <th style="text-align: center">Game type</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let room of roomlist">
+            <td>{{ room.title }}</td>
+            <td>{{ room.location }}</td>
+            <td>{{ room.play_time }}</td>
+            <td>{{ room.type }}</td>
+          </tr>
+          </tbody>
+        </table>
+        <div style="text-align: center">
+          <button style="width: 100px" class="btn btn-default" routerLink="/room/create">Create</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
