@@ -42,7 +42,7 @@ export class TournamentParticipateComponent implements OnInit {
 
   registerTeam(): void {
     for(var i = 0; i<this.tournament.teams.length; i++){
-      if(this.tournament.teams[i] == this.leaderId){
+      if(this.tournament.teamLeaders[i] == this.leaderId){
         alert('You have already participated!');
         return;
       }
@@ -68,7 +68,8 @@ export class TournamentParticipateComponent implements OnInit {
         this.teamService.addTeam(
           {name: this.name, contact: this.contact, leader_id: this.leaderId, members_id: []} as Team)
             .subscribe(team => {
-            this.tournament.teams.push(team.leader_id);
+            this.tournament.teams.push(team.id);
+            this.tournament.teamLeaders.push(team.leader_id);
             if (this.tournament.teams.length == 8) {
               this.tournament.state = 3;
             }

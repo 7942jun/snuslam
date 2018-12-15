@@ -71,7 +71,9 @@
     <h2>Team Information</h2>
     <div *ngFor = "let team of teams; let i = index">
       <h3>Team {{i+1}}</h3>
-      Team name: {{team.name}}
+      Team name: {{team.name}} <br>
+      Team leader: {{leaderName[i]}} <br>
+      Contact information: {{team.contact}}
     </div>
   </div>
 
