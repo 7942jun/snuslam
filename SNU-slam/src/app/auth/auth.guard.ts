@@ -54,13 +54,14 @@ export class AuthGuard implements CanActivate {
       }
       else if (seg[2] == 'ongoing' && seg.length==4) {
         if (/^\d+$/.test(seg[3])) {
-          this.checkTournamentOngoing(Number(seg[3]));
+          return this.checkTournamentOngoing(Number(seg[3]));
 
         }
       }
       else if ( seg[2] == 'participate' && seg.length==4) {
         if ( /^\d+$/.test(seg[3])) {
-          this.checkTournamentParticipate(Number(seg[3]));
+          console.log(Number(seg[3]));
+          return this.checkTournamentParticipate(Number(seg[3]));
         }
       }
     }
@@ -91,14 +92,18 @@ export class AuthGuard implements CanActivate {
           return true;
         }
       });
+    return true;
   }
   checkTournamentParticipate(id: number){
+    console.log('checkTP: ' + id);
     this.tournamentService.getTournamentById(id)
       .subscribe(tournament => {
-        if(tournament.id == id && tournament.state == 2){
+        if(tournament.id == id){
           return true;
         }
+        
       });
+    return true;
   }
 
 }
