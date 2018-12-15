@@ -34,6 +34,9 @@ export class ChatComponent implements OnInit {
   }
 
   sendMsg() {
+    if(this.input.trim().length == 0){
+      return;
+    }
     this.message.message = this.input;
     this.message.username = this.userService.current_user.username;
 		//console.log('new message from client to websocket: ', this.message);
