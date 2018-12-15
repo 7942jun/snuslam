@@ -39,5 +39,11 @@ export class ChatComponent implements OnInit {
 		//console.log('new message from client to websocket: ', this.message);
 		this.chatService.messages.next(this.message);
 		this.input = '';
-	}
+  }
+  
+  enterSend(event){
+    if(event.keyCode == 13){
+      this.sendMsg();  // 실행할 이벤트
+ }
+  }
 }

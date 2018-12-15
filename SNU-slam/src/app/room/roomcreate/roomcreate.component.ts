@@ -50,7 +50,7 @@ export class RoomcreateComponent implements OnInit {
 
   }
   goRoom(id: number) {
-    //this.router.navigate([`room/${id}`]);
+    this.router.navigate([`room/${id}`]);
 
   }
 }
