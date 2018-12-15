@@ -20,8 +20,6 @@
             <th style="text-align: center">Total Teams</th>
             <th style="text-align: center">Reward</th>
             <th style="text-align: center">State</th>
-            <th style="text-align: center">Delete</th>
-            <th style="text-align: center">Accept</th>
           </tr>
           </thead>
           <tbody *ngFor="let tournament of tournaments">
@@ -31,12 +29,7 @@
             <td style="text-align: center">{{ tournament.total_team }}</td>
             <td style="text-align: center">{{ tournament.reward }}</td>
             <td style="text-align: center">{{ state(tournament.state) }}</td>
-            <td style="text-align: center">
-              <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
-            </td>
-            <td style="text-align: center">
-              <button class="change team btn btn-default" (click)="acceptTournament(tournament)">Accept</button>
-            </td>
+            
           </tr>
           
           <tr *ngIf="(tournament.state == 3) || (tournament.state == 4)" routerLink="/tournament/ongoing/{{ tournament.id }}" >
@@ -45,10 +38,6 @@
             <td style="text-align: center">{{ tournament.total_team }}</td>
             <td style="text-align: center">{{ tournament.reward }}</td>
             <td style="text-align: center">{{ state(tournament.state) }}</td>
-            <td style="text-align: center">
-              <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
-            </td>
-            <td>Accepted</td>
           </tr>
           
           <tr *ngIf="tournament.state == 2" routerLink="/tournament/participate/{{ tournament.id }}" >
@@ -57,13 +46,14 @@
             <td style="text-align: center">{{ tournament.teams.length }}/{{ tournament.total_team }}</td>
             <td style="text-align: center">{{ tournament.reward }}</td>
             <td style="text-align: center">{{ state(tournament.state) }}</td>
-            <td style="text-align: center">
-              <button class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
-            </td>
-            <td>Accepted</td>
           </tr>
           </tbody>
         </table>
+        <div *ngIf = "isAdmin()">
+            <button *ngFor="let tournament of tournaments" class="change team btn btn-default" (click)="deleteTournament(tournament)">Delete</button>
+            <br>
+            <button *ngFor="let tournament of tournaments" class="change team btn btn-default" (click)="acceptTournament(tournament)">Accept</button>
+        </div>
       </div>
       <div class="col-sm-3"></div>
     </div>
