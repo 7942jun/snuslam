@@ -20,7 +20,13 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
-    if (!this.newUser.email || !this.newUser.password || !this.newUser.username || !this.newUser.position) {
+    var rx_email = /^[a-z0-9]+\@snu\.ac\.kr$/;
+    var no_email:boolean = !(rx_email.test(this.newUser.email));
+    if(no_email){
+      alert("Unvalid email");
+      return;
+    }
+    if(!this.newUser.email.trim() || !this.newUser.password.trim() || !this.newUser.username.trim() || !this.newUser.position) {
       alert("enter information");
       return;
     }
