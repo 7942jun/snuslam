@@ -20,14 +20,14 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
+    if(!this.newUser.email.trim() || !this.newUser.password.trim() || !this.newUser.username.trim() || !this.newUser.position) {
+      alert("enter all information");
+      return;
+    }
     var rx_email = /^[a-z0-9]+\@snu\.ac\.kr$/;
     var no_email:boolean = !(rx_email.test(this.newUser.email));
     if(no_email){
       alert("Unvalid email");
-      return;
-    }
-    if(!this.newUser.email.trim() || !this.newUser.password.trim() || !this.newUser.username.trim() || !this.newUser.position) {
-      alert("enter information");
       return;
     }
     if (this.newUser.password != this.pw_confirm) {
@@ -36,15 +36,29 @@ export class SignUpComponent implements OnInit {
       this.newUser.password = '';
       return;
     }
-
+    
     this.userService.postUser(this.newUser).subscribe(
       user => {
-        if (user.id > 0) {
+        if(user == undefined){
+          alert('Duplicate email or nickname');
+        }
+        else if (user.id > 0) {
           this.goBack();
           alert('Sign up success!');
         }
-      }, () => alert('Sign up failed!')
+      }
     );
+    /*
+    this.userService.postUser(this.newUser).subscribe({
+      complete: () => {
+        this.goBack();
+        alert('Sign up success!');
+      },
+      error: () => {
+        alert('Sign up failed!');
+      }
+    });
+    */
 
   }
 
