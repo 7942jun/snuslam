@@ -15,6 +15,7 @@ import { UserService } from '../../services/user.service';
 export class TournamentParticipateComponent implements OnInit {
   tournament: Tournament;
   name;
+  contact;
   leaderId;
   team: Team;
   id;
@@ -40,10 +41,19 @@ export class TournamentParticipateComponent implements OnInit {
   }
 
   registerTeam(): void {
-    if (this.name.trim().length == 0) {
+    for(var i = 0; i<this.tournament.teams.length; i++){
+      if(this.tournament.teams[i] == this.leaderId){
+        alert('You have already participated!');
+        return;
+      }
+    }
+    if (this.name.trim().length == 0 || this.contact.trim().length == 0) {
+      alert('Enter all information');
       return;
     }
-    const check = confirm('Your team name: ' + this.name + '\n' + 'Is it correct?');
+    const check = confirm('Your team name: ' + this.name + '\n' +
+                          'Your contact information: ' + this.contact + '\n'+
+                          'Is it correct?');
 
     if (check) {
       this.tournamentService.getTournamentById(this.id)
@@ -56,14 +66,12 @@ export class TournamentParticipateComponent implements OnInit {
       }
       else {
         this.teamService.addTeam(
-          {name: this.name, leader_id: this.leaderId, members_id: []} as Team)
+          {name: this.name, contact: this.contact, leader_id: this.leaderId, members_id: []} as Team)
             .subscribe(team => {
-            this.tournament.teams.push(team.id);
+            this.tournament.teams.push(team.leader_id);
             if (this.tournament.teams.length == 8) {
               this.tournament.state = 3;
             }
-            console.log('team length: ' + this.tournament.teams.length);
-            console.log('team state: ' + this.tournament.state);
             this.tournamentService.updateTournament(this.tournament)
               .subscribe(tournament => {
                 this.router.navigateByUrl(`tournament`);
