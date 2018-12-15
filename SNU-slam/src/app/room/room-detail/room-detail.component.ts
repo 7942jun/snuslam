@@ -21,7 +21,7 @@ export class RoomDetailComponent implements OnInit {
   host_id: number;
   isStarted: boolean;
 
-
+  
   constructor(
     private roomService: RoomService,
     private userService: UserService,

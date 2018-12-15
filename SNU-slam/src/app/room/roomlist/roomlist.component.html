@@ -21,7 +21,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let room of roomlist">
+          <tr *ngFor="let room of roomlist" routerLink="/room/{{ room.id }}">
             <td>{{ room.title }}</td>
             <td>{{ room.location }}</td>
             <td>{{ room.play_time }}</td>
