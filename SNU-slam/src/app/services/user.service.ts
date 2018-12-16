@@ -1,4 +1,4 @@
-import { user } from './../../../../../../project/swpp18-team3/SNU-slam/src/app/room/list.service';
+
 import {Injectable, Output} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../user';

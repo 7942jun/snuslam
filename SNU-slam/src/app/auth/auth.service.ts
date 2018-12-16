@@ -1,5 +1,5 @@
 import { UserService } from 'src/app/services/user.service';
-import { User } from './../../../../../../project/swpp18-team3/SNU-slam/src/app/user';
+import { User } from '../user';
 import { TournamentService } from './../tournament/tournament.service';
  import { Injectable } from '@angular/core';
  import { Observable, of } from 'rxjs';
