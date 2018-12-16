@@ -17,8 +17,7 @@ const httpOptions = {
 export class RoomService {
   baseUrl = environment.API_URL;
   private url = this.baseUrl + '/api/room';
-  private user_url = this.baseUrl + '/api/user'
-
+  private user_url = this.baseUrl + '/api/user';
   constructor(
      private http: HttpClient
     ) { }
@@ -44,20 +43,13 @@ export class RoomService {
     const url = `${this.url}/${room.id}`;
     return this.http.put<void>(url, room, httpOptions);
   } // tested
-  addUsertoRoom(roomid: number , userid: number): Observable<User> {
-    this.getCSRFHeaders();
-    const url = this.baseUrl + `/api/room/${roomid}/user`;
-    const data = JSON.stringify({id: roomid, user: userid});
-    return this.http.put<User>(url, data, httpOptions);
 
-  }
   getRoomUserById(roomid: number): Observable<User[]> {
     const url = this.baseUrl + `/api/room/${roomid}/user`; // mockroom/<int:id>/user
     return this.http.get<User[]>(url);
   }
-<<<<<<< HEAD
-=======
   AddRoomUser(roomid: number, userid: number): Observable<void> {
+    this.getCSRFHeaders();
     const url = `${this.url}/${roomid}/user`;
     const data = JSON.stringify({ user: userid });
     return this.http.put<void>(url, data, httpOptions);
@@ -66,14 +58,9 @@ export class RoomService {
     const url = `${this.url}/${roomid}/user/${userid}`;
     return this.http.delete<void>(url);
   }
->>>>>>> b6013c3056e54b436ba84494c2626d78b2bad9be
   changeTeam( user: User ): Observable<void> {
-<<<<<<< HEAD
     this.getCSRFHeaders();
     const url = this.baseUrl + `/api/user/${user.id}`;
-=======
-    const url = `${this.user_url}/${user.id}`;
->>>>>>> dfebbfbd46991e238aa659df48d2279cd863fcdd
     return this.http.put<void>(url, user, httpOptions);
   }
   getCSRFHeaders(): void {

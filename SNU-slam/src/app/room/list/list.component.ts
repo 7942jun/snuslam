@@ -51,7 +51,7 @@ export class ListComponent implements OnInit {
 
   setCurrentUserTeam(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.roomService.addUsertoRoom(id, this.currentUser.id).subscribe();
+    this.roomService.AddRoomUser(id, this.currentUser.id).subscribe();
     this.currentUser.team = 1;
     this.roomService.changeTeam(this.currentUser).subscribe();
     this.user.id = this.currentUser.id;
