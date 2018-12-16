@@ -1,14 +1,14 @@
-<div style="position: absolute; top: 9%; left: 10%">
+<!--<div style="position: absolute; top: 9%; left: 10%">
   <button style="width: 100px" class="btn btn-light" (click)="goBack()">Exit</button>
-</div>
-
+</div>-->
+<div *ngIf = "room">
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-4" style="text-align: center">
       <div *ngIf="!isStarted" class="well">
         <h3>Title: {{ room.title }}</h3>
-        <h4>Location: {{ room.location }} Game type: {{ room.type }}:{{ room.type }} Play time: {{ room.play_time }}</h4>
+        <h4>Location: {{ room.location }} Game type: {{ room.type }}:{{ room.type }} Play time: {{ room.play_time }}min</h4>
         <button (click) = "refresh()">Refresh</button>
       </div>
       <div *ngIf="isStarted">Game Started!!!!!!!!!!!!!!!!!!!111</div>
@@ -26,4 +26,5 @@
 </div>
 <div *ngIf="user.id == host_id && !isStarted " class="col-lg-6">
   <button class="btn btn-default" style="width: 100px" (click)="start()">Start</button>
+</div>
 </div>

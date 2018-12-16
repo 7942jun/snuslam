@@ -4,6 +4,8 @@ import { Team } from '../../team';
 import { TournamentService } from '../tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { TeamService } from '../team.service';
+import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-tournament-ongoing',
@@ -13,16 +15,19 @@ import { TeamService } from '../team.service';
 export class TournamentOngoingComponent implements OnInit {
   tournament: Tournament;
   teams: Team[] = [];
+  leaderName: string[] = [];
 
   constructor(
     private tournamentService: TournamentService,
     private teamService: TeamService,
     private route: ActivatedRoute,
+    private userService: UserService,
 
   ) { }
 
   ngOnInit() {
       this.getTournament();
+      this.getLeaderName();
       // this.getTeams();
   }
 
@@ -38,6 +43,14 @@ export class TournamentOngoingComponent implements OnInit {
                       });
                   }
                   });
+  }
+  getLeaderName(){
+    for(var i = 0; i<this.teams.length; i++){
+      this.userService.getUserById(this.teams[i].leader_id)
+        .subscribe(user =>{
+          this.leaderName.push(user.username);
+        })
+    }
   }
   /*
   getTeams(): void {

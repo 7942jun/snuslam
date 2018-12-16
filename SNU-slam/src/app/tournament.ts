@@ -3,6 +3,7 @@ export class Tournament {
   title: string;
   host: number;
   teams: number[];
+  teamLeaders: number[];
   game_type: number; // value means the number of members in a team.
   total_team: number; // value means the number of total teams in a tournament.
   result1: number[];

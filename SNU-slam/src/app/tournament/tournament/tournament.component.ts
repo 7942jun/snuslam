@@ -35,7 +35,7 @@ export class TournamentComponent implements OnInit {
   }
 
   acceptTournament(tournament: Tournament): void {
-    if(!this.isAdmin()){
+    if(!this.isAdmin() || tournament.state!=1){
       return;
     }
     tournament.state = 2;

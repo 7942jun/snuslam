@@ -3,12 +3,18 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { Tournament } from '../tournament';
+import { TournamentService } from '../tournament/tournament.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private userService: UserService, 
+    private router: Router,
+    private tournamentService: TournamentService
+  ) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const url: string = state.url;
@@ -43,18 +49,19 @@ export class AuthGuard implements CanActivate {
       if (seg.length == 2) {
         return true;
       }
-      else if (seg[2] == 'create') {
+      else if (seg[2] == 'create' && seg.length==3) {
         return true;
       }
-      else if (seg[2] == 'ongoing' ) {
+      else if (seg[2] == 'ongoing' && seg.length==4) {
         if (/^\d+$/.test(seg[3])) {
-          return this.checkongoing(Number(seg[3]));
+          return this.checkTournamentOngoing(Number(seg[3]));
 
         }
       }
-      else if ( seg[2] == 'participate' ) {
+      else if ( seg[2] == 'participate' && seg.length==4) {
         if ( /^\d+$/.test(seg[3])) {
-          return this.checktorunament(Number(seg[3]));
+          console.log(Number(seg[3]));
+          return this.checkTournamentParticipate(Number(seg[3]));
         }
       }
     }
@@ -67,6 +74,7 @@ export class AuthGuard implements CanActivate {
 
 
   checkLogin(): boolean {
+    console.log(this.userService.isLoggedIn);
     if (this.userService.isLoggedIn) {
       return true;
     }
@@ -76,10 +84,25 @@ export class AuthGuard implements CanActivate {
     //if (this.authService.isInRoom()) {}
     return true;
   }
-  checktorunament(id: number): boolean {
+  checkTournamentOngoing(id: number){
+    
+    this.tournamentService.getTournamentById(id)
+      .subscribe(tournament => {
+        if(tournament.id == id && (tournament.state == 3 || tournament.state == 4)){
+          return true;
+        }
+      });
     return true;
   }
-  checkongoing(id: number): boolean {
+  checkTournamentParticipate(id: number){
+    console.log('checkTP: ' + id);
+    this.tournamentService.getTournamentById(id)
+      .subscribe(tournament => {
+        if(tournament.id == id){
+          return true;
+        }
+        
+      });
     return true;
   }
 

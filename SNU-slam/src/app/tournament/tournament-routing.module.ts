@@ -9,7 +9,7 @@ import { TournamentParticipateComponent } from './tournament-participate/tournam
 
 
 const tournamentRoutes: Routes = [
-  { path: 'tournament', component: TournamentComponent},
+  { path: 'tournament', component: TournamentComponent, canActivate: [AuthGuard]},
   { path: 'tournament/create', component: TournamentCreateComponent , canActivate: [AuthGuard]},
   { path: 'tournament/ongoing/:id', component: TournamentOngoingComponent , canActivate: [AuthGuard]},
   { path: 'tournament/participate/:id', component: TournamentParticipateComponent , canActivate: [AuthGuard]},
