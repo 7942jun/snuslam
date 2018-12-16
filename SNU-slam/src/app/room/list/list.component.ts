@@ -53,6 +53,7 @@ export class ListComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.roomService.addUsertoRoom(id, this.currentUser.id).subscribe();
     this.currentUser.team = 1;
+    this.roomService.changeTeam(this.currentUser).subscribe();
     this.user.id = this.currentUser.id;
     this.user.team = 1;
     this.user.getOut = false;
@@ -73,6 +74,7 @@ export class ListComponent implements OnInit {
   onChangeTeam(): void {
     if(this.currentUser.team === 1) {
       this.currentUser.team = 2;
+      this.roomService.changeTeam(this.currentUser).subscribe();
       this.user.id = this.currentUser.id;
       this.user.team = 2;
       this.user.getOut = false;
@@ -80,6 +82,7 @@ export class ListComponent implements OnInit {
     }
     else if(this.currentUser.team === 2) {
       this.currentUser.team = 1;
+      this.roomService.changeTeam(this.currentUser).subscribe();
       this.user.id = this.currentUser.id;
       this.user.team = 1;
       this.user.getOut = false;

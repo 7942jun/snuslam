@@ -17,6 +17,7 @@ const httpOptions = {
 export class RoomService {
   baseUrl = environment.API_URL;
   private url = this.baseUrl + '/api/room';
+  private user_url = this.baseUrl + '/api/user'
 
   constructor(
      private http: HttpClient
@@ -67,8 +68,12 @@ export class RoomService {
   }
 >>>>>>> b6013c3056e54b436ba84494c2626d78b2bad9be
   changeTeam( user: User ): Observable<void> {
+<<<<<<< HEAD
     this.getCSRFHeaders();
     const url = this.baseUrl + `/api/user/${user.id}`;
+=======
+    const url = `${this.user_url}/${user.id}`;
+>>>>>>> dfebbfbd46991e238aa659df48d2279cd863fcdd
     return this.http.put<void>(url, user, httpOptions);
   }
   getCSRFHeaders(): void {
