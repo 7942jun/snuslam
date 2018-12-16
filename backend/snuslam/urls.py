@@ -12,6 +12,7 @@ urlpatterns = [
 	path('room', views.room, name='room'),
 	path('room/<int:id>', views.room_detail, name='room_detail'),
 	path('room/<int:id>/user', views.room_user, name='room_user'),
+	path('room/<int:id>/user/<int:user_id>', views.room_user_detail, name='room_user_detail'),
 	path('tournament', views.tournament, name='tournament'),
 	path('tournament/<int:id>', views.tournament_detail, name='tournament_detail'),
 	path('team', views.team, name='team'),

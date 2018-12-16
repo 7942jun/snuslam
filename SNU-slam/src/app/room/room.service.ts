@@ -47,6 +47,10 @@ export class RoomService {
     const data = JSON.stringify({ user: userid });
     return this.http.put<void>(url, data, httpOptions);
   }
+  deleteRoomUser(roomid: number, userid: number): Observable<void> {
+    const url = `${this.url}/${roomid}/user/${userid}`;
+    return this.http.delete<void>(url);
+  }
   changeTeam( user: User ): Observable<void> {
     const url = `${this.url}/${user.id}`;
     return this.http.put<void>(url, user, httpOptions);

@@ -7,7 +7,8 @@ import { environment } from '../../environments/environment';
 
 export interface user {
 	id: number,
-	team: number
+	team: number,
+	getOut: boolean
 }
 
 @Injectable()
@@ -28,7 +29,8 @@ export class ListService {
         let data = JSON.parse(response.data);
         return {
           id: data.id,
-          team: data.team
+          team: data.team,
+					getOut: data.getOut
         }
       }));
   }
