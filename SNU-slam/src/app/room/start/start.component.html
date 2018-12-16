@@ -1,0 +1,12 @@
+<h1>Game Start!!</h1>
+<div *ngIf="!chooseTeam && user.id == host">
+  <h3>choose win team</h3>
+  <button style="width: 100px" class="btn btn-default" (click)="redWin()">Team Red</button>
+  <button style="width: 100px" class="btn btn-default" (click)="blueWin()">Team Blue</button>
+</div>
+<div *ngIf="chooseTeam && user.id == host">
+  <h3>Congratulation! {{winTeam}} wins!</h3>
+</div>
+<div *ngIf="user.id != host || chooseTeam">
+  <button style="width: 100px" class="btn btn-default" (click)="exit()">Exit</button>
+</div>

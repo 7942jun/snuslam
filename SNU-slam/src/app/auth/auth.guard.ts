@@ -11,7 +11,7 @@ import { TournamentService } from '../tournament/tournament.service';
 })
 export class AuthGuard implements CanActivate {
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private router: Router,
     private tournamentService: TournamentService
   ) { }
@@ -65,6 +65,9 @@ export class AuthGuard implements CanActivate {
         }
       }
     }
+    else if(seg[1] == 'start') {
+      return true;
+    }
     alert('Bad url!');
     this.router.navigate(['/']);
     return false;
@@ -85,7 +88,7 @@ export class AuthGuard implements CanActivate {
     return true;
   }
   checkTournamentOngoing(id: number){
-    
+
     this.tournamentService.getTournamentById(id)
       .subscribe(tournament => {
         if(tournament.id == id && (tournament.state == 3 || tournament.state == 4)){
@@ -101,7 +104,7 @@ export class AuthGuard implements CanActivate {
         if(tournament.id == id){
           return true;
         }
-        
+
       });
     return true;
   }

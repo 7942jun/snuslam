@@ -67,6 +67,21 @@ def user_detail(request, id):
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
 @csrf_exempt
+def user_wins(request, id):
+	if request.method == 'PUT':
+		try: 
+			user = Profile.objects.get(id=id)
+		except Profile.DoesNotExist:
+			return HttpResponse(status=404)
+		data = json.loads(request.body.decode())
+		user.wins = user.wins + data['win']
+		user.loses = user.loses + data['lose']
+		user.save()
+		return HttpResponse(status=200)
+	else:
+		return HttpResponseNotAllowed(['PUT'])
+
+@csrf_exempt
 def rank(request):
 	if request.method == 'GET':
 		rank_list = [profile.json() for profile in Profile.objects.all()]
