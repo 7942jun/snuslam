@@ -113,6 +113,7 @@ def sign_in(request):
 def sign_out(request):
 	if request.method == 'GET':
 		if request.user.is_authenticated:
+	
 			logout(request)
 			return HttpResponse(status=204)
 		else:
