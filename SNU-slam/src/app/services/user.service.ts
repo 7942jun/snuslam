@@ -1,8 +1,9 @@
+import { user } from './../../../../../../project/swpp18-team3/SNU-slam/src/app/room/list.service';
 import {Injectable, Output} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap , map } from 'rxjs/operators';
 import { Router } from "@angular/router";
 import { environment } from '../../environments/environment';
 
@@ -66,7 +67,8 @@ export class UserService {
   login(email: string, password: string): Observable<User> {
     this.getCSRFHeaders();
     const data = JSON.stringify({ email: email, password: password });
-    return this.http.post<User>(this.signUrl, data, httpOptions);
+
+    return this.http.post<User>(this.signUrl, data, httpOptions)
   }
 
   getCSRFHeaders(): HttpHeaders {
@@ -90,7 +92,8 @@ export class UserService {
   }
 
   getUser(): User {
-    if ( this.isLoggedIn ) {
+    const id = parseInt(localStorage.getItem('user_id'), 10);
+    if ( id ) {
       return this.current_user;
     } else {
       return;
