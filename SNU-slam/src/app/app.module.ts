@@ -26,7 +26,7 @@ import { APIInterceptor } from "./APIInterceptor";
     SignUpComponent,
     MainComponent,
     RankComponent,
-    SignInComponent
+    SignInComponent,
   ],
   imports: [
     ReactiveFormsModule,

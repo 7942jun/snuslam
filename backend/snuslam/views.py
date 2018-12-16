@@ -83,6 +83,21 @@ def user_room(request, id):
 
 
 @csrf_exempt
+def user_wins(request, id):
+	if request.method == 'PUT':
+		try: 
+			user = Profile.objects.get(id=id)
+		except Profile.DoesNotExist:
+			return HttpResponse(status=404)
+		data = json.loads(request.body.decode())
+		user.wins = user.wins + data['win']
+		user.loses = user.loses + data['lose']
+		user.save()
+		return HttpResponse(status=200)
+	else:
+		return HttpResponseNotAllowed(['PUT'])
+
+@csrf_exempt
 def rank(request):
 	if request.method == 'GET':
 		rank_list = [profile.json() for profile in Profile.objects.all()]
@@ -264,20 +279,18 @@ def tournament(request):
 		tournament.total_team = data['total_team']
 		tournament.reward = data['reward']
 		tournament.state = data['state']
-		for team in tournament.result1.all():
-			tournament.result1.remove(team)
-		for id in data['result1']:
-			tournament.result1.add(Team.objects.get(id=id))
-		
-		for team in tournament.result2.all():
-			tournament.result2.remove(team)
-		for id in data['result2']:
-			tournament.result2.add(Team.objects.get(id=id))
-		
-		for team in tournament.result3.all():
-			tournament.result3.remove(team)
-		for id in data['result3']:
-			tournament.result3.add(Team.objects.get(id=id))
+		tournament.result11 = data['result11']
+		tournament.result12 = data['result12']
+		tournament.result13 = data['result13']
+		tournament.result14 = data['result14']
+		tournament.result21 = data['result21']
+		tournament.result22 = data['result22']
+		tournament.result31 = data['result31']
+		for user in tournament.teamLeaders.all():
+			tournament.teamLeaders.remove(user)
+		for id in data['teamLeaders']:
+			tournament.teamLeaders.add(User.objects.get(id=id))
+
 		tournament.save()
 		return HttpResponse(status=200)
 
@@ -311,7 +324,9 @@ def team(request):
 		data = json.loads(request.body.decode())
 		leader_id = User.objects.get(id=data['leader_id'])
 		name = data['name']
-		team = Team(leader_id=leader_id, name=name)
+		leaderName = data['leaderName']
+		contact = data['contact']
+		team = Team(leader_id=leader_id, name=name, leaderName=leaderName, contact=contact)
 		team.save()
 		response_dict = team.json()
 		return HttpResponse(json.dumps(response_dict), content_type = 'application/json', status=201)

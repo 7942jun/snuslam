@@ -8,7 +8,8 @@ import { environment } from '../../environments/environment';
 export interface user {
 	id: number,
 	team: number,
-	getOut: boolean
+	getOut: boolean,
+	start: boolean
 }
 
 @Injectable()
@@ -30,7 +31,8 @@ export class ListService {
         return {
           id: data.id,
           team: data.team,
-					getOut: data.getOut
+					getOut: data.getOut,
+					start: data.start,
         }
       }));
   }

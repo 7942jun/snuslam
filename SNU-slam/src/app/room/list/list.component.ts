@@ -4,6 +4,8 @@ import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { ListService } from '../list.service';
 import { WebsocketService } from '../websocket.service';
+import { StartService } from '../start.service'
+import { Router } from '@angular/router';
 import { User } from '../../user';
 
 @Component({
@@ -21,24 +23,34 @@ export class ListComponent implements OnInit {
   private user = {
     id: 0,
     team: 0,
-    getOut: false
+    getOut: false,
+    start: false
   }
 
   constructor(
     private roomService: RoomService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private listService: ListService
+    private listService: ListService,
+    private startService: StartService,
+    private router: Router,
   ) {
     listService.users.subscribe(user => {
-      this.blueteam = this.blueteam.filter(temp => temp.id !== user.id);
-      this.redteam = this.redteam.filter(temp => temp.id !== user.id);
-      if(!user.getOut) {
-        if(user.team === 1) {
-          this.userService.getUserById(user.id).subscribe(user => this.redteam.push(user));
-        }
-        else if(user.team === 2) {
-          this.userService.getUserById(user.id).subscribe(user => this.blueteam.push(user));
+      if(user.start) {
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.startService.setTeam(this.redteam, this.blueteam);
+        this.router.navigate(['/start/' + id]);
+      }
+      else {
+        this.blueteam = this.blueteam.filter(temp => temp.id !== user.id);
+        this.redteam = this.redteam.filter(temp => temp.id !== user.id);
+        if(!user.getOut) {
+          if(user.team === 1) {
+            this.userService.getUserById(user.id).subscribe(user => this.redteam.push(user));
+          }
+          else if(user.team === 2) {
+            this.userService.getUserById(user.id).subscribe(user => this.blueteam.push(user));
+          }
         }
       }
 		});
@@ -57,6 +69,7 @@ export class ListComponent implements OnInit {
     this.user.id = this.currentUser.id;
     this.user.team = 1;
     this.user.getOut = false;
+    this.user.start = false;
     this.listService.users.next(this.user);
   }
 
@@ -78,6 +91,7 @@ export class ListComponent implements OnInit {
       this.user.id = this.currentUser.id;
       this.user.team = 2;
       this.user.getOut = false;
+      this.user.start = false;
       this.listService.users.next(this.user);
     }
     else if(this.currentUser.team === 2) {
@@ -86,6 +100,7 @@ export class ListComponent implements OnInit {
       this.user.id = this.currentUser.id;
       this.user.team = 1;
       this.user.getOut = false;
+      this.user.start = false;
       this.listService.users.next(this.user);
     }
   }

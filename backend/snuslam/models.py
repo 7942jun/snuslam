@@ -39,11 +39,15 @@ class Team(models.Model):
 	leader_id = models.ForeignKey(User, on_delete=models.CASCADE)
 	members_id = models.ManyToManyField(User, related_name='%(class)s_users')
 	name = models.CharField(max_length=20)
+	contact = models.CharField(max_length=20)
+	leaderName = models.CharField(max_length=20)
 
 	def json(self):
 		return {
 			'id': self.id,
 			'name': self.name,
+			'leaderName': self.leaderName,
+			'contact': self.contact,
 			'leader_id': self.leader_id.id,
 			'members_id': [user.id for user in self.members_id.all()]
 		}
@@ -73,11 +77,16 @@ class Tournament(models.Model):
 	title = models.CharField(max_length=100)
 	host = models.IntegerField(default=0)
 	teams = models.ManyToManyField(Team, related_name='%(class)s_teams')
+	teamLeaders = models.ManyToManyField(User, related_name='%(class)s_teamLeaders')
 	game_type = models.IntegerField(default=0)
 	total_team = models.IntegerField(default=0)
-	result1 = models.ManyToManyField(Team, related_name='%(class)s_result1')
-	result2 = models.ManyToManyField(Team, related_name='%(class)s_result2')
-	result3 = models.ManyToManyField(Team, related_name='%(class)s_result3')
+	result11 = models.IntegerField(default=-1)
+	result12 = models.IntegerField(default=-1)
+	result13 = models.IntegerField(default=-1)
+	result14 = models.IntegerField(default=-1)
+	result21 = models.IntegerField(default=-1)
+	result22 = models.IntegerField(default=-1)
+	result31 = models.IntegerField(default=-1)
 	state = models.IntegerField(default=1)
 	reward = models.CharField(max_length=100)
 
@@ -87,9 +96,14 @@ class Tournament(models.Model):
 			'title': self.title,
 			'host': self.host,
 			'teams': [team.id for team in self.teams.all()],
-			'result1': [team.id for team in self.result1.all()],
-			'result2': [team.id for team in self.result2.all()],
-			'result3': [team.id for team in self.result3.all()],
+			'teamLeaders': [user.id for user in self.teamLeaders.all()],
+			'result11': self.result11,
+			'result12': self.result12,
+			'result13': self.result13,
+			'result14': self.result14,
+			'result21': self.result21,
+			'result22': self.result22,
+			'result31': self.result31,
 			'total_team': self.total_team,
 			'game_type': self.game_type,
 			'state': self.state,

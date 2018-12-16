@@ -16,6 +16,7 @@ import { MapComponent } from './map/map.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ChatComponent } from './chat/chat.component';
 import { ListComponent } from './list/list.component';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { ListComponent } from './list/list.component';
     IngameComponent,
     MapComponent,
     ChatComponent,
-    ListComponent
+    ListComponent,
+    StartComponent
   ],
   exports: [
     MapComponent

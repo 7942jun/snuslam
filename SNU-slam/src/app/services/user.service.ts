@@ -30,6 +30,12 @@ export class UserService {
     private router: Router
   ) { }
 
+  updateUserWinsById(id: number, win: boolean): Observable<void> {
+    const url = `${this.userUrl}/wins/${id}`;
+    const data = (win)? JSON.stringify({win:1, lose:0}) : JSON.stringify({win:0, lose:1});
+    return this.http.put<void>(url, data, httpOptions);
+  }
+
   postUser(user: User): Observable<User> {
     this.getCSRFHeaders();
     return this.http.post<User>(this.userUrl, user, httpOptions)

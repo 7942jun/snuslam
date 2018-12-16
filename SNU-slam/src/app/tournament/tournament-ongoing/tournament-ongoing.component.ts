@@ -5,6 +5,7 @@ import { TournamentService } from '../tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { TeamService } from '../team.service';
 import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/user';
 
 
 @Component({
@@ -14,8 +15,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class TournamentOngoingComponent implements OnInit {
   tournament: Tournament;
-  teams: Team[] = [];
+  teams: Team[] = [null,null,null,null,null,null,null,null];
   leaderName: string[] = [];
+  user:User;
 
   constructor(
     private tournamentService: TournamentService,
@@ -27,7 +29,8 @@ export class TournamentOngoingComponent implements OnInit {
 
   ngOnInit() {
       this.getTournament();
-      this.getLeaderName();
+      this.user = this.userService.getUser();
+      
       // this.getTeams();
   }
 
@@ -36,22 +39,18 @@ export class TournamentOngoingComponent implements OnInit {
     this.tournamentService.getTournamentById(id)
       .subscribe(tournament => {
                   this.tournament = tournament;
+                  
                   for (let i = 0; i < tournament.teams.length; i++) {
+                    
                     this.teamService.getTeamById(tournament.teams[i])
                       .subscribe(team => {
-                        this.teams.push(team);
+                        this.teams[i] = team;
                       });
                   }
+                  
                   });
   }
-  getLeaderName(){
-    for(var i = 0; i<this.teams.length; i++){
-      this.userService.getUserById(this.teams[i].leader_id)
-        .subscribe(user =>{
-          this.leaderName.push(user.username);
-        })
-    }
-  }
+  
   /*
   getTeams(): void {
     for (let i = 0; i < this.tournament.teams.length; i++) {
@@ -64,23 +63,34 @@ export class TournamentOngoingComponent implements OnInit {
   */
 
   updateColor(): void {
-    for (let i = 0; i < 4; i++) {
-      if ( this.tournament.result1[i] != -1) {
-        const id = 'r1' + this.tournament.result1[i];
-        document.getElementById(id).style.backgroundColor = 'red';
-      }
+    if(this.tournament.result11 != -1){
+      const id = 'r1'+this.tournament.result11;
+      document.getElementById(id).style.backgroundColor = 'red';
     }
-
-    for (let i = 0; i < 2; i++) {
-      if ( this.tournament.result2[i] != -1) {
-        const temp = Math.floor((this.tournament.result2[i] - 1) / 2) + 1;
-        const id = 'r2' + temp;
-        document.getElementById(id).style.backgroundColor = 'red';
-      }
+    if(this.tournament.result12 != -1){
+      const id = 'r1'+this.tournament.result12;
+      document.getElementById(id).style.backgroundColor = 'red';
     }
-
-    if ( this.tournament.result3[0] != -1) {
-      const temp = Math.floor((this.tournament.result3[0] - 1) / 4) + 1;
+    if(this.tournament.result13 != -1){
+      const id = 'r1'+this.tournament.result13;
+      document.getElementById(id).style.backgroundColor = 'red';
+    }
+    if(this.tournament.result14 != -1){
+      const id = 'r1'+this.tournament.result14;
+      document.getElementById(id).style.backgroundColor = 'red';
+    }
+    if(this.tournament.result21 != -1){
+      const temp = Math.floor((this.tournament.result21 - 1) / 2) + 1;
+      const id = 'r2' + temp;
+      document.getElementById(id).style.backgroundColor = 'red';
+    }
+    if(this.tournament.result22 != -1){
+      const temp = Math.floor((this.tournament.result22 - 1) / 2) + 1;
+      const id = 'r2' + temp;
+      document.getElementById(id).style.backgroundColor = 'red';
+    }
+    if ( this.tournament.result31 != -1) {
+      const temp = Math.floor((this.tournament.result31 - 1) / 4) + 1;
       const id = 'r3' + temp;
       const id2 = 'r4';
       document.getElementById(id).style.backgroundColor = 'red';
@@ -88,46 +98,118 @@ export class TournamentOngoingComponent implements OnInit {
     }
   }
 
-  result1(team: number, id: string): void {
-    const temp = Math.floor((team - 1) / 2);
-    if (this.tournament.result1[temp] == -1 ) {
-      const check = confirm('Team ' + team + ' won the game. Is it true?');
-      if (check) {
-        this.tournament.result1[temp] = team;
-        this.tournamentService.updateTournament(this.tournament)
-        .subscribe();
-        document.getElementById(id).style.backgroundColor = 'red';
-      }
-    }
-  }
-
-  result2(team: number, id: string): void {
-    if (team == -1) {
+  result1(team: number,myTeam:number, id: string): void {
+    if(this.teams[myTeam-1].leader_id != this.user.id){
       return;
     }
-    else {
-      const temp = Math.floor((team - 1) / 4);
-      if (this.tournament.result2[temp] == -1) {
+    const temp = Math.floor((team - 1) / 2) +1;
+    if(temp == 1){
+      if(this.tournament.result11 == -1){
         const check = confirm('Team ' + team + ' won the game. Is it true?');
         if (check) {
-          this.tournament.result2[temp] = team;
+          this.tournament.result11 = team;
           this.tournamentService.updateTournament(this.tournament)
-        .subscribe();
-        document.getElementById(id).style.backgroundColor = 'red';
+          .subscribe();
+          document.getElementById(id).style.backgroundColor = 'red';
         }
       }
     }
+    else if(temp == 2){
+      if(this.tournament.result12 == -1){
+        const check = confirm('Team ' + team + ' won the game. Is it true?');
+        if (check) {
+          this.tournament.result12 = team;
+          this.tournamentService.updateTournament(this.tournament)
+          .subscribe();
+          document.getElementById(id).style.backgroundColor = 'red';
+        }
+      }
+    }
+    else if(temp == 3){
+      if(this.tournament.result13 == -1){
+        const check = confirm('Team ' + team + ' won the game. Is it true?');
+        if (check) {
+          this.tournament.result13 = team;
+          this.tournamentService.updateTournament(this.tournament)
+          .subscribe();
+          document.getElementById(id).style.backgroundColor = 'red';
+        }
+      }
+    }
+    else{
+      if(this.tournament.result14 == -1){
+        const check = confirm('Team ' + team + ' won the game. Is it true?');
+        if (check) {
+          this.tournament.result14 = team;
+          this.tournamentService.updateTournament(this.tournament)
+          .subscribe();
+          document.getElementById(id).style.backgroundColor = 'red';
+        }
+      }
+
+    }
+   
   }
 
-  result3(team: number, id: string): void {
-    if (team == -1) {
+  result2(team: number,myTeam:number, id: string): void {
+    if (team == -1 || myTeam == -1) {
+      return;
+    }
+    if(this.teams[myTeam-1].leader_id != this.user.id){
       return;
     }
     else {
-      if (this.tournament.result3[0] == -1) {
+      const temp = Math.floor((team - 1) / 4)+1;
+      if(temp == 1){
+        
+        if(this.tournament.result11 == -1 || this.tournament.result12 == -1){
+          return;
+        }
+        if (this.tournament.result21 == -1) {
+          const check = confirm('Team ' + team + ' won the game. Is it true?');
+          if (check) {
+            this.tournament.result21 = team;
+            this.tournamentService.updateTournament(this.tournament)
+          .subscribe();
+          document.getElementById(id).style.backgroundColor = 'red';
+          }
+        }
+
+      }
+      else{
+        if(this.tournament.result13 == -1 || this.tournament.result14 == -1){
+          return;
+        }
+        if (this.tournament.result22 == -1) {
+          const check = confirm('Team ' + team + ' won the game. Is it true?');
+          if (check) {
+            this.tournament.result22 = team;
+            this.tournamentService.updateTournament(this.tournament)
+          .subscribe();
+          document.getElementById(id).style.backgroundColor = 'red';
+          }
+        }
+
+      }
+    }
+  }
+
+  result3(team: number, myTeam:number, id: string): void {
+    
+    if (team == -1 || myTeam == -1) {
+      return;
+    }
+    if(this.teams[myTeam-1].leader_id != this.user.id){
+      return;
+    }
+    else {
+      if(this.tournament.result21 == -1 || this.tournament.result22 == -1){
+        return;
+      }
+      if (this.tournament.result31 == -1) {
         const check = confirm('Team ' + team + ' won the game. Is it true?');
         if (check) {
-          this.tournament.result3[0] = team;
+          this.tournament.result31 = team;
           this.tournament.state = 4; // 종료
           this.tournamentService.updateTournament(this.tournament)
             .subscribe();
@@ -140,29 +222,29 @@ export class TournamentOngoingComponent implements OnInit {
 
   quarterFinals(nth: number): string {
     if (nth == 0) {
-      return this.tournament.result1[0] == -1 ? '' : 'Team ' + this.tournament.result1[0];
+      return this.tournament.result11 == -1 ? '' : 'Team ' + this.tournament.result11;
     }
     else if (nth == 1) {
-      return this.tournament.result1[1] == -1 ? '' : 'Team ' + this.tournament.result1[1];
+      return this.tournament.result12 == -1 ? '' : 'Team ' + this.tournament.result12;
     }
     else if (nth == 2) {
-      return this.tournament.result1[2] == -1 ? '' : 'Team ' + this.tournament.result1[2];
+      return this.tournament.result13 == -1 ? '' : 'Team ' + this.tournament.result13;
     }
     else {
-      return this.tournament.result1[3] == -1 ? '' : 'Team ' + this.tournament.result1[3];
+      return this.tournament.result14 == -1 ? '' : 'Team ' + this.tournament.result14;
     }
   }
 
   semiFinals(nth: number): string {
     if (nth == 0) {
-      return this.tournament.result2[0] == -1 ? '' : 'Team ' + this.tournament.result2[0];
+      return this.tournament.result21 == -1 ? '' : 'Team ' + this.tournament.result21;
     }
     else {
-      return this.tournament.result2[1] == -1 ? '' : 'Team ' + this.tournament.result2[1];
+      return this.tournament.result22 == -1 ? '' : 'Team ' + this.tournament.result22;
     }
   }
 
   final(): string {
-    return this.tournament.result3[0] == -1 ? '' : 'Team ' + this.tournament.result3[0];
+    return this.tournament.result31 == -1 ? '' : 'Team ' + this.tournament.result31;
   }
 }
