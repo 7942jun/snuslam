@@ -5,11 +5,14 @@ import { RoomService } from '../room.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ListService } from '../list.service';
+import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-room-detail',
   templateUrl: './room-detail.component.html',
-  styleUrls: ['./room-detail.component.css']
+  styleUrls: ['./room-detail.component.css'],
+  providers: [ WebsocketService, ListService ]
 })
 export class RoomDetailComponent implements OnInit {
   user: User;
@@ -21,12 +24,13 @@ export class RoomDetailComponent implements OnInit {
   host_id: number;
   isStarted: boolean;
 
-  
+
   constructor(
     private roomService: RoomService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private listService: ListService,
   ) {}
 
   ngOnInit() {
@@ -130,29 +134,28 @@ export class RoomDetailComponent implements OnInit {
 
   goBack() {
     //this.refresh();
-    // const check = confirm('Do you want to leave the room?');
-    // if (check) {
-    //   if (this.isStarted) {
-    //     alert( 'Game started! You are not allowed to leave the room!' );
-    //   }
-    //   else if (this.room.guests_id) {
-    //     const newroom = this.room;
-    //     if (this.user.id === this.host_id) {
-    //       newroom.host = newroom.guests_id.shift();
-    //     } else {
-    //       newroom.guests_id = newroom.guests_id.filter( id => id !== this.user.id );
-    //     }
-    //     this.roomService.updateRoom( newroom ).subscribe(
-    //       () => this.router.navigate(['/room'])
-    //     );
-    //   }
-    //   else {
-    //   this.roomService.deleteRoomById(this.room.id).subscribe(
-    //     () => this.router.navigate(['/room'])
-    //     );
-    //   }
-    // }
+    const check = confirm('Do you want to leave the room?');
+    if (check) {
+      // if (this.isStarted) {
+      //   alert( 'Game started! You are not allowed to leave the room!' );
+      // }
+      if (this.user.id === this.host_id) {
+        alert('Room host cannot go back');
+      } else {
+        this.roomService.deleteRoomUser(this.room.id, this.user.id).subscribe();
+        const user = {id:this.user.id, team:0, getOut:true};
+        this.listService.users.next(user);
+        this.router.navigate(['/room'])
+      }
+      //   this.roomService.updateRoom( newroom ).subscribe(
+      //     () => this.router.navigate(['/room'])
+      //   );
+      // }
+      // else {
+      // this.roomService.deleteRoomById(this.room.id).subscribe(
+      //   () => this.router.navigate(['/room'])
+      //   );
+      // }
+    }
   }
-
-
 }
