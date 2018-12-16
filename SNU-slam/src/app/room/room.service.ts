@@ -54,6 +54,18 @@ export class RoomService {
     const url = this.baseUrl + `/api/room/${roomid}/user`; // mockroom/<int:id>/user
     return this.http.get<User[]>(url);
   }
+<<<<<<< HEAD
+=======
+  AddRoomUser(roomid: number, userid: number): Observable<void> {
+    const url = `${this.url}/${roomid}/user`;
+    const data = JSON.stringify({ user: userid });
+    return this.http.put<void>(url, data, httpOptions);
+  }
+  deleteRoomUser(roomid: number, userid: number): Observable<void> {
+    const url = `${this.url}/${roomid}/user/${userid}`;
+    return this.http.delete<void>(url);
+  }
+>>>>>>> b6013c3056e54b436ba84494c2626d78b2bad9be
   changeTeam( user: User ): Observable<void> {
     this.getCSRFHeaders();
     const url = this.baseUrl + `/api/user/${user.id}`;

@@ -165,15 +165,8 @@ def room_detail(request, id):
 			room.guests.add(User.objects.get(id=id))
 		room.save()
 		return HttpResponse(status=200)
-	elif request.method == 'DELETE':
-		try:
-			room = Room.objects.get(id=id)
-		except Room.DoesNotExist:
-			return HttpResponse(status=404)
-		room.delete()
-		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
+		return HttpResponseNotAllowed(['GET', 'PUT'])
 
 
 # @csrf_exempt
@@ -225,6 +218,18 @@ def room_user(request, id):
 		return HttpResponse(json.dumps(room.json()), content_type='application/json')
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT'])
+
+
+@csrf_exempt
+def room_user_detail(request, id, user_id):
+	if request.method == 'DELETE':
+		room = Room.objects.get(id=id)
+		user = User.objects.get(id=user_id)
+		room.guests.remove(user)
+		room.save()
+		return HttpResponse(status=200)
+	else:
+		return HttpResponseNotAllowed(['DELETE'])
 
 
 @csrf_exempt
