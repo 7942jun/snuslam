@@ -22,6 +22,7 @@ export class UserService {
   private userUrl = this.baseUrl + '/api/user';
   private signUrl = this.baseUrl + '/api/sign_in';
   private signOutUrl = this.baseUrl + '/api/sign_out';
+  private tokenUrl =  this.baseUrl + '/api/token';
 
   constructor(
     private http: HttpClient,
@@ -29,6 +30,7 @@ export class UserService {
   ) { }
 
   postUser(user: User): Observable<User> {
+    this.getCSRFHeaders();
     return this.http.post<User>(this.userUrl, user, httpOptions)
       .pipe(catchError(this.handleError<User>('postUser')));
   }
@@ -49,13 +51,14 @@ export class UserService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<User[]>(`${this.userUrl}/?nickname=${term}`)
+    return this.http.get<User[]>(`${this.userUrl}/?username=${term}`)
       .pipe(tap(_ => this.log(`found users matching "${term}"`)),
         catchError(this.handleError<User[]>('searchUsers', []))
     );
   }
 
   login(email: string, password: string): Observable<User> {
+    this.getCSRFHeaders();
     const data = JSON.stringify({ email: email, password: password });
     return this.http.post<User>(this.signUrl, data, httpOptions);
   }
@@ -69,6 +72,9 @@ export class UserService {
       'Content-Type': 'application/json',
       'X-CSRFToken': token
     });
+  }
+  getCSRFToken(): Observable<void> {
+    return this.http.get<void>(this.tokenUrl, httpOptions);
   }
 
   logout(): Observable<User> {
@@ -96,5 +102,7 @@ export class UserService {
       return Promise.resolve(result as T);
     };
   }
+
+
 
 }

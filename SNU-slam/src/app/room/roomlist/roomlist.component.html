@@ -8,6 +8,9 @@
           <h2>Waiting Rooms</h2>
           <br>
         </div>
+        <div style="text-align: center">
+          <button style="width: 100px text_align: center" class="btn btn-default" (click)="refresh()">Refresh</button>
+        </div>
         <h1 *ngIf="roomlist.length == 0" style="text-align: center">
           No rooms available now!
         </h1>

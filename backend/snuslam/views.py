@@ -66,6 +66,22 @@ def user_detail(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
+def user_room(request, id):
+	if request.method == 'GET':
+		try:
+			profile = Profile.objects.get(id=id)
+		except Profile.DoesNotExist:
+			return HttpResponse(status=404)
+		
+		guests_list = [room.json() for room in profile.user.room_guests.all()]
+		host_list = [room.json() for room in profile.user.room_host.all()]
+		rooms = guests_list + host_list 
+		return HttpResponse(json.dumps(rooms), content_type='application/json')
+	else:
+		return HttpResponseNotAllowed(['GET'])
+
+
+
 @csrf_exempt
 def rank(request):
 	if request.method == 'GET':
@@ -97,6 +113,7 @@ def sign_in(request):
 def sign_out(request):
 	if request.method == 'GET':
 		if request.user.is_authenticated:
+	
 			logout(request)
 			return HttpResponse(status=204)
 		else:
@@ -149,16 +166,38 @@ def room_detail(request, id):
 			room.guests.add(User.objects.get(id=id))
 		room.save()
 		return HttpResponse(status=200)
-	elif request.method == 'DELETE':
-		try:
-			room = Room.objects.get(id=id)
-		except Room.DoesNotExist:
-			return HttpResponse(status=404)
-		room.delete()
-		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
+		return HttpResponseNotAllowed(['GET', 'PUT'])
 
+
+# @csrf_exempt
+# def room_user(request, id):
+# 	if request.method == 'GET':
+# 		user_list = [Profile.objects.get(id=user.id).json() for user in Room.objects.get(id=id).guests.all()]
+# 		host_profile = Profile.objects.get(id=Room.objects.get(id=id).host.id)
+# 		user_list.insert(0, host_profile.json())
+# 		return HttpResponse(json.dumps(user_list), content_type='application/json')
+# 	elif request.method == 'PUT':
+# 		room = Room.objects.get(id=id)
+# 		data = json.loads(request.body.decode())
+# 		new_user = User.objects.get(id=data['user'])
+# 		if room.host.id == new_user.id:
+# 			return HttpResponse(status=409)
+# 		for temp in room.guests.all():
+# 			if temp.id == new_user.id:
+# 				return HttpResponse(status=409)
+# 		room.guests.add(new_user)
+# 		room.save()
+# 		return HttpResponse(status=200)
+# 	elif request.method == 'DELETE':
+# 		room = Room.objects.get(id=id)
+# 		data = json.loads(request.body.decode())
+# 		user = User.objects.get(id=data['user'])
+# 		room.guests.remove(user)
+# 		room.save()
+# 		return HttpResponse(status=200)
+# 	else:
+# 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
 @csrf_exempt
 def room_user(request, id):
@@ -170,17 +209,29 @@ def room_user(request, id):
 	elif request.method == 'PUT':
 		room = Room.objects.get(id=id)
 		data = json.loads(request.body.decode())
+		if( room.guests.all().filter(id = data['user']).exists() or room.host.id == data['user']):
+			return HttpResponse(status=200)
 		new_user = User.objects.get(id=data['user'])
-		if room.host.id == new_user.id:
-			return HttpResponse(status=409)
-		for temp in room.guests.all():
-			if temp.id == new_user.id:
-				return HttpResponse(status=409)
+		new_user.profile.team = 1
+		new_user.save()
 		room.guests.add(new_user)
+		room.save()
+		return HttpResponse(json.dumps(room.json()), content_type='application/json')
+	else:
+		return HttpResponseNotAllowed(['GET', 'PUT'])
+
+
+@csrf_exempt
+def room_user_detail(request, id, user_id):
+	if request.method == 'DELETE':
+		room = Room.objects.get(id=id)
+		user = User.objects.get(id=user_id)
+		room.guests.remove(user)
 		room.save()
 		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT'])
+		return HttpResponseNotAllowed(['DELETE'])
+
 
 @csrf_exempt
 def tournament(request):

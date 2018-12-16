@@ -20,7 +20,8 @@ export class ListComponent implements OnInit {
 
   private user = {
     id: 0,
-    team: 0
+    team: 0,
+    getOut: false
   }
 
   constructor(
@@ -32,11 +33,13 @@ export class ListComponent implements OnInit {
     listService.users.subscribe(user => {
       this.blueteam = this.blueteam.filter(temp => temp.id !== user.id);
       this.redteam = this.redteam.filter(temp => temp.id !== user.id);
-      if(user.team === 1) {
-        this.userService.getUserById(user.id).subscribe(user => this.redteam.push(user));
-      }
-      else if(user.team === 2) {
-        this.userService.getUserById(user.id).subscribe(user => this.blueteam.push(user));
+      if(!user.getOut) {
+        if(user.team === 1) {
+          this.userService.getUserById(user.id).subscribe(user => this.redteam.push(user));
+        }
+        else if(user.team === 2) {
+          this.userService.getUserById(user.id).subscribe(user => this.blueteam.push(user));
+        }
       }
 		});
   }
@@ -50,8 +53,10 @@ export class ListComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.roomService.AddRoomUser(id, this.currentUser.id).subscribe();
     this.currentUser.team = 1;
+    this.roomService.changeTeam(this.currentUser).subscribe();
     this.user.id = this.currentUser.id;
     this.user.team = 1;
+    this.user.getOut = false;
     this.listService.users.next(this.user);
   }
 
@@ -69,14 +74,18 @@ export class ListComponent implements OnInit {
   onChangeTeam(): void {
     if(this.currentUser.team === 1) {
       this.currentUser.team = 2;
+      this.roomService.changeTeam(this.currentUser).subscribe();
       this.user.id = this.currentUser.id;
       this.user.team = 2;
+      this.user.getOut = false;
       this.listService.users.next(this.user);
     }
     else if(this.currentUser.team === 2) {
       this.currentUser.team = 1;
+      this.roomService.changeTeam(this.currentUser).subscribe();
       this.user.id = this.currentUser.id;
       this.user.team = 1;
+      this.user.getOut = false;
       this.listService.users.next(this.user);
     }
   }

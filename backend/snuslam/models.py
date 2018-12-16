@@ -54,8 +54,8 @@ class Team(models.Model):
 
 class Room(models.Model):
 	title = models.CharField(max_length=20)
-	host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_user')
-	guests = models.ManyToManyField(User, related_name='%(class)s_users')
+	host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_host')
+	guests = models.ManyToManyField(User, related_name='%(class)s_guests')
 	location = models.CharField(max_length=100)
 	play_time = models.IntegerField(default=0)
 	type = models.IntegerField(default=0)
