@@ -10,6 +10,7 @@ urlpatterns = [
 	path('sign_in', views.sign_in, name='sign_in'),
 	path('sign_out', views.sign_out, name='sign_out'),
 	path('user/rank', views.rank, name='rank'),
+	path('user/room/<int:id>', views.user_room, name = 'user_room'),
 	path('room', views.room, name='room'),
 	path('room/<int:id>', views.room_detail, name='room_detail'),
 	path('room/<int:id>/user', views.room_user, name='room_user'),

@@ -11,7 +11,7 @@ import { UserService } from "../../services/user.service";
 })
 export class RoomcreateComponent implements OnInit {
   id: number;
-  title: string;
+  title: string = '';
   location: string;
   play_time: number;
   type: number;
@@ -28,6 +28,7 @@ export class RoomcreateComponent implements OnInit {
   createroom() {
     if (this.title.trim().length == 0 || this.location.trim().length == 0 ||
       this.play_time == null || this.type == null) {
+      alert('Enter all information.');
       return;
     }
 

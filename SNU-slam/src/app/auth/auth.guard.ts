@@ -1,43 +1,73 @@
+import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { Tournament } from '../tournament';
-import { TournamentService } from '../tournament/tournament.service';
-
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private tournamentService: TournamentService
-  ) { }
+  private userId: number;
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const url: string = state.url;
     const seg = url.split('/');
-    console.log('1');
+
 
     if (!this.checkLogin()) {
-      console.log('2');
       this.router.navigate(['/']);
       alert('Please sign in');
-      return false;
+      return of(false);
     }
 
 
     if ( seg[1] == 'room' ) {
       if (seg.length == 2) {
-        return true;
+        return of(true);
       }
+
       else if (seg[2] == 'create' ) {
-        return true;
+        return this.authService.isuserinRoom(this.userId).pipe(
+          map(res => {
+            if (res.length != 0) {
+              alert(`You are already in room ${res[0].id}`);
+              this.router.navigate([`room/${res[0].id}`]);
+              return false;
+            }
+            else {
+              return true;
+            }
+
+          })
+        );
       }
       else if ( /^\d+$/.test(seg[2]) ) {
-        return this.checkRoom(Number(seg[2]));
+        const roomid = parseInt(seg[2], 10);
+        if ( this.isroom(roomid)) {
+        return this.authService.isuserinRoom(this.userId).pipe(
+          map(res => {
+            if (res.length != 0) {
+              if (res[0].id == roomid ) {
+                return true;
+              }
+              alert(`You are already in room ${res[0].id}`);
+              this.router.navigate([`room/${res[0].id}`]);
+              return false;
+            }
+            else {
+              return true;
+            }
+          })
+
+        );
+        }
+        else {
+          return false;
+        }
+
       }
     }
 
@@ -49,19 +79,17 @@ export class AuthGuard implements CanActivate {
       if (seg.length == 2) {
         return true;
       }
-      else if (seg[2] == 'create' && seg.length==3) {
+      else if (seg[2] == 'create') {
         return true;
       }
-      else if (seg[2] == 'ongoing' && seg.length==4) {
+      else if (seg[2] == 'ongoing' || seg[2] == 'participate' ) {
         if (/^\d+$/.test(seg[3])) {
-          return this.checkTournamentOngoing(Number(seg[3]));
+          return this.checktorunament(Number(seg[3])).pipe(
+            map(res =>
+                {return res}
+              )
+          );
 
-        }
-      }
-      else if ( seg[2] == 'participate' && seg.length==4) {
-        if ( /^\d+$/.test(seg[3])) {
-          console.log(Number(seg[3]));
-          return this.checkTournamentParticipate(Number(seg[3]));
         }
       }
     }
@@ -77,36 +105,31 @@ export class AuthGuard implements CanActivate {
 
 
   checkLogin(): boolean {
-    console.log(this.userService.isLoggedIn);
     if (this.userService.isLoggedIn) {
+      this.userId = this.userService.current_user.id;
       return true;
     }
     return false;
   }
-  checkRoom(id: number): boolean {
-    //if (this.authService.isInRoom()) {}
+
+  checktorunament(id: number): Observable<boolean> {
+    return this.authService.istournamentExist(id)
+    .pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
+  checkongoing(id: number): boolean {
     return true;
   }
-  checkTournamentOngoing(id: number){
-
-    this.tournamentService.getTournamentById(id)
-      .subscribe(tournament => {
-        if(tournament.id == id && (tournament.state == 3 || tournament.state == 4)){
-          return true;
-        }
-      });
-    return true;
-  }
-  checkTournamentParticipate(id: number){
-    console.log('checkTP: ' + id);
-    this.tournamentService.getTournamentById(id)
-      .subscribe(tournament => {
-        if(tournament.id == id){
-          return true;
-        }
-
-      });
-    return true;
+  isroom(roomid: number): Observable<boolean> {
+    return this.authService.isroomExist(roomid)
+    .pipe(
+      map(res => {
+        return res;
+      })
+    );
   }
 
 }

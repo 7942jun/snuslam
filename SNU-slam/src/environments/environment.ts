@@ -6,8 +6,7 @@ export const environment = {
   production: false,
   API_URL: '127.0.0.1:8000'
   //production: true,
-  //API_URL: 'ec2-54-180-99-47.ap-northeast-2.compute.amazonaws.com',
-  
+  //API_URL: 'ec2-54-180-99-47.ap-northeast-2.compute.amazonaws.com'
 };
 
 /*
