@@ -15,6 +15,7 @@ const httpOptions = {
 export class RoomService {
   baseUrl = environment.API_URL;
   private url = this.baseUrl + '/api/room';
+  private user_url = this.baseUrl + '/api/user'
 
   constructor(
      private http: HttpClient
@@ -52,7 +53,7 @@ export class RoomService {
     return this.http.delete<void>(url);
   }
   changeTeam( user: User ): Observable<void> {
-    const url = `${this.url}/${user.id}`;
+    const url = `${this.user_url}/${user.id}`;
     return this.http.put<void>(url, user, httpOptions);
   }
 
