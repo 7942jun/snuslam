@@ -179,8 +179,15 @@ def room_user(request, id):
 		room.guests.add(new_user)
 		room.save()
 		return HttpResponse(status=200)
+	elif request.method == 'DELETE':
+		room = Room.objects.get(id=id)
+		data = json.loads(request.body.decode())
+		user = User.objects.get(id=data['user'])
+		room.guests.remove(user)
+		room.save()
+		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT'])
+		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
 @csrf_exempt
 def tournament(request):
