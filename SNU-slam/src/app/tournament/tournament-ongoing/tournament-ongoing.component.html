@@ -1,15 +1,26 @@
-<div style="position: relative; left: 33%;" *ngIf = "tournament">
+<div  style = "position: absolute; top:30%; left: 5%" *ngIf = "teams">
+    <h2>&lt;Team Information&gt;</h2>
+    <div *ngFor = "let team of teams; let i = index">
+      <div *ngIf = 'team!=null'>
+        <h3>Team {{i+1}}</h3>
+        Team name: {{team.name}} <br>
+        Team leader: {{team.leaderName}} <br>
+        Contact information: {{team.contact}}
+      </div>
+    </div>
+</div>
+<div  style = "position: absolute; top:30%; left:33%" *ngIf = "tournament">
   <article id="container">
 
     <section>
-      <div id = "r11" (click) = "result1(1, 'r11')">Team 1</div>
-      <div id = "r12" (click) = "result1(2, 'r12')">Team 2</div>
-      <div id = "r13" (click) = "result1(3, 'r13')">Team 3</div>
-      <div id = "r14" (click) = "result1(4, 'r14')">Team 4</div>
-      <div id = "r15" (click) = "result1(5, 'r15')">Team 5</div>
-      <div id = "r16" (click) = "result1(6, 'r16')">Team 6</div>
-      <div id = "r17" (click) = "result1(7, 'r17')">Team 7</div>
-      <div id = "r18" (click) = "result1(8, 'r18')">Team 8</div>
+      <div id = "r11" (click) = "result1(1,2, 'r11')">Team 1</div>
+      <div id = "r12" (click) = "result1(2,1, 'r12')">Team 2</div>
+      <div id = "r13" (click) = "result1(3,4, 'r13')">Team 3</div>
+      <div id = "r14" (click) = "result1(4,3, 'r14')">Team 4</div>
+      <div id = "r15" (click) = "result1(5,6, 'r15')">Team 5</div>
+      <div id = "r16" (click) = "result1(6,5, 'r16')">Team 6</div>
+      <div id = "r17" (click) = "result1(7,8, 'r17')">Team 7</div>
+      <div id = "r18" (click) = "result1(8,7, 'r18')">Team 8</div>
     </section>
 
     <div class="connecter">
@@ -27,10 +38,10 @@
     </div>
 
     <section id="quarterFinals">
-      <div id = "r21" (click) = "result2(this.tournament.result1[0], 'r21')">{{quarterFinals(0)}}</div>
-      <div id = "r22" (click) = "result2(this.tournament.result1[1], 'r22')">{{quarterFinals(1)}}</div>
-      <div id = "r23" (click) = "result2(this.tournament.result1[2], 'r23')">{{quarterFinals(2)}}</div>
-      <div id = "r24" (click) = "result2(this.tournament.result1[3], 'r24')">{{quarterFinals(3)}}</div>
+      <div id = "r21" (click) = "result2(this.tournament.result11,this.tournament.result12, 'r21')">{{quarterFinals(0)}}</div>
+      <div id = "r22" (click) = "result2(this.tournament.result12,this.tournament.result11, 'r22')">{{quarterFinals(1)}}</div>
+      <div id = "r23" (click) = "result2(this.tournament.result13,this.tournament.result14, 'r23')">{{quarterFinals(2)}}</div>
+      <div id = "r24" (click) = "result2(this.tournament.result14,this.tournament.result13, 'r24')">{{quarterFinals(3)}}</div>
     </section>
 
     <div class="connecter" id="conn2">
@@ -44,8 +55,8 @@
     </div>
 
     <section id="semiFinals">
-      <div id = "r31" (click) = "result3(this.tournament.result2[0], 'r31')">{{semiFinals(0)}}</div>
-      <div id = "r32" (click) = "result3(this.tournament.result2[1], 'r32')">{{semiFinals(1)}}</div>
+      <div id = "r31" (click) = "result3(this.tournament.result21,this.tournament.result22, 'r31')">{{semiFinals(0)}}</div>
+      <div id = "r32" (click) = "result3(this.tournament.result22,this.tournament.result21, 'r32')">{{semiFinals(1)}}</div>
     </section>
 
     <div class="connecter" id="conn3">
@@ -67,18 +78,11 @@
   </article>
 
   
-  <div *ngIf = "teams">
-    <h2>Team Information</h2>
-    <div *ngFor = "let team of teams; let i = index">
-      <h3>Team {{i+1}}</h3>
-      Team name: {{team.name}} <br>
-      Team leader: {{leaderName[i]}} <br>
-      Contact information: {{team.contact}}
-    </div>
-  </div>
+  
 
 
 </div>
+
 
 
 

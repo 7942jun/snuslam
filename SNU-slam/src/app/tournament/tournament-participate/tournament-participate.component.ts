@@ -14,8 +14,9 @@ import { UserService } from '../../services/user.service';
 })
 export class TournamentParticipateComponent implements OnInit {
   tournament: Tournament;
-  name;
-  contact;
+  name='';
+  leaderName='';
+  contact='';
   leaderId;
   team: Team;
   id;
@@ -47,11 +48,16 @@ export class TournamentParticipateComponent implements OnInit {
         return;
       }
     }
-    if (this.name.trim().length == 0 || this.contact.trim().length == 0) {
-      alert('Enter all information');
+    if (this.name.trim().length == 0 || this.contact.trim().length == 0 || this.leaderName.trim().length == 0) {
+      alert('Enter all information.');
+      return;
+    }
+    if (this.name.trim().length > 20 || this.contact.trim().length > 20 || this.leaderName.trim().length > 20) {
+      alert('All information should be under 20 letters.');
       return;
     }
     const check = confirm('Your team name: ' + this.name + '\n' +
+                          'Your name: ' + this.leaderName + '\n' +
                           'Your contact information: ' + this.contact + '\n'+
                           'Is it correct?');
 
@@ -66,7 +72,7 @@ export class TournamentParticipateComponent implements OnInit {
       }
       else {
         this.teamService.addTeam(
-          {name: this.name, contact: this.contact, leader_id: this.leaderId, members_id: []} as Team)
+          {name: this.name, leaderName: this.leaderName, contact: this.contact, leader_id: this.leaderId, members_id: []} as Team)
             .subscribe(team => {
             this.tournament.teams.push(team.id);
             this.tournament.teamLeaders.push(team.leader_id);
