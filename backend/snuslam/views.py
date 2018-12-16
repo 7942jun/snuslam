@@ -162,7 +162,7 @@ def room_user(request, id):
 		data = json.loads(request.body.decode())
 		new_user = User.objects.get(id=data['user'])
 		if room.host.id == new_user.id:
-			return HttpResponse(status=409)
+			return HttpResponse(status=204)
 		for temp in room.guests.all():
 			if temp.id == new_user.id:
 				return HttpResponse(status=409)
