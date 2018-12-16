@@ -93,12 +93,9 @@ export class AuthGuard implements CanActivate {
         }
       }
     }
-    else if(seg[1] == 'start') {
+    else if (seg[1] == 'start') {
       return true;
     }
-    alert('Bad url!');
-    this.router.navigate(['/']);
-    return false;
 
   }
 
