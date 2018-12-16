@@ -31,7 +31,7 @@
     <tbody *ngIf="searched_users.length == 0">
     <tr *ngFor="let user of users">
       <td>{{ users.indexOf(user) + 1 }}</td>
-      <td>{{ user.nickname }}</td>
+      <td>{{ user.username }}</td>
       <td>{{ user.point }}</td>
       <td>{{ user.wins }}</td>
       <td>{{ user.loses }}</td>
@@ -40,7 +40,7 @@
     <tbody *ngIf="searched_users.length > 0">
       <tr *ngFor="let user of searched_users">
         <td>{{ searched_users.indexOf(user) + 1 }}</td>
-        <td>{{ user.nickname }}</td>
+        <td>{{ user.username }}</td>
         <td>{{ user.point }}</td>
         <td>{{ user.wins }}</td>
         <td>{{ user.loses }}</td>

@@ -49,7 +49,7 @@ export class UserService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<User[]>(`${this.userUrl}/?nickname=${term}`)
+    return this.http.get<User[]>(`${this.userUrl}/?username=${term}`)
       .pipe(tap(_ => this.log(`found users matching "${term}"`)),
         catchError(this.handleError<User[]>('searchUsers', []))
     );
