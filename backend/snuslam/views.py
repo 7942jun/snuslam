@@ -19,9 +19,10 @@ def user(request):
 		user_list = [profile.json() for profile in Profile.objects.all()]
 		return HttpResponse(json.dumps(user_list), content_type='application/json')
 	elif request.method == 'POST':
-		#todo: 중복 체크 구현
 		data = json.loads(request.body.decode())
 		email = data['email']
+		if User.objects.filter(email=email):
+			return HttpResponse(status=407)
 		password = data['password']
 		username = data['username']
 		user = User(email=email, username=username)
@@ -170,6 +171,12 @@ def room_user(request, id):
 		room = Room.objects.get(id=id)
 		data = json.loads(request.body.decode())
 		new_user = User.objects.get(id=data['user'])
+		if room.host.id == new_user.id:
+			return HttpResponse(status=409)
+		for temp in room.guests.all():
+			if temp.id == new_user.id:
+				return HttpResponse(status=409)
+		room.guests.add(new_user)
 		room.save()
 		return HttpResponse(status=200)
 	else:
