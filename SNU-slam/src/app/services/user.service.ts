@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 09f3fc48a2477f1cadcf4fe089a6d484ebec45d8
 import {Injectable, Output} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../user';
