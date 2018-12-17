@@ -30,6 +30,7 @@ class RoomConsumer(WebsocketConsumer):
         id = text_data_json['id']
         team = text_data_json['team']
         getOut = text_data_json['getOut']
+        start = text_data_json['start']
 
         # 그룹으로 메세지를 돌려보내주는 부분이다.
         async_to_sync(self.channel_layer.group_send)(
@@ -38,7 +39,8 @@ class RoomConsumer(WebsocketConsumer):
                 'type': 'chat_message',
                 'id': id,
                 'team': team,
-                'getOut': getOut
+                'getOut': getOut,
+                'start': start
             }
         )
 
@@ -47,11 +49,14 @@ class RoomConsumer(WebsocketConsumer):
         id = event['id']
         team = event['team']
         getOut = event['getOut']
+        start = event['start']
+
         # 클라이언트로 웹소켓을 통해 받은 메세지를 다시 보내주는 부분이다.
         self.send(text_data=json.dumps({
             'id': id,
             'team': team,
-            'getOut': getOut
+            'getOut': getOut,
+            'start': start
         }))
 
 

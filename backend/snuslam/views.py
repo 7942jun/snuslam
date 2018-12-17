@@ -66,6 +66,21 @@ def user_detail(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
+@csrf_exempt
+def user_wins(request, id):
+	if request.method == 'PUT':
+		try: 
+			user = Profile.objects.get(id=id)
+		except Profile.DoesNotExist:
+			return HttpResponse(status=404)
+		data = json.loads(request.body.decode())
+		user.wins = user.wins + data['win']
+		user.loses = user.loses + data['lose']
+		user.save()
+		return HttpResponse(status=200)
+	else:
+		return HttpResponseNotAllowed(['PUT'])
+
 def user_room(request, id):
 	if request.method == 'GET':
 		try:
@@ -79,8 +94,6 @@ def user_room(request, id):
 		return HttpResponse(json.dumps(rooms), content_type='application/json')
 	else:
 		return HttpResponseNotAllowed(['GET'])
-
-
 
 @csrf_exempt
 def rank(request):
@@ -112,12 +125,8 @@ def sign_in(request):
 @csrf_exempt
 def sign_out(request):
 	if request.method == 'GET':
-		if request.user.is_authenticated:
-	
-			logout(request)
-			return HttpResponse(status=204)
-		else:
-			return HttpResponse(status=401)
+		logout(request)
+		return HttpResponse(status=204)
 	else:
 		return HttpResponseNotAllowed(['GET'])
 
@@ -166,38 +175,16 @@ def room_detail(request, id):
 			room.guests.add(User.objects.get(id=id))
 		room.save()
 		return HttpResponse(status=200)
+	elif request.method == 'DELETE':
+		try:
+			room = Room.objects.get(id=id)
+		except Room.DoesNotExist:
+			return HttpResponse(status=404)
+		room.delete()
+		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT'])
+		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
-
-# @csrf_exempt
-# def room_user(request, id):
-# 	if request.method == 'GET':
-# 		user_list = [Profile.objects.get(id=user.id).json() for user in Room.objects.get(id=id).guests.all()]
-# 		host_profile = Profile.objects.get(id=Room.objects.get(id=id).host.id)
-# 		user_list.insert(0, host_profile.json())
-# 		return HttpResponse(json.dumps(user_list), content_type='application/json')
-# 	elif request.method == 'PUT':
-# 		room = Room.objects.get(id=id)
-# 		data = json.loads(request.body.decode())
-# 		new_user = User.objects.get(id=data['user'])
-# 		if room.host.id == new_user.id:
-# 			return HttpResponse(status=409)
-# 		for temp in room.guests.all():
-# 			if temp.id == new_user.id:
-# 				return HttpResponse(status=409)
-# 		room.guests.add(new_user)
-# 		room.save()
-# 		return HttpResponse(status=200)
-# 	elif request.method == 'DELETE':
-# 		room = Room.objects.get(id=id)
-# 		data = json.loads(request.body.decode())
-# 		user = User.objects.get(id=data['user'])
-# 		room.guests.remove(user)
-# 		room.save()
-# 		return HttpResponse(status=200)
-# 	else:
-# 		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
 @csrf_exempt
 def room_user(request, id):
@@ -209,17 +196,24 @@ def room_user(request, id):
 	elif request.method == 'PUT':
 		room = Room.objects.get(id=id)
 		data = json.loads(request.body.decode())
-		if( room.guests.all().filter(id = data['user']).exists() or room.host.id == data['user']):
-			return HttpResponse(status=200)
 		new_user = User.objects.get(id=data['user'])
-		new_user.profile.team = 1
-		new_user.save()
+		if room.host.id == new_user.id:
+			return HttpResponse(status=204)
+		for temp in room.guests.all():
+			if temp.id == new_user.id:
+				return HttpResponse(status=409)
 		room.guests.add(new_user)
 		room.save()
-		return HttpResponse(json.dumps(room.json()), content_type='application/json')
+		return HttpResponse(status=200)
+	elif request.method == 'DELETE':
+		room = Room.objects.get(id=id)
+		data = json.loads(request.body.decode())
+		user = User.objects.get(id=data['user'])
+		room.guests.remove(user)
+		room.save()
+		return HttpResponse(status=200)
 	else:
-		return HttpResponseNotAllowed(['GET', 'PUT'])
-
+		return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
 @csrf_exempt
 def room_user_detail(request, id, user_id):
@@ -264,18 +258,20 @@ def tournament(request):
 		tournament.total_team = data['total_team']
 		tournament.reward = data['reward']
 		tournament.state = data['state']
-		tournament.result11 = data['result11']
-		tournament.result12 = data['result12']
-		tournament.result13 = data['result13']
-		tournament.result14 = data['result14']
-		tournament.result21 = data['result21']
-		tournament.result22 = data['result22']
-		tournament.result31 = data['result31']
-		for user in tournament.teamLeaders.all():
-			tournament.teamLeaders.remove(user)
-		for id in data['teamLeaders']:
-			tournament.teamLeaders.add(User.objects.get(id=id))
-
+		for team in tournament.result1.all():
+			tournament.result1.remove(team)
+		for id in data['result1']:
+			tournament.result1.add(Team.objects.get(id=id))
+		
+		for team in tournament.result2.all():
+			tournament.result2.remove(team)
+		for id in data['result2']:
+			tournament.result2.add(Team.objects.get(id=id))
+		
+		for team in tournament.result3.all():
+			tournament.result3.remove(team)
+		for id in data['result3']:
+			tournament.result3.add(Team.objects.get(id=id))
 		tournament.save()
 		return HttpResponse(status=200)
 
@@ -309,9 +305,7 @@ def team(request):
 		data = json.loads(request.body.decode())
 		leader_id = User.objects.get(id=data['leader_id'])
 		name = data['name']
-		leaderName = data['leaderName']
-		contact = data['contact']
-		team = Team(leader_id=leader_id, name=name, leaderName=leaderName, contact=contact)
+		team = Team(leader_id=leader_id, name=name)
 		team.save()
 		response_dict = team.json()
 		return HttpResponse(json.dumps(response_dict), content_type = 'application/json', status=201)

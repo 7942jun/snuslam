@@ -93,6 +93,10 @@ export class AuthGuard implements CanActivate {
         }
       }
     }
+    else if (seg[1] == 'start') {
+      return true;
+    }
+
   }
 
 

@@ -2,7 +2,7 @@ import {Injectable, Output} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap , map } from 'rxjs/operators';
 import { Router } from "@angular/router";
 import { environment } from '../../environments/environment';
 
@@ -27,7 +27,21 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {
+      if (!JSON.parse(sessionStorage.getItem('sessionUser'))) {
+        this.isLoggedIn = false;
+        this.current_user = null;
+      } else {
+        this.isLoggedIn = true;
+        this.current_user = JSON.parse(sessionStorage.getItem('sessionUser')) as User;
+      }
+  }
+
+  updateUserWinsById(id: number, win: boolean): Observable<void> {
+    const url = `${this.userUrl}/wins/${id}`;
+    const data = (win)? JSON.stringify({win:1, lose:0}) : JSON.stringify({win:0, lose:1});
+    return this.http.put<void>(url, data, httpOptions);
+  }
 
   postUser(user: User): Observable<User> {
     this.getCSRFHeaders();
@@ -60,7 +74,8 @@ export class UserService {
   login(email: string, password: string): Observable<User> {
     this.getCSRFHeaders();
     const data = JSON.stringify({ email: email, password: password });
-    return this.http.post<User>(this.signUrl, data, httpOptions);
+
+    return this.http.post<User>(this.signUrl, data, httpOptions)
   }
 
   getCSRFHeaders(): HttpHeaders {
@@ -80,11 +95,13 @@ export class UserService {
   logout(): Observable<User> {
     this.isLoggedIn = false;
     this.current_user = undefined;
+    sessionStorage.clear();
     return this.http.get<User>(this.signOutUrl);
   }
 
   getUser(): User {
-    if ( this.isLoggedIn ) {
+    const id = parseInt(localStorage.getItem('user_id'), 10);
+    if ( id ) {
       return this.current_user;
     } else {
       return;

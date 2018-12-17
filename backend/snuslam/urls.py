@@ -5,6 +5,7 @@ urlpatterns = [
 	path('token', views.token, name='token'),
 	path('user', views.user, name='user'),
 	path('user/<int:id>', views.user_detail, name='user_detail'),
+	path('user/wins/<int:id>', views.user_wins, name='user_wins'),
 	path('user/rank', views.rank, name='user_rank'),
 	path('sign_in', views.sign_in, name='sign_in'),
 	path('sign_out', views.sign_out, name='sign_out'),
