@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie, csrf_protect
 from django.shortcuts import render
+from elo import rate_1vs1
 import json
 
 @ensure_csrf_cookie
@@ -76,6 +77,12 @@ def user_wins(request, id):
 		data = json.loads(request.body.decode())
 		user.wins = user.wins + data['win']
 		user.loses = user.loses + data['lose']
+		mypoint = data['mypoint']
+		yourpoint = data['yourpoint']
+		if( data['wins'] == 1):
+			user.point = user.point + (rate_1vs1(mypoint,yourpoint)[0]-mypoint)
+		else:
+			user.point = user.point + (rate_1vs1(yourpoint,mypoint)[1]-mypoint)
 		user.save()
 		return HttpResponse(status=200)
 	else:
