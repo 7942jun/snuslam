@@ -12,7 +12,7 @@ import { UserService } from '../../services/user.service';
 export class ChatComponent implements OnInit {
 
   input: string;
-  chatLog: string;
+  chatLog: string[];
 
   private message = {
 		username: '',
@@ -25,12 +25,12 @@ export class ChatComponent implements OnInit {
   ) {
 		chatService.messages.subscribe(msg => {
       //console.log( msg.author + " " + msg.message);
-      this.chatLog += msg.username + ': ' + msg.message + '\n';
+      this.chatLog.push(msg.username + ': ' + msg.message);
 		});
 	}
 
   ngOnInit() {
-    this.chatLog = '';
+    this.chatLog = [];
   }
 
   sendMsg() {

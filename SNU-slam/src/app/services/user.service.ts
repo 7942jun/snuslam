@@ -64,7 +64,6 @@ export class UserService {
   login(email: string, password: string): Observable<User> {
     this.getCSRFHeaders();
     const data = JSON.stringify({ email: email, password: password });
-
     return this.http.post<User>(this.signUrl, data, httpOptions)
   }
 
@@ -90,8 +89,7 @@ export class UserService {
   }
 
   getUser(): User {
-    const id = parseInt(localStorage.getItem('user_id'), 10);
-    if ( id ) {
+    if ( this.current_user ) {
       return this.current_user;
     } else {
       return;
