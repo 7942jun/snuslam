@@ -25,6 +25,7 @@ export class TournamentComponent implements OnInit {
   ngOnInit() {
     this.getTournaments();
     this.user = this.userService.getUser()
+    this.userService.getCSRFToken();
     
     
   }
