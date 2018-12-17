@@ -76,6 +76,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.userService.getUser();
     this.getUserlist();
+    alert('Click \'change\' button!');
   }
 
   setCurrentUserTeam(): void {
