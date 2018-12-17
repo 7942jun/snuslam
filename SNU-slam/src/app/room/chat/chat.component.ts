@@ -24,7 +24,6 @@ export class ChatComponent implements OnInit {
     private userService: UserService
   ) {
 		chatService.messages.subscribe(msg => {
-      //console.log( msg.author + " " + msg.message);
       this.chatLog.push(msg.username + ': ' + msg.message);
 		});
 	}
@@ -39,7 +38,6 @@ export class ChatComponent implements OnInit {
     }
     this.message.message = this.input;
     this.message.username = this.userService.current_user.username;
-		//console.log('new message from client to websocket: ', this.message);
 		this.chatService.messages.next(this.message);
 		this.input = '';
   }

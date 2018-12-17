@@ -58,7 +58,6 @@ export class TournamentCreateComponent implements OnInit {
         { title: this.title.trim(), host: 1, teams: [], game_type: this.game_type,
           total_team: this.total_team, reward: this.prize.trim(), state: 1 } as Tournament)
         .subscribe(tournament => {
-          console.log(this.total_team);
           this.tournaments.push(tournament);
           this.router.navigateByUrl(`tournament`);
         });

@@ -102,7 +102,6 @@ export class ListComponent implements OnInit {
   }
 
   onChangeTeam(): void {
-    console.log(this.hostid);
     this.buttonable = false;
     const subscribe = del.subscribe(val => this.buttonable = true );
 
