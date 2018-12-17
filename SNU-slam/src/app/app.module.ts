@@ -46,10 +46,6 @@ import {
     // HttpClientInMemoryWebApiModule.forRoot(
     //   InMemoryDataService, { dataEncapsulation: false }
     //  ),
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'My-Xsrf-Cookie',
-      headerName: 'My-Xsrf-Header'
-    })
   ],
   exports: [
     SignInComponent
@@ -61,11 +57,6 @@ import {
       useClass: APIInterceptor,
       multi: true,
     },
-    // HttpXsrfInterceptor,
-    // { provide: HTTP_INTERCEPTORS, useExisting: HttpXsrfInterceptor, multi: true },
-    // { provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor },
-    // { provide: XSRF_COOKIE_NAME, useValue: 'XSRF-TOKEN' },
-    // { provide: XSRF_HEADER_NAME, useValue: 'X-XSRF-TOKEN' }
   ],
   bootstrap: [AppComponent]
 })

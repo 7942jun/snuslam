@@ -4,15 +4,24 @@
       <h4 class="modal-title">Sign In</h4>
     </div>
     <div class="modal-body">
-      <div>
-        <label class="control-label">Email:</label>
-        <input id="email" type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)"
-               [formControl]="signInForm.controls['email']">
+      <div class="row">
+        <div class="col-sm-2">
+          <label class="control-label">Email:</label>
+        </div>
+        <div class="col-sm-10">
+          <input id="email" type="email" class="form-control" placeholder="Enter email (@snu.ac.kr)"
+                 [formControl]="signInForm.controls['email']">
+        </div>
       </div>
-      <div>
-        <label class="control-label">Password:</label>
-        <input id="password" type="password" class="form-control" placeholder="Enter password"
-               [formControl]="signInForm.controls['password']">
+      <br>
+      <div class="row">
+        <div class="col-sm-2">
+          <label class="control-label">Password:</label>
+        </div>
+        <div class="col-sm-10">
+          <input id="password" type="password" class="form-control" placeholder="Enter password"
+                 [formControl]="signInForm.controls['password']">
+        </div>
       </div>
     </div>
     <div class="modal-footer">

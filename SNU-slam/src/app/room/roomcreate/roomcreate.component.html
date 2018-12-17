@@ -1,38 +1,54 @@
 <div class="container">
   <h1 style="text-align: center">Create room</h1>
   <br>
-  <div>
-    <label class="control-label">Title:</label>
-    <input type="string" class="form-control" placeholder="Enter title" [(ngModel)]="title">
+  <div class="row">
+    <div class="col-sm-2">
+      <label class="control-label">Title:</label>
+    </div>
+    <div class="col-sm-10">
+      <input type="string" class="form-control" placeholder="Enter title" [(ngModel)]="title">
+    </div>
   </div>
   <br>
-  <div>
-    <label class="control-label">Location:</label>
-    <select class="form-control" [(ngModel)]="location">
-      <option>기숙사</option>
-      <option>대운동장</option>
-      <option>301 주차장</option>
-    </select>
+  <div class="row">
+    <div class="col-sm-2">
+      <label class="control-label">Location:</label>
+    </div>
+    <div class="col-sm-10">
+      <select class="form-control" [(ngModel)]="location">
+        <option>기숙사</option>
+        <option>대운동장</option>
+        <option>301 주차장</option>
+      </select>
+    </div>
   </div>
   <br>
-  <div>
-    <label class="control-label">Play time:</label>
-    <select class="form-control" [(ngModel)]="play_time">
-      <option value = 15>15 min</option>
-      <option value = 30>30 min</option>
-      <option value = 60>60 min</option>
-    </select>
+  <div class="row">
+    <div class="col-sm-2">
+      <label class="control-label">Play time:</label>
+    </div>
+    <div class="col-sm-10">
+      <select class="form-control" [(ngModel)]="play_time">
+        <option value = 15>15 min</option>
+        <option value = 30>30 min</option>
+        <option value = 60>60 min</option>
+      </select>
+    </div>
   </div>
   <br>
-  <div>
-    <label class="control-label">Game type:</label>
-    <select class="form-control" [(ngModel)]="type">
-      <option value = 1>1:1</option>
-      <option value = 2>2:2</option>
-      <option value = 3>3:3</option>
-      <option value = 4>4:4</option>
-      <option value = 5>5:5</option>
-    </select>
+  <div class="row">
+    <div class="col-sm-2">
+      <label class="control-label">Game type:</label>
+    </div>
+    <div class="col-sm-10">
+      <select class="form-control" [(ngModel)]="type">
+        <option value = 1>1:1</option>
+        <option value = 2>2:2</option>
+        <option value = 3>3:3</option>
+        <option value = 4>4:4</option>
+        <option value = 5>5:5</option>
+      </select>
+    </div>
   </div>
 </div>
 <br>
