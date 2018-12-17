@@ -21,25 +21,42 @@ export class TournamentService {
   ) { }
 
   getTournaments(): Observable<Tournament[]> {
+    this.getCSRFHeaders();
     return this.http.get<Tournament[]>(this.tournamentsUrl);
   }
 
   updateTournament(tournament: Tournament): Observable<any> {
+    this.getCSRFHeaders();
     return this.http.put(this.tournamentsUrl, tournament, httpOptions);
   }
 
   deleteTournament(tournament: Tournament): Observable<Tournament> {
+    this.getCSRFHeaders();
     const url = `${this.tournamentsUrl}/${tournament.id}`;
     return this.http.delete<Tournament>(url, httpOptions);
   }
 
   addTournament(tournament: Tournament): Observable<Tournament> {
+    this.getCSRFHeaders();
     return this.http.post<Tournament>(this.tournamentsUrl, tournament, httpOptions);
   }
 
   getTournamentById(id: number): Observable<Tournament> {
+    this.getCSRFHeaders();
     const url = `${this.tournamentsUrl}/${id}`;
     return this.http.get<Tournament>(url);
+  }
+
+  getCSRFHeaders(): void {
+    let token = '';
+    if (document.cookie) {
+      token = document.cookie.split('csrftoken=')[1].split(';')[0];
+    }
+    localStorage.setItem('csrf', token);
+    httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': token
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 import { UserService } from 'src/app/services/user.service';
-import { User } from '../user'
+import { User } from '../user';
 import { TournamentService } from './../tournament/tournament.service';
  import { Injectable } from '@angular/core';
  import { Observable, of } from 'rxjs';
@@ -26,7 +26,7 @@ export class AuthService {
     return Observable.create((observer) => {
       this.roomService.getRoomById(roomid)
         .subscribe((room) => {
-          observer.next(room); // your server response
+          observer.next(room);// your server response
         }, (err) => {
           observer.next(false);
         });

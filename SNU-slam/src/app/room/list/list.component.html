@@ -39,5 +39,5 @@
 </table>
 
 <div style="text-align: center">
-  <button class="change team btn btn-default" (click)="onChangeTeam()" style="width: 100px">Change</button>
+  <button class="change team btn btn-default" [disabled] = "!buttonable" (click)="onChangeTeam()" style="width: 100px">Change</button>
 </div>

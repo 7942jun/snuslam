@@ -21,11 +21,25 @@ export class TeamService {
   ) { }
 
   addTeam(team: Team): Observable<Team> {
+    this.getCSRFHeaders();
     return this.http.post<Team>(this.teamsUrl, team, httpOptions);
   }
 
   getTeamById(id: number): Observable<Team> {
+    this.getCSRFHeaders();
     const url = `${this.teamsUrl}/${id}`;
     return this.http.get<Team>(url);
+  }
+
+  getCSRFHeaders(): void {
+    let token = '';
+    if (document.cookie) {
+      token = document.cookie.split('csrftoken=')[1].split(';')[0];
+    }
+    localStorage.setItem('csrf', token);
+    httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': token
+    });
   }
 }

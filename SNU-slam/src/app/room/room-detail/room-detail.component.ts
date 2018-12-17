@@ -124,9 +124,15 @@ export class RoomDetailComponent implements OnInit {
   // }
 
   start() {
-    const user = {id:this.user.id, team:0, getOut:false, start:true};
-    this.startService.setHost(this.host_id);
-    this.listService.users.next(user);
+    if ( this.redteam.length === this.blueteam.length ) {
+      const user = {id:this.user.id, team:0, getOut:false, start:true};
+      this.startService.setHost(this.host_id);
+      this.roomService.deleteRoomById(this.room.id).subscribe();
+      this.listService.users.next(user);
+    }
+    else {
+      alert( 'Numbers of people in the two teams is not equal!');
+    }
   }
 
   goBack() {

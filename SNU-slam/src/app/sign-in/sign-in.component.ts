@@ -46,8 +46,9 @@ export class SignInComponent implements OnInit {
         this.isLoggedIn = true;
         this.userService.isLoggedIn = true;
         this.userService.current_user = user;
+        sessionStorage.setItem('sessionUser', JSON.stringify(user));
         alert('Sign in success');
-        localStorage.setItem('user_id', user.id.toString());
+        //localStorage.setItem('user_id', user.id.toString());
         this.router.navigate(['/room']);
       } else {
         alert('Sign in failed');
@@ -59,7 +60,7 @@ export class SignInComponent implements OnInit {
   sign_out() {
     this.isLoggedIn = false;
     this.userService.logout().subscribe(() => {
-      localStorage.removeItem('user_id');
+      //localStorage.removeItem('user_id');
       this.router.navigate(['/']);
     }
     );
