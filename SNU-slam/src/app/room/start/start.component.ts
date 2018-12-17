@@ -16,6 +16,8 @@ export class StartComponent implements OnInit {
   host: number;
   chooseTeam: boolean;
   winTeam: string;
+  redpoints: number;
+  bluepoints: number;
 
   constructor(
     private startService: StartService,
@@ -29,16 +31,18 @@ export class StartComponent implements OnInit {
     this.redTeam = this.startService.getRedTeam();
     this.blueTeam = this.startService.getBlueTeam();
     this.host = this.startService.getRoomHost();
+    this.redpoints = this.redTeam.map(user => user.point).reduce(function(a, b) { return a + b; });
+    this.bluepoints = this.blueTeam.map(user => user.point).reduce(function(a, b) { return a + b; });
   }
 
   redWin() {
     this.chooseTeam = true;
     this.winTeam = "Team Red";
     this.redTeam.forEach(user => {
-      this.userService.updateUserWinsById(user.id, true).subscribe();
+      this.userService.updateUserWinsById(user.id, true, this.redpoints, this.bluepoints).subscribe();
     });
     this.blueTeam.forEach(user => {
-      this.userService.updateUserWinsById(user.id, false).subscribe();
+      this.userService.updateUserWinsById(user.id, false, this.redpoints, this.bluepoints).subscribe();
     });
   }
 
@@ -46,10 +50,10 @@ export class StartComponent implements OnInit {
     this.chooseTeam = true;
     this.winTeam = "Team Blue";
     this.redTeam.forEach(user => {
-      this.userService.updateUserWinsById(user.id, false).subscribe();
+      this.userService.updateUserWinsById(user.id, false, this.bluepoints, this.redpoints).subscribe();
     });
     this.blueTeam.forEach(user => {
-      this.userService.updateUserWinsById(user.id, true).subscribe();
+      this.userService.updateUserWinsById(user.id, true, this.bluepoints, this.redpoints).subscribe();
     });
   }
 

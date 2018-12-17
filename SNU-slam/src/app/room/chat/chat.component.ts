@@ -24,7 +24,6 @@ export class ChatComponent implements OnInit {
     private userService: UserService
   ) {
 		chatService.messages.subscribe(msg => {
-      //console.log( msg.author + " " + msg.message);
       this.chatLog.push(msg.username + ': ' + msg.message);
 		});
 	}
@@ -39,7 +38,6 @@ export class ChatComponent implements OnInit {
     }
     this.message.message = this.input;
     this.message.username = this.userService.current_user.username;
-		//console.log('new message from client to websocket: ', this.message);
 		this.chatService.messages.next(this.message);
 		this.input = '';
   }
@@ -48,14 +46,6 @@ export class ChatComponent implements OnInit {
     if(event.keyCode == 13){
       this.sendMsg();  // 실행할 이벤트
     }
-  }
-
-  resize() {
-      let height = document.getElementById("chatBox").style.height.split("px", 1);
-      let height_num = +height;
-      if (height_num < 300) {
-          document.getElementById("chatBox").style.height = document.getElementById("chatBox").scrollHeight + 'px';
-      }
   }
 
 }

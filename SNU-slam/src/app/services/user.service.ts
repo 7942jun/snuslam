@@ -37,9 +37,9 @@ export class UserService {
       }
   }
 
-  updateUserWinsById(id: number, win: boolean): Observable<void> {
+  updateUserWinsById(id: number, win: boolean, mypoint: number, yourpoint: number): Observable<void> {
     const url = `${this.userUrl}/wins/${id}`;
-    const data = (win)? JSON.stringify({win:1, lose:0}) : JSON.stringify({win:0, lose:1});
+    const data = (win) ? JSON.stringify({win: 1, lose: 0,mypoint: mypoint, yourpoint: yourpoint}) : JSON.stringify({win:0, lose:1, mypoint: mypoint, yourpoint: yourpoint});
     return this.http.put<void>(url, data, httpOptions);
   }
 

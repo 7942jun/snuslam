@@ -55,7 +55,6 @@ export class ListComponent implements OnInit {
     listService.users.subscribe(user => {
       if(user.start) {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.startService.setTeam(this.redteam, this.blueteam);
         this.router.navigate(['/start/' + id]);
       }
       else {
@@ -69,6 +68,7 @@ export class ListComponent implements OnInit {
             this.userService.getUserById(user.id).subscribe(user => this.blueteam.push(user));
           }
         }
+        this.startService.setTeam(this.redteam, this.blueteam);
       }
 		});
   }
@@ -102,7 +102,6 @@ export class ListComponent implements OnInit {
   }
 
   onChangeTeam(): void {
-    console.log(this.hostid);
     this.buttonable = false;
     const subscribe = del.subscribe(val => this.buttonable = true );
 

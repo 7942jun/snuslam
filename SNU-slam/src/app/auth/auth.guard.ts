@@ -60,7 +60,6 @@ export class AuthGuard implements CanActivate {
               return true;
             }
             else {
-              console.log(res.guests.length);
               if ( 2 * res.type == res.guests.length + 1) {
                 alert(`Room is Full!`);
                 return false;

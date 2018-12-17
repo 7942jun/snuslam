@@ -42,7 +42,6 @@ export class SignInComponent implements OnInit {
   sign_in() {
     this.userService.login(this.email.value, this.password.value).subscribe(user => {
       if (user.id > 0) {
-        console.log(user);
         this.isLoggedIn = true;
         this.userService.isLoggedIn = true;
         this.userService.current_user = user;
