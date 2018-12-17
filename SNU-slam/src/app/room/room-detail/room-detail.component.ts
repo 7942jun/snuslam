@@ -51,6 +51,7 @@ export class RoomDetailComponent implements OnInit {
         this.isStarted = room.ingame;
         this.play_time = room.play_time;
         this.type = room.type;
+        console.log(this.host_id);
       }
     );
   }

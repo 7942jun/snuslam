@@ -1,5 +1,5 @@
 import { async } from '@angular/core/testing';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input} from '@angular/core';
 import { RoomService } from '../room.service';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
@@ -28,6 +28,8 @@ const del = merge(
   providers: [ WebsocketService, ListService ]
 })
 export class ListComponent implements OnInit {
+  @Input()
+  hostid:number;
 
   redteam: User[] = [];
   blueteam: User[] = [];
@@ -100,6 +102,7 @@ export class ListComponent implements OnInit {
   }
 
   onChangeTeam(): void {
+    console.log(this.hostid);
     this.buttonable = false;
     const subscribe = del.subscribe(val => this.buttonable = true );
 
