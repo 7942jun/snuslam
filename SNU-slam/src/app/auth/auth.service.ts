@@ -26,7 +26,7 @@ export class AuthService {
     return Observable.create((observer) => {
       this.roomService.getRoomById(roomid)
         .subscribe((room) => {
-          observer.next(room); // your server response
+          observer.next(room);// your server response
         }, (err) => {
           observer.next(false);
         });

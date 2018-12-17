@@ -7,6 +7,9 @@ import { WebsocketService } from '../websocket.service';
 import { StartService } from '../start.service'
 import { Router } from '@angular/router';
 import { User } from '../../user';
+import { Observable, of, interval} from 'rxjs';
+import { timeout } from 'rxjs/operators';
+const buttondelay = interval(500);
 
 @Component({
   selector: 'app-list',
@@ -19,6 +22,8 @@ export class ListComponent implements OnInit {
   redteam: User[] = [];
   blueteam: User[] = [];
   currentUser: User;
+  buttonable = true;
+
 
   private user = {
     id: 0,
@@ -85,7 +90,13 @@ export class ListComponent implements OnInit {
   }
 
   onChangeTeam(): void {
-    if(this.currentUser.team === 1) {
+    this.buttonable = false;
+    buttondelay.pipe(timeout(600))      // Let's use bigger timespan to be safe,
+    // since `interval` might fire a bit later then scheduled.
+    .subscribe(
+      value => this.buttonable = true
+    );
+    if  (this.currentUser.team === 1) {
       this.currentUser.team = 2;
       this.roomService.changeTeam(this.currentUser).subscribe();
       this.user.id = this.currentUser.id;
@@ -103,5 +114,6 @@ export class ListComponent implements OnInit {
       this.user.start = false;
       this.listService.users.next(this.user);
     }
+
   }
 }
