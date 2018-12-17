@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from "@angular/common";
 import { UserService } from "../services/user.service";
 import { User } from "../user";
+import { Observable, Subject } from "rxjs";
+import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
 
 @Component({
   selector: 'app-rank',
@@ -10,7 +12,6 @@ import { User } from "../user";
 })
 export class RankComponent implements OnInit {
   users: User[];
-  searched_users: User[];
 
   constructor(private location: Location,
               private userService: UserService) { }
@@ -21,12 +22,6 @@ export class RankComponent implements OnInit {
 
   getUsers() {
     this.userService.getUsers().subscribe(users => this.users = users.sort((a, b) => {
-      return a.point > b.point ? -1 : a.point < b.point ? 1 : 0;
-    }));
-  }
-
-  search(term: string) {
-    this.userService.searchUsers(term).subscribe(users => this.searched_users = users.slice(0, 10).sort((a, b) => {
       return a.point > b.point ? -1 : a.point < b.point ? 1 : 0;
     }));
   }

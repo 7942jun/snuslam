@@ -71,16 +71,6 @@ describe('UserService', () => {
     req.flush(mockUser);
   }));
 
-  it('should search users by nickname', async (() => {
-    userService.searchUsers('').subscribe(data => {
-      expect(data).toEqual([]);
-    });
-    const username = mockUser.username;
-    userService.searchUsers(username).subscribe( data => {
-      expect(data).toEqual([mockUser]);
-    });
-  }));
-
   it('should return empty list', async( () => {
     userService.getUsers().subscribe( data => {
       expect(data).toEqual([]);

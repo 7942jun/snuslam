@@ -1,4 +1,3 @@
-import { user } from './../../../../../../project/swpp18-team3/SNU-slam/src/app/room/list.service';
 import {Injectable, Output} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../user';
@@ -52,16 +51,6 @@ export class UserService {
     const url = `${this.userUrl}/${id}`;
     return this.http.get<User>(url)
       .pipe(catchError(this.handleError<User>(`getUser id=${id}`)));
-  }
-
-  searchUsers(term: string): Observable<User[]> {
-    if (!term.trim()) {
-      return of([]);
-    }
-    return this.http.get<User[]>(`${this.userUrl}/?username=${term}`)
-      .pipe(tap(_ => this.log(`found users matching "${term}"`)),
-        catchError(this.handleError<User[]>('searchUsers', []))
-    );
   }
 
   login(email: string, password: string): Observable<User> {
