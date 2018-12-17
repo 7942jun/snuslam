@@ -50,12 +50,4 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  resize() {
-      let height = document.getElementById("chatBox").style.height.split("px", 1);
-      let height_num = +height;
-      if (height_num < 300) {
-          document.getElementById("chatBox").style.height = document.getElementById("chatBox").scrollHeight + 'px';
-      }
-  }
-
 }
