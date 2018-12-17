@@ -79,7 +79,7 @@ def user_wins(request, id):
 		user.loses = user.loses + data['lose']
 		mypoint = data['mypoint']
 		yourpoint = data['yourpoint']
-		if( data['wins'] == 1):
+		if( data['win'] == 1):
 			user.point = user.point + (rate_1vs1(mypoint,yourpoint)[0]-mypoint)
 		else:
 			user.point = user.point + (rate_1vs1(yourpoint,mypoint)[1]-mypoint)

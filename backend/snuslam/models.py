@@ -8,7 +8,7 @@ class Profile(models.Model):
 	position = models.CharField(max_length=100)
 	wins = models.IntegerField(default=0)
 	loses = models.IntegerField(default=0)
-	point = models.IntegerField(default=0)
+	point = models.IntegerField(default=1000)
 	team = models.IntegerField(default=0)
 
 	def json(self):
