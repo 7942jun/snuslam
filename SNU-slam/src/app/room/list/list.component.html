@@ -11,7 +11,11 @@
   <tbody>
   <tr *ngFor="let user of redteam" style="background-color: lavenderblush">
     <td style="text-align: center">RED</td>
-    <td style="text-align: center">{{ user.username }}</td>
+    <td style="text-align: center" *ngIf="hostid == user.id">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Heraldic_Imperial_Crown_%28Gules_Mitre%29.svg/1024px-Heraldic_Imperial_Crown_%28Gules_Mitre%29.svg.png" style="width: 25px" align="middle">
+      {{ user.username }}
+    </td>
+    <td style="text-align: center" *ngIf="hostid != user.id">{{ user.username }}</td>
     <td style="text-align: center">{{ user.position }}</td>
     <td style="text-align: center">{{ user.point }}</td>
   </tr>
@@ -31,7 +35,11 @@
   <tbody>
   <tr *ngFor="let user of blueteam" style="background-color: lavender">
     <td style="text-align: center">BLUE</td>
-    <td style="text-align: center">{{ user.username }}</td>
+    <td style="text-align: center" *ngIf="hostid == user.id">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Heraldic_Imperial_Crown_%28Gules_Mitre%29.svg/1024px-Heraldic_Imperial_Crown_%28Gules_Mitre%29.svg.png" style="width: 25px" align="middle">
+      {{ user.username }}
+    </td>
+    <td style="text-align: center" *ngIf="hostid != user.id">{{ user.username }}</td>
     <td style="text-align: center">{{ user.position }}</td>
     <td style="text-align: center">{{ user.point }}</td>
   </tr>
