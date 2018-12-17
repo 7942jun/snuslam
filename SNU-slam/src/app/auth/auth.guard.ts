@@ -40,34 +40,35 @@ export class AuthGuard implements CanActivate {
             else {
               return true;
             }
-
           })
         );
       }
       else if ( /^\d+$/.test(seg[2]) ) {
         const roomid = parseInt(seg[2], 10);
-        if ( this.isroom(roomid)) {
-        return this.authService.isuserinRoom(this.userId).pipe(
+        return this.authService.roomauth(roomid, this.userId).pipe(
           map(res => {
-            if (res.length != 0) {
-              if (res[0].id == roomid ) {
-                return true;
+            if (Number.isInteger(res)) {
+              if (res == -1) {
+                alert(`Room ${roomid} does not exists!`);
+                return false;
               }
-              alert(`You are already in room ${res[0].id}`);
-              this.router.navigate([`room/${res[0].id}`]);
+              alert(`You are already in room ${res}`);
+              this.router.navigate([`room/${res}`]);
               return false;
             }
+            else if (res == true) {
+              return true;
+            }
             else {
+              console.log(res.guests.length);
+              if ( 2 * res.type == res.guests.length + 1) {
+                alert(`Room is Full!`);
+                return false;
+              }
               return true;
             }
           })
-
         );
-        }
-        else {
-          return false;
-        }
-
       }
     }
 

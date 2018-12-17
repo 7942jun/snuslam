@@ -4,10 +4,13 @@ import { TournamentService } from './../tournament/tournament.service';
  import { Injectable } from '@angular/core';
  import { Observable, of } from 'rxjs';
  import { RoomService } from './../room/room.service';
+ import { map , switchMap } from 'rxjs/operators';
+ import { Room } from '../room';
  @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  falseroom: Room;
    constructor(
     private roomService: RoomService,
     private tournamentService: TournamentService,
@@ -26,7 +29,7 @@ export class AuthService {
     return Observable.create((observer) => {
       this.roomService.getRoomById(roomid)
         .subscribe((room) => {
-          observer.next(room);// your server response
+          observer.next(room); // your server response
         }, (err) => {
           observer.next(false);
         });
@@ -43,6 +46,38 @@ export class AuthService {
       });
     });
   }
+  roomauth(roomid: number, userid: number): Observable<any> {
+    return Observable.create((observer) => {
+    this.roomService.getuserroom(userid).pipe(
+    map( rooms => {
+      if (rooms.length != 0) {
+        console.log(rooms);
+        if (roomid == rooms[0].id) {
+          return true;
+        }
+        return rooms[0].id;
+      }
+      else {
+        return this.roomService.getRoomById(roomid);
+      }
+    }),
+    ).subscribe(
+      (room) => {
+        if ( typeof room == 'number' ||  typeof room == 'boolean' ){
+          observer.next(room);
+        }
+        else {
+        room.subscribe(res => {
+          observer.next(res);
+        }, (err) => {
+            alert(`room ${roomid} not exists!`);
+            observer.next(false);
+        });
+        }
+      });
+    });
+  }
+
   isLoggedIn(): Observable<any> {
     const id = parseInt(localStorage.getItem('user_id'), 10);
     if (id == null) {
