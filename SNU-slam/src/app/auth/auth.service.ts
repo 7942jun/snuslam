@@ -51,7 +51,6 @@ export class AuthService {
     this.roomService.getuserroom(userid).pipe(
     map( rooms => {
       if (rooms.length != 0) {
-        console.log(rooms);
         if (roomid == rooms[0].id) {
           return true;
         }

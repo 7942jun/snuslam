@@ -51,7 +51,6 @@ export class RoomDetailComponent implements OnInit {
         this.isStarted = room.ingame;
         this.play_time = room.play_time;
         this.type = room.type;
-        console.log(this.host_id);
       }
     );
   }
@@ -125,6 +124,8 @@ export class RoomDetailComponent implements OnInit {
   // }
 
   start() {
+    this.redteam = this.startService.getRedTeam();
+    this.blueteam = this.startService.getBlueTeam();
     if ( this.redteam.length === this.blueteam.length ) {
       const user = {id:this.user.id, team:0, getOut:false, start:true};
       this.startService.setHost(this.host_id);
@@ -144,7 +145,16 @@ export class RoomDetailComponent implements OnInit {
       //   alert( 'Game started! You are not allowed to leave the room!' );
       // }
       if (this.user.id === this.host_id) {
-        alert('Room host cannot go back');
+        this.redteam = this.startService.getRedTeam();
+        this.blueteam = this.startService.getBlueTeam();
+        if(this.redteam.length + this.blueteam.length == 1) {
+          this.roomService.deleteRoomById(this.room.id).subscribe();
+          this.router.navigate(['/room']);
+        }
+        else {
+          alert('host can exit when there is no other player');
+        }
+
       } else {
         this.roomService.deleteRoomUser(this.room.id, this.user.id).subscribe();
         const user = {id:this.user.id, team:0, getOut:true, start:false};

@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -30,7 +29,7 @@ export class RoomService {
     return this.http.get<Room>(url);
   }  // tested
   addRoom(room: Room): Observable<Room> {
-    this.getCSRFHeaders();
+    //this.getCSRFHeaders();
     return this.http.post<Room>(this.url, room, httpOptions);
   }  // tested
   deleteRoomById(id: number): Observable<void> {

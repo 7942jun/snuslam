@@ -3,5 +3,5 @@
     <b>{{ chat }}</b>
   </div>
 </div>
-<input id="chat-message-input" [(ngModel)]="input" type="text" style="width: 80%" (keydown)="enterSend($event); resize()"/>
+<input id="chat-message-input" [(ngModel)]="input" type="text" style="width: 80%" (keydown)="enterSend($event)"/>
 <input id="chat-message-submit" class="btn btn-outline-primary" type="button" value="Send" (click)="sendMsg()"/>
