@@ -21,6 +21,7 @@
             <th style="text-align: center">Location</th>
             <th style="text-align: center">Play time</th>
             <th style="text-align: center">Game type</th>
+            <th style="text-align: center">Wating Players</th>
           </tr>
           </thead>
           <tbody>
@@ -28,7 +29,8 @@
             <td>{{ room.title }}</td>
             <td>{{ room.location }}</td>
             <td>{{ room.play_time }}</td>
-            <td>{{ room.type }}</td>
+            <td>{{ room.type }} on {{ room.type }}</td>
+            <td>{{ 1+room.guests.length }}</td>
           </tr>
           </tbody>
         </table>
