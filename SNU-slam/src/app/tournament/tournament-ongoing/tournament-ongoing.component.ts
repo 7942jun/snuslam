@@ -30,10 +30,16 @@ export class TournamentOngoingComponent implements OnInit {
   ngOnInit() {
       this.getTournament();
       this.user = this.userService.getUser();
+      this.showPopup();
       
       // this.getTeams();
   }
-
+  showPopup(){
+    var popup = window.open("NOTICE", "MsgWindow", "width=400,height=400");
+    popup.document.write('<p style="font-size:40px">After contacting the other team through contact information, '+ 
+    'the teams should have a match. The losing team\'s leader clicks on the winning team in the list of matches.</p>');
+    popup.document.write('<title>NOTICE</title>');
+  }
   getTournament(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.tournamentService.getTournamentById(id)

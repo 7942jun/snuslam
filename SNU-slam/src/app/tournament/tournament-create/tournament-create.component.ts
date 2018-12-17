@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Tournament } from '../../tournament';
 import { TournamentService } from '../tournament.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-tournament-create',
@@ -22,13 +23,17 @@ export class TournamentCreateComponent implements OnInit {
 
   constructor(
     private tournamentService: TournamentService,
+    private userService: UserService,
     private router: Router,
   ) { }
 
   ngOnInit() {
     this.getTournaments();
-  }
+    this.userService.getCSRFToken();
+    
 
+  }
+  
   getTournaments(): void {
     this.tournamentService.getTournaments()
       .subscribe(tournaments => this.tournaments = tournaments);

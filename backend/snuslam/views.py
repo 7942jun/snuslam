@@ -233,7 +233,7 @@ def room_user_detail(request, id, user_id):
 		return HttpResponseNotAllowed(['DELETE'])
 
 
-@csrf_exempt
+
 def tournament(request):
 	if request.method == 'GET':
 		tournament_list = [tournament.json() for tournament in Tournament.objects.all()]
@@ -282,7 +282,7 @@ def tournament(request):
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST', 'PUT'])
 
-@csrf_exempt
+
 def tournament_detail(request, id):
 	if request.method == 'GET':
 		try:
@@ -300,7 +300,7 @@ def tournament_detail(request, id):
 	else:
 		return HttpResponseNotAllowed(['GET', 'DELETE'])
 
-@csrf_exempt
+
 def team(request):
 	if request.method == 'GET':
 		team_list = [team.json() for team in Team.objects.all()]
@@ -320,7 +320,7 @@ def team(request):
 
 	pass
 
-@csrf_exempt
+
 def team_detail(request, id):
 	if request.method == 'GET':
 		try:
