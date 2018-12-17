@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { Component, OnInit } from '@angular/core';
 import { RoomService } from '../room.service';
 import { UserService } from '../../services/user.service';
@@ -7,9 +8,18 @@ import { WebsocketService } from '../websocket.service';
 import { StartService } from '../start.service'
 import { Router } from '@angular/router';
 import { User } from '../../user';
-import { Observable, of, interval} from 'rxjs';
+import { Observable, of, merge, interval} from 'rxjs';
 import { timeout } from 'rxjs/operators';
-const buttondelay = interval(500);
+import { mapTo, delay } from 'rxjs/operators';
+
+const example = of(null);
+const del = merge(
+  example.pipe(
+    mapTo('done'),
+    delay(1000)
+  )
+);
+
 
 @Component({
   selector: 'app-list',
@@ -91,11 +101,8 @@ export class ListComponent implements OnInit {
 
   onChangeTeam(): void {
     this.buttonable = false;
-    buttondelay.pipe(timeout(600))      // Let's use bigger timespan to be safe,
-    // since `interval` might fire a bit later then scheduled.
-    .subscribe(
-      value => this.buttonable = true
-    );
+    const subscribe = del.subscribe(val => this.buttonable = true );
+
     if  (this.currentUser.team === 1) {
       this.currentUser.team = 2;
       this.roomService.changeTeam(this.currentUser).subscribe();
