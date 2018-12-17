@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpXsrfTokenExtractor} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,12 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { UserService } from "./services/user.service";
 
 import { APIInterceptor } from "./APIInterceptor";
+import {
+  HttpXsrfCookieExtractor,
+  HttpXsrfInterceptor,
+  XSRF_COOKIE_NAME,
+  XSRF_HEADER_NAME
+} from "@angular/common/http/src/xsrf";
 
 
 @NgModule({
@@ -54,7 +60,12 @@ import { APIInterceptor } from "./APIInterceptor";
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,
       multi: true,
-    }
+    },
+    // HttpXsrfInterceptor,
+    // { provide: HTTP_INTERCEPTORS, useExisting: HttpXsrfInterceptor, multi: true },
+    // { provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor },
+    // { provide: XSRF_COOKIE_NAME, useValue: 'XSRF-TOKEN' },
+    // { provide: XSRF_HEADER_NAME, useValue: 'X-XSRF-TOKEN' }
   ],
   bootstrap: [AppComponent]
 })
