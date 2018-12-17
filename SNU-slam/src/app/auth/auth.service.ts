@@ -70,8 +70,8 @@ export class AuthService {
         room.subscribe(res => {
           observer.next(res);
         }, (err) => {
-            alert(`room ${roomid} not exists!`);
-            observer.next(false);
+            alert(`Room ${roomid} does not exists!`);
+            observer.next(-1);
         });
         }
       });
