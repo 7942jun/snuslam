@@ -126,6 +126,7 @@ export class RoomDetailComponent implements OnInit {
   start() {
     const user = {id:this.user.id, team:0, getOut:false, start:true};
     this.startService.setHost(this.host_id);
+    this.roomService.deleteRoomById(this.room.id).subscribe();
     this.listService.users.next(user);
   }
 

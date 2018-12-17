@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 09f3fc48a2477f1cadcf4fe089a6d484ebec45d8
 import {Injectable, Output} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../user';
@@ -28,7 +31,15 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {
+      if (!JSON.parse(sessionStorage.getItem('sessionUser'))) {
+        this.isLoggedIn = false;
+        this.current_user = null;
+      } else {
+        this.isLoggedIn = true;
+        this.current_user = JSON.parse(sessionStorage.getItem('sessionUser')) as User;
+      }
+  }
 
   updateUserWinsById(id: number, win: boolean): Observable<void> {
     const url = `${this.userUrl}/wins/${id}`;
@@ -88,6 +99,7 @@ export class UserService {
   logout(): Observable<User> {
     this.isLoggedIn = false;
     this.current_user = undefined;
+    sessionStorage.clear();
     return this.http.get<User>(this.signOutUrl);
   }
 
