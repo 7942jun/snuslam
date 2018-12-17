@@ -53,7 +53,8 @@ export class SignInComponent implements OnInit {
       } else {
         alert('Sign in failed');
       }
-    });
+    },
+    err => alert('Sign in failed'));
     this.isLoggedIn = this.userService.isLoggedIn;
   }
 

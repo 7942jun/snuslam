@@ -61,20 +61,9 @@ export class UserService {
       .pipe(catchError(this.handleError<User>(`getUser id=${id}`)));
   }
 
-  searchUsers(term: string): Observable<User[]> {
-    if (!term.trim()) {
-      return of([]);
-    }
-    return this.http.get<User[]>(`${this.userUrl}/?username=${term}`)
-      .pipe(tap(_ => this.log(`found users matching "${term}"`)),
-        catchError(this.handleError<User[]>('searchUsers', []))
-    );
-  }
-
   login(email: string, password: string): Observable<User> {
     this.getCSRFHeaders();
     const data = JSON.stringify({ email: email, password: password });
-
     return this.http.post<User>(this.signUrl, data, httpOptions)
   }
 
@@ -100,8 +89,7 @@ export class UserService {
   }
 
   getUser(): User {
-    const id = parseInt(localStorage.getItem('user_id'), 10);
-    if ( id ) {
+    if ( this.current_user ) {
       return this.current_user;
     } else {
       return;

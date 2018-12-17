@@ -43,8 +43,10 @@ export class RoomcreateComponent implements OnInit {
       play_time: this.play_time,
       type: this.type
     };
+    console.log(newroom);
     if (check) {
       this.roomService.addRoom( newroom as Room ).subscribe(
+
         room => this.goRoom(room.id)
       );
     }
