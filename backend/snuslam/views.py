@@ -319,8 +319,6 @@ def team(request):
 	else:
 		return HttpResponseNotAllowed(['GET', 'POST'])
 
-	pass
-
 @csrf_exempt
 def team_detail(request, id):
 	if request.method == 'GET':

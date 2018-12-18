@@ -6,14 +6,17 @@ class BlogTestCase(TestCase):
 		client = Client(enforce_csrf_checks=True)
 		
 		new_user_json = {'email':'7942jun@naver.com', 'password':'1234', 'username':'raa', 'position':'guard'}
-		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
-		#self.assertEqual(response.status_code, 403)
+		#response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
+		#self.assertEqual(response.status_code, 403) #can't test since csrf_exempt
 
 		response = client.get('/api/token')
 		csrftoken = response.cookies['csrftoken'].value  # Get csrf token from cookie
 
 		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
-		#self.assertEqual(response.status_code, 201) # Pass csrf protection
+		self.assertEqual(response.status_code, 201) # Pass csrf protection
+
+		response = client.post('/api/token', HTTP_X_CSRFTOKEN=csrftoken)
+		self.assertEqual(response.status_code, 405)
 
 class RankTestCase(TestCase):
 	def test_rank(self):
@@ -52,7 +55,10 @@ class UserTestCase(TestCase):
 
 		user = User.objects.get(id=1)
 		self.assertEqual(user.profile.position, 'guard')
-		
+
+		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
+		self.assertEqual(response.status_code, 407)
+
 		#'api/user'에 post 이외의 요청이 잘 처리되는지 확인
 		response = client.put('/api/user')
 		self.assertEqual(response.status_code, 405)
@@ -88,6 +94,37 @@ class UserTestCase(TestCase):
 		response = client.post('/api/user/1')
 		self.assertEqual(response.status_code, 405)
 
+		#test user_wins
+		response = client.post('/api/user', json.dumps(new_user_json), content_type='application/json')
+		self.assertEqual(response.status_code, 201)
+
+		win_json = {'win':1, 'lose':0, 'mypoint':1000, 'yourpoint':1000}
+		lose_json = {'win':0, 'lose':1, 'mypoint':1000, 'yourpoint':1000}
+
+		response = client.put('/api/user/wins/2', json.dumps(win_json), content_type='application/json')
+		self.assertEqual(response.status_code, 200)
+
+		response = client.put('/api/user/wins/2', json.dumps(lose_json), content_type='application/json')
+		self.assertEqual(response.status_code, 200)
+
+		response = client.put('/api/user/wins/5', json.dumps(lose_json), content_type='application/json')
+		self.assertEqual(response.status_code, 404)
+
+		response = client.get('/api/user/wins/2')
+		self.assertEqual(response.status_code, 405)
+
+		#test user_room
+
+		response = client.get('/api/user/room/2')
+		self.assertEqual(response.status_code, 200)
+		
+		response = client.get('/api/user/room/5')
+		self.assertEqual(response.status_code, 404)
+		
+		response = client.post('/api/user/room/2')
+		self.assertEqual(response.status_code, 405)
+
+
 class SignInOutTestCase(TestCase):
 	def test_sign_in_out(self):
 		from django.contrib.auth.models import User
@@ -96,9 +133,9 @@ class SignInOutTestCase(TestCase):
 
 		client = Client()
 
-		#사용자가 로그인 되어있지 않을 때 sign_out
-		response = client.get('/api/sign_out')
-		self.assertEqual(response.status_code, 401)
+		#사용자가 로그인 되어있지 d않을 때 sign_out
+		#response = client.get('/api/sign_out')
+		#self.assertEqual(response.status_code, 401)
 		
 		#올바른 sign_in 
 		response = client.post('/api/sign_in', json.dumps({'email':'1111@gmail.com', 'password':'1234'}), content_type='application/json')
@@ -145,7 +182,7 @@ class ModelTestCase(TestCase):
 		for i in User.objects.all():
 			self.assertEqual(i.profile.wins, 0)
 			self.assertEqual(i.profile.loses, 0)
-			self.assertEqual(i.profile.point, 0)
+			self.assertEqual(i.profile.point, 1000)
 		
 		temp1 = User.objects.get(id=1)
 		temp1.profile.position = 'guard'
@@ -201,6 +238,8 @@ class RoomTestCase(TestCase):
 		user3.save()
 		room = Room(title='room1!', host=user, location='302', play_time=30, type=6)
 		room.save()
+		room.guests.add(user2)
+		room.save()
 		room2 = Room(title='room2!', host=user2, location='dormitory', play_time=15, type=4)
 		room2.save()
 
@@ -222,20 +261,30 @@ class RoomTestCase(TestCase):
 		self.assertIn('3', response.content.decode())
 
 		#'/room/:id'에 get이 잘 작동하는지 확인
-		response = client.get('/api/room/3')
+		response = client.get('/api/room/2')
 		self.assertEqual(response.status_code, 200)
-		self.assertIn('room3!', response.content.decode())
+		self.assertIn('room2!', response.content.decode())
 
 		#'/room/:id'에 존재하지 않는 데이터에 대한 get이 잘 처리되는지 확인
 		response = client.get('/api/room/4')
 		self.assertEqual(response.status_code, 404)
 
 		#'/room/:id'에 put이 잘 작동하는지 확인
+		room_json = {'title':'new_room', 'location':'기숙사', 'play_time':15, 'type':1, 'host':2, 'ingame':False, 'guests':[1]}
+		response = client.put('/api/room/1', json.dumps(room_json), content_type='application/json')
+		self.assertEqual(response.status_code, 200)
+
 		response = client.put('/api/room/1/user', json.dumps({'user':3}), content_type='application/json')
 		self.assertEqual(response.status_code, 200)
 		response = client.get('/api/room/1')
-		self.assertEqual(len(json.loads(response.content.decode()).get('guests')), 1)
+		self.assertEqual(len(json.loads(response.content.decode()).get('guests')), 2)
 		
+		response = client.put('/api/room/1/user', json.dumps({'user':2}), content_type='application/json')
+		self.assertEqual(response.status_code, 204)
+
+		response = client.put('/api/room/1/user', json.dumps({'user':3}), content_type='application/json')
+		self.assertEqual(response.status_code, 409)
+
 		#'/room/:id'에 존재하지 않는 데이터에 대한 put이 잘 처리되는지 확인
 		response = client.put('/api/room/4')
 		self.assertEqual(response.status_code, 404)
@@ -254,15 +303,21 @@ class RoomTestCase(TestCase):
 
 		response = client.get('/api/room/1/user')
 		self.assertEqual(response.status_code, 200)
-		self.assertEqual(len(json.loads(response.content.decode())), 2)
+		self.assertEqual(len(json.loads(response.content.decode())), 3)
 
 		response = client.delete('/api/room/1/user', json.dumps({'user':3}), content_type='application/json')
 		self.assertEqual(response.status_code, 200)
 
 		response = client.get('/api/room/1/user')
-		self.assertEqual(len(json.loads(response.content.decode())), 1)
+		self.assertEqual(len(json.loads(response.content.decode())), 2)
 
 		response = client.post('/api/room/1/user')
+		self.assertEqual(response.status_code, 405)
+
+		response = client.delete('/api/room/1/user/1')
+		self.assertEqual(response.status_code, 200)
+
+		response = client.get('/api/room/1/user/1')
 		self.assertEqual(response.status_code, 405)
 
 class TeamTestCase(TestCase):
@@ -291,7 +346,7 @@ class TeamTestCase(TestCase):
 		self.assertEqual(len(json.loads(response.content.decode())), 2)
 
 		#'/api/team'에 post 요청이 잘 처리되는지 확인
-		new_team_json = {'name':'team3!', 'leader_id':3}
+		new_team_json = {'name':'team3!', 'leader_id':1, 'leaderName':'raa', 'contact':'01012345678'}
 		response = client.post('/api/team', json.dumps(new_team_json), content_type='application/json')
 		self.assertEqual(response.status_code, 201)
 
@@ -346,6 +401,9 @@ class TournamentTestCase(TestCase):
 		team3.save()
 		tournament = Tournament(title='tournament1!', host=1, game_type=8, reward='reward1')
 		tournament.save()
+		tournament.teams.add(team2)
+		tournament.teamLeaders.add(user2)
+		tournament.save()
 		tournament2 = Tournament(title='tournament2!', host=2, game_type=4, reward='reward2')
 		tournament2.save()
 
@@ -375,11 +433,15 @@ class TournamentTestCase(TestCase):
 		self.assertEqual(response.status_code, 404)
 
 		#'api/tournament'에 put 요청이 잘 처리되는지 확인
-		tournament_json = {'id':1, 'title':'tournament1!', 'host':1, 'teams':[1, 2, 3], 'game_type':8, 'total_team':3, 'result1':[1,2], 'result2':[1], 'result3':[], 'reward':'reward', 'state':2}
+		tournament_json = {'id':1, 'title':'tournament1!', 'host':1, 'teams':[1, 2, 3], 'game_type':8, 'result11':0, 'result12':0, 'result13':0, 'result14':0, 'result21':0, 'result22':0, 'result31':0, 'teamLeaders':[1, 3], 'total_team':3, 'reward':'reward', 'state':2}
 		response = client.put('/api/tournament', json.dumps(tournament_json), content_type='application/json')
 		self.assertEqual(response.status_code, 200)
+
 		response = client.get('/api/tournament/1')
 		self.assertIn('reward', response.content.decode())
+
+		response = client.put('/api/tournament', json.dumps({'id':5}), content_type='application/json')
+		self.assertEqual(response.status_code, 404)
 
 		response = client.put('/api/tournament/4')
 		self.assertEqual(response.status_code, 405)
@@ -396,5 +458,4 @@ class TournamentTestCase(TestCase):
 		#'api/tournament/:id'에 post 요청이 잘 처리되는지 확인
 		response = client.post('/api/tournament/1')
 		self.assertEqual(response.status_code, 405)
-
 
