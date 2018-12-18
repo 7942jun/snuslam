@@ -21,7 +21,7 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private userService: UserService,
+    public userService: UserService,
     private location: Location,
     private formBuilder: FormBuilder,
     public router: Router

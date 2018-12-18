@@ -36,7 +36,6 @@ export class ListComponent implements OnInit {
   currentUser: User;
   buttonable = true;
 
-
   private user = {
     id: 0,
     team: 0,
@@ -79,11 +78,7 @@ export class ListComponent implements OnInit {
     alert('Click \'change\' button!');
   }
 
-  setCurrentUserTeam(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.roomService.AddRoomUser(id, this.currentUser.id).subscribe();
-    this.currentUser.team = 1;
-    this.roomService.changeTeam(this.currentUser).subscribe();
+  alertToOtherUser(): void {
     this.user.id = this.currentUser.id;
     this.user.team = 1;
     this.user.getOut = false;
@@ -91,13 +86,27 @@ export class ListComponent implements OnInit {
     this.listService.users.next(this.user);
   }
 
+  saveCurrentUserToDB(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.currentUser.team = 1;
+    this.alertToOtherUser();
+    this.roomService.AddRoomUser(id, this.currentUser.id).subscribe();
+    this.roomService.changeTeam(this.currentUser).subscribe();
+  }
+
   getUserlist(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.roomService.getRoomUserById(id).subscribe(
       users => {
-        this.redteam  = users.filter( user => user.team === 1 || user.team === 0);
-        this.blueteam = users.filter( user => user.team === 2);
-        this.setCurrentUserTeam();
+        users.forEach(user => {
+          if(user.team == 2) {
+            this.blueteam.push(user);
+          }
+          else {
+            this.redteam.push(user);
+          }
+        })
+        this.saveCurrentUserToDB();
       }
     );
   }
@@ -124,6 +133,5 @@ export class ListComponent implements OnInit {
       this.user.start = false;
       this.listService.users.next(this.user);
     }
-
   }
 }

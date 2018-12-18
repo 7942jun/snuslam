@@ -18,6 +18,7 @@ export class UserService {
   isLoggedIn: boolean;
   current_user: User;
   baseUrl = environment.API_URL;
+  users: User[];
 
   private userUrl = this.baseUrl + '/api/user';
   private signUrl = this.baseUrl + '/api/sign_in';
@@ -36,7 +37,7 @@ export class UserService {
         this.current_user = JSON.parse(sessionStorage.getItem('sessionUser')) as User;
       }
   }
-
+  
   updateUserWinsById(id: number, win: boolean, mypoint: number, yourpoint: number): Observable<void> {
     const url = `${this.userUrl}/wins/${id}`;
     const data = (win) ? JSON.stringify({win: 1, lose: 0,mypoint: mypoint, yourpoint: yourpoint}) : JSON.stringify({win:0, lose:1, mypoint: mypoint, yourpoint: yourpoint});
